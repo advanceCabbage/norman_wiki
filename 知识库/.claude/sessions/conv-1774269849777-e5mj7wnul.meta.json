@@ -1,0 +1,19 @@
+{
+  "id": "conv-1774269849777-e5mj7wnul",
+  "title": "获取 https://github",
+  "titleGenerationStatus": "failed",
+  "createdAt": 1774269849778,
+  "updatedAt": 1774318829889,
+  "lastResponseAt": 1774318599260,
+  "sessionId": "0f2a0e35-4001-4a17-83b0-b706a40f1800",
+  "sdkSessionId": "0f2a0e35-4001-4a17-83b0-b706a40f1800",
+  "usage": {
+    "model": "sonnet",
+    "inputTokens": 0,
+    "cacheCreationInputTokens": 0,
+    "cacheReadInputTokens": 0,
+    "contextWindow": 200000,
+    "contextTokens": 0,
+    "percentage": 0
+  }
+}

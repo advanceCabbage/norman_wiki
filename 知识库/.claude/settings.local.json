@@ -1,0 +1,15 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(curl -s --max-time 10 'https://ai.daliy.musnow.top/index.html')",
+      "Bash(find /Users/yanghao -name CLAUDE.md -not -path */.*)",
+      "Bash(codex --version)",
+      "Bash(codex --help)",
+      "Bash(codex)",
+      "Read(//Users/yanghao/.config/codex/**)",
+      "Read(//Users/yanghao/.codex/**)",
+      "Bash(echo $OPENAI_API_KEY)",
+      "Bash(curl:*)"
+    ]
+  }
+}

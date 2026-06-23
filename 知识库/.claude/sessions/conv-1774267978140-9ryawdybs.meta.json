@@ -1,0 +1,20 @@
+{
+  "id": "conv-1774267978140-9ryawdybs",
+  "title": "你好",
+  "titleGenerationStatus": "failed",
+  "createdAt": 1774267978153,
+  "updatedAt": 1774269843665,
+  "lastResponseAt": 1774269843665,
+  "sessionId": "6905aeff-e1d8-4457-b302-a2b83e034d28",
+  "sdkSessionId": "6905aeff-e1d8-4457-b302-a2b83e034d28",
+  "currentNote": "第一篇笔记.md",
+  "usage": {
+    "model": "sonnet",
+    "inputTokens": 37202,
+    "cacheCreationInputTokens": 0,
+    "cacheReadInputTokens": 0,
+    "contextWindow": 200000,
+    "contextTokens": 37202,
+    "percentage": 19
+  }
+}

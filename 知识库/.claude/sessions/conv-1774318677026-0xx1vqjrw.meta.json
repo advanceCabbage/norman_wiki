@@ -1,0 +1,19 @@
+{
+  "id": "conv-1774318677026-0xx1vqjrw",
+  "title": "Create AI news folder with Product Hunt summary",
+  "titleGenerationStatus": "success",
+  "createdAt": 1774318677026,
+  "updatedAt": 1782109921467,
+  "lastResponseAt": 1782109921467,
+  "sessionId": "65a322ee-b155-40f7-8135-ab90a7be4148",
+  "sdkSessionId": "65a322ee-b155-40f7-8135-ab90a7be4148",
+  "usage": {
+    "model": "sonnet",
+    "inputTokens": 0,
+    "cacheCreationInputTokens": 0,
+    "cacheReadInputTokens": 0,
+    "contextWindow": 200000,
+    "contextTokens": 0,
+    "percentage": 0
+  }
+}
