@@ -2,7 +2,8 @@
   "permissions": {
     "allow": [
       "Bash(gh repo:*)",
-      "WebFetch(domain:github.com)"
+      "WebFetch(domain:github.com)",
+      "WebFetch(domain:mp.weixin.qq.com)"
     ]
   }
 }
