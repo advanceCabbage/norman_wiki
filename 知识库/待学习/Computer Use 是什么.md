@@ -1,4 +1,3 @@
-# Computer Use 是什么
 
 > **一句话总结**：Computer Use 是 Anthropic 为 Claude 开发的能力，让 AI 能像人一样操作电脑——看屏幕截图、移动鼠标、点击按钮、输入文字，从而完成复杂的计算机任务。
 

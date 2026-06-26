@@ -1,12 +1,3 @@
-# 🎓 AI 电子伴侣企业级项目实战
-
-> 一套带你从零做出企业级 AI 电子伴侣项目的实战课程，覆盖 Zod 运行时校验、TypeScript 类型推导等工程化基础（链接为其中「Zod 是什么」一节）。
-
-🔗 **课程链接**：[AI 电子伴侣企业级项目实战 - Zod 是什么](https://aicompanion.usehook.cn/1-what-is-zod/)
-
----
-
-## 待办
-
-- [ ] 浏览课程目录，看整体覆盖范围
-- [ ] 评估是否购买（价格、内容、口碑）
+ - 课程介绍：AI 的基础概念
+ - 链接：[AI相关基础概念](https://aicompanion.usehook.cn/0a-ai-learning-mindset/)
+ - 价格：200¥
