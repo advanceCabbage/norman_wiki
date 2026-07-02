@@ -1,3 +1,4 @@
 
 # 密钥，勿提交
 .env
+.wechat_state.json
