@@ -13,15 +13,58 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "知识库/学习总结/小林大模型视频/02-第二周 Claude Code核心架构与实现原理.md",
+                "file": "知识库/待学习/学习清单.md",
+                "mode": "source",
+                "source": false
+              },
+              "icon": "lucide-file",
+              "title": "学习清单"
+            }
+          },
+          {
+            "id": "ab9de87c11e7e7bb",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "知识库/小林大模型视频学习总结/02-第二周 Claude Code核心架构与实现原理.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
               "title": "02-第二周 Claude Code核心架构与实现原理"
             }
+          },
+          {
+            "id": "0b3c4a66dc8139a4",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "知识库/小林大模型视频学习总结/02-第二周 Claude Code核心架构与实现原理.md",
+                "mode": "source",
+                "source": false
+              },
+              "icon": "lucide-file",
+              "title": "02-第二周 Claude Code核心架构与实现原理"
+            }
+          },
+          {
+            "id": "bdcd6e5480e8e69f",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "知识库/小林大模型视频学习总结/02 之Claude code工具系统.md",
+                "mode": "source",
+                "source": false
+              },
+              "icon": "lucide-file",
+              "title": "02 之Claude code工具系统"
+            }
           }
-        ]
+        ],
+        "currentTab": 3
       }
     ],
     "direction": "vertical"
@@ -185,37 +228,38 @@
       "bases:新建数据库": false
     }
   },
-  "active": "e56d58d73eaf9d37",
+  "active": "bdcd6e5480e8e69f",
   "lastOpenFiles": [
+    "知识库/小林大模型视频学习总结/02-第二周 Claude Code核心架构与实现原理.md",
+    "知识库/小林大模型视频学习总结/02 之Claude code工具系统.md",
+    "知识库/优秀的github/优秀的github仓.md",
+    "知识库/待学习/学习清单.md",
+    "知识库/优秀的github",
+    "知识库/知识沉淀/Computer Use 是什么.md",
+    "知识库/知识沉淀",
+    "知识库/待学习/学习计划.md",
+    "日常任务.md",
+    "未命名.base",
+    "知识库/公众号文章/🧠 Claude Code 记忆机制.md",
+    "知识库/公众号文章/Loop 机制详解：什么时候该让 AI 自己循环干活.md",
+    "知识库/公众号文章/循环（Loops）什么时候该用.md",
+    "知识库/公众号文章/🧠 Claude Code 记忆机制（微信公众号版）.md",
+    "知识库/小林大模型视频学习总结/01-第一周 Agent-skill.md",
+    "知识库/收藏箱/提示词工程.md",
+    "知识库/收藏箱/RepoPrompt CE.md",
+    "知识库/收藏箱/OpenAI Tokenizer.md",
+    "知识库/收藏箱/daily_stock_analysis 每日股票分析.md",
+    "知识库/收藏箱/用AI Agent做微服务系统设计.md",
+    "知识库/收藏箱/[精]Loop Engineering又是啥？一文讲清企业Agent落地的四层工程进化论.md",
     "AGENTS.md",
     "AGENT.md",
-    "未命名.base",
     "知识库/项目总结/自动化AI研发工作流.md",
     "知识库/项目总结/智能客服机器人.md",
     "知识库/项目总结/文档代码一致性智能检测工具.md",
     "知识库/项目总结/KNB桥转MSI桥转码工具.md",
     "知识库/待调研/Memory Bank调研.md",
-    "知识库/待调研/IDE中使用Claude code，能复用IDE的LSP吗.md",
-    "知识库/待调研/【模板】调研模板.md",
-    "知识库/待调研/如何写好Prompt & 好的Prompt是什么样的.md",
-    "知识库/待调研/gnhf 夜间自主编程编排器.md",
-    "知识库/待调研/superpower和Grill with doc的区别.md",
-    "知识库/待调研/调研oh-my-pi.md",
-    "知识库/学习总结/小林大模型视频/02-第二周 Claude Code核心架构与实现原理.md",
-    "知识库/待调研/Function Call 和MCP的区别.md",
-    "知识库/学习总结/小林大模型视频/01-第一周 Agent-skill.md",
-    "知识库/收藏箱/[精]Loop Engineering又是啥？一文讲清企业Agent落地的四层工程进化论.md",
-    "知识库/收藏箱/用AI Agent做微服务系统设计.md",
-    "知识库/公众号文章/Loop 机制详解：什么时候该让 AI 自己循环干活.md",
-    "知识库/公众号文章/Loop机制详解-什么时候该让AI自己循环干活.md",
     "图片/Pasted image 20260702202703.png",
-    "知识库/公众号文章/循环（Loops）什么时候该用.md",
     "图片/Pasted image 20260702202410.png",
-    "未命名.md",
-    "知识库/收藏箱/RepoPrompt CE.md",
-    "知识库/收藏箱/OpenAI Tokenizer.md",
-    "知识库/收藏箱/daily_stock_analysis 每日股票分析.md",
-    "知识库/待调研/花叔的skill（女娲、橙皮书）.md",
     "知识库/炼丹炉/文章",
     "知识库/炼丹炉",
     "图片/Pasted image 20260629111617.png",
@@ -229,9 +273,7 @@
     "图片/Pasted image 20260626182842.png",
     "图片/Pasted image 20260626181622.png",
     "图片",
-    "知识库/学习总结/小林大模型视频",
-    "知识库/学习总结",
-    "知识库/项目总结",
-    "知识库/待买课程"
+    "知识库/小林大模型视频学习总结",
+    "知识库/学习总结"
   ]
 }

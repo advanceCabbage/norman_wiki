@@ -10,6 +10,7 @@ CC是Anthropic官方的AI编程CLI，它的本质是一个tool-use agent loop：
 ## 三、工具系统
 - 确保工具安全执行，Hook + 权限执行栈
 	- **Hook是工具执行内容维度**。工具调用之前，添加Hook。阻止在工具执行之前，是通过工具执行的内容为判断标准，判断改内容是否有风险，是否允许执行，举例：判断工具的执行内容是否包含rm -rf
+	- Claude Code 支持的所有 Hooks 有哪些
 	- **Permission是工具维度**。Permission Check 设置系统内白名单，按照工具维度设置：1. 工具执行是否需要向人确认 2. 该工具是否允许并发
 - 基础工具：Bash 、 Read、Edit、Write、Glob、Grep。本质上都是Bash工具，按照权限分裂出了其他工具，方便鉴权
 - Skill：Skill本质是作为agent loop中的tool加载的，Skill渐进式披露加载的过程本质上是子agent按照上下文加载，并将加载的上下文内容返回给主控agent
