@@ -401,7 +401,47 @@ Recalled memory
 >
 > 对比一下：**CLAUDE.md 无论多长都会整篇加载**，而 MEMORY.md 有 200 行 / 25KB 上限。
 
-### 3. 如何查看 / 开关？
+
+### 3. 隐式记忆（auto Memory）类型有哪些，如何加载的？
+
+##### 3.1 隐式记忆包括四种类型
+- **user**：用户的角色、目标、偏好、职责、知识背景，用来调整 Claude 的协作方式
+- **feedback**：用户对 Claude 工作方式的反馈，包含“以后避免什么 / 继续做什么”，强调记录原因和适用方式。
+- **project**：关于当前项目的目标、计划、事故、bug、长期背景，但必须是不能从代码或 git 历史直接推导出来的信息。
+- **reference**：外部系统入口，比如 Linear、Slack、Grafana dashboard 等。
+##### 3.2 隐式记忆文件内容格式
+- MEMORY.md 文件中会存储所有记忆文件的索引信息
+- XXX.md 文件会记录具体内容以及name、description、type 等
+```
+MEMORY.md
+
+- [个人日记条目](diary_entry.md) — 记录个人日常想法和感受
+```
+
+```
+diary_entry.md
+
+---
+name: 个人日记条目
+description: 记录个人日常想法和感受
+type: project
+---
+
+**2026-07-06**: 我爱喝牛奶
+**Why:** 这是一个简单的个人日记条目，记录了当天的个人喜好。
+**How to apply:** 这个记忆可以用于了解用户的个人偏好，在未来的对话中可以作为参考。
+```
+##### <font color="#ff0000">3.3 <font color="#ff0000">隐式记忆的加载逻辑</font></font>
+- 加载 `MEMORY.md` 的前 200 行或 25KB 数据，模型每轮能看到 Memory 的索引文件
+- 扫描 memory 目录下的 md 文件，排除 memory.md。读取每个文件的前三行 front matter，获取 file name、description、type，并组成 manifest。使用 特定的提示词（You are selecting memories that will be useful to Claude Code as it processes a user's query）使用大模型判断与用户当前的 query 选择最多五个相关的记忆，返回这些文件的路径。
+- 读取相关的记忆文件，并将记忆文件的内容通过 `relevant_memories` 字段传给大模型
+- 召回是异步预取，不阻塞主循环。每个用户 turn 开始时，会异步获取记忆，主循环会在后续 post-tools 阶段检查 prefetch 获取的记忆是否已经完成，
+	- 如果完成，就注入相关记忆 attachment
+	- 如果没完成，就本轮先跳过，下一次 loop iteration 再看
+	- 如果整个 turn 结束前都没完成，就不会强行等待
+- **去重与避免重复注入**：系统会收集历史上已经 surfaced 的 memory 路径，避免重复选择；也会检查 `readFileState`，如果模型已经通过 Read/Write/Edit 接触过某个 memory 文件，就不再通过 attachment 重复注入
+- **优点：全程做去重、限量、非阻塞**
+### 4. 如何查看 / 开关？
 
 查看方式：
 

@@ -61,7 +61,7 @@ python3 $S publish --yes
 
 ## 命令速查
 
-脚本（项目级 skill，从项目根目录运行）：`.claude/skills/wechat-official-draft/scripts/wechat_draft.py`（下称 `$S`）
+脚本（项目级 skill，从项目根目录运行）：`.codex/skills/wechat-official-draft/scripts/wechat_draft.py`（下称 `$S`）
 
 | 命令 | 说明 |
 |---|---|
