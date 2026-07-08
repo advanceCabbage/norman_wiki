@@ -4,65 +4,39 @@
     "type": "split",
     "children": [
       {
-        "id": "832596f6fe9aba97",
+        "id": "aedfe5a7102f29f8",
         "type": "tabs",
         "children": [
           {
-            "id": "e56d58d73eaf9d37",
+            "id": "29d7a70c046e7a6f",
             "type": "leaf",
             "state": {
               "type": "markdown",
               "state": {
-                "file": "知识库/待学习/学习清单.md",
+                "file": "知识库/项目总结/自动化测试工作流/MSI端到端智能测试应用实践.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "学习清单"
+              "title": "MSI端到端智能测试应用实践"
             }
           },
           {
-            "id": "ab9de87c11e7e7bb",
+            "id": "2bf44d3531a8d640",
             "type": "leaf",
             "state": {
               "type": "markdown",
               "state": {
-                "file": "知识库/小林大模型视频学习总结/02-第二周 Claude Code核心架构与实现原理.md",
+                "file": "知识库/项目总结/智能客服机器人.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "02-第二周 Claude Code核心架构与实现原理"
-            }
-          },
-          {
-            "id": "0b3c4a66dc8139a4",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "知识库/小林大模型视频学习总结/02-第二周 Claude Code核心架构与实现原理.md",
-                "mode": "source",
-                "source": false
-              },
-              "icon": "lucide-file",
-              "title": "02-第二周 Claude Code核心架构与实现原理"
-            }
-          },
-          {
-            "id": "bdcd6e5480e8e69f",
-            "type": "leaf",
-            "state": {
-              "type": "image",
-              "state": {
-                "file": "图片/Pasted image 20260707145102.png"
-              },
-              "icon": "lucide-image",
-              "title": "Pasted image 20260707145102"
+              "title": "智能客服机器人"
             }
           }
         ],
-        "currentTab": 3
+        "currentTab": 1
       }
     ],
     "direction": "vertical"
@@ -85,7 +59,7 @@
                 "autoReveal": false
               },
               "icon": "lucide-folder-closed",
-              "title": "文件列表"
+              "title": "Files"
             }
           },
           {
@@ -119,7 +93,7 @@
       }
     ],
     "direction": "horizontal",
-    "width": 382.5
+    "width": 300
   },
   "right": {
     "id": "44586ca62a0726bd",
@@ -197,17 +171,27 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "知识库/待学习/学习计划.md",
+                "file": "知识库/项目总结/自动化AI研发工作流.md",
                 "followCursor": false,
                 "showSearch": false,
                 "searchQuery": ""
               },
               "icon": "lucide-list",
-              "title": "学习计划 的大纲"
+              "title": "自动化AI研发工作流 的大纲"
+            }
+          },
+          {
+            "id": "396ecf12660b65e5",
+            "type": "leaf",
+            "state": {
+              "type": "advanced-tables-toolbar",
+              "state": {},
+              "icon": "spreadsheet",
+              "title": "Advanced Tables"
             }
           }
         ],
-        "currentTab": 3
+        "currentTab": 5
       }
     ],
     "direction": "horizontal",
@@ -216,63 +200,63 @@
   },
   "left-ribbon": {
     "hiddenItems": {
-      "table-editor-obsidian:Advanced Tables Toolbar": false,
-      "switcher:打开快速切换": false,
-      "graph:查看关系图谱": false,
-      "canvas:新建白板": false,
-      "daily-notes:打开/创建今天的日记": false,
-      "templates:插入模板": false,
-      "command-palette:打开命令面板": false,
-      "bases:新建数据库": false
+      "switcher:Open quick switcher": false,
+      "graph:Open graph view": false,
+      "canvas:Create new canvas": false,
+      "daily-notes:Open today's daily note": false,
+      "templates:Insert template": false,
+      "command-palette:Open command palette": false,
+      "bases:Create new base": false,
+      "table-editor-obsidian:Advanced Tables Toolbar": false
     }
   },
-  "active": "1cdfdb71f116154d",
+  "active": "2bf44d3531a8d640",
   "lastOpenFiles": [
-    "图片/Pasted image 20260707114730.png",
-    "图片/Pasted image 20260707114407.png",
-    "知识库/待调研/superpower和Grill with doc的区别.md",
-    "知识库/待调研/workBuddy.md",
-    "知识库/skills/github-weekly-top10/scripts/fetch_github_weekly_top10.py",
-    "知识库/skills/github-weekly-top10/scripts",
-    "知识库/skills/github-weekly-top10/SKILL.md",
-    "知识库/skills/github-weekly-top10",
-    "知识库/skills",
+    "知识库/项目总结/智能客服/RAG在终端前端的应用实践.md",
+    "412e6f51-9e21-436c-a2e0-3a1727ece8ff.png",
+    "6856f498-a217-4281-9d57-e42950dcf52f.png",
+    "知识库/项目总结/Untitled.md",
+    "知识库/项目总结/智能客服",
+    "知识库/项目总结/智能客服机器人.md",
+    "知识库/项目总结/自动化测试工作流/评审测试用例SKill.md",
+    "知识库/项目总结/自动化测试工作流/生成测试用例SKill.md",
+    "知识库/项目总结/自动化测试工作流/MSI端到端智能测试应用实践.md",
+    "23c7ffe6-e997-4f0d-ab18-6c520160ba26.png",
+    "f86096cf-e9aa-4f41-8768-9b8711ce4033.png",
+    "知识库/项目总结/自动化AI研发工作流.md",
+    "知识库/项目总结/自动化测试工作流",
+    "知识库/项目总结/KNB桥转MSI桥转码工具.md",
+    "知识库/🗺️ 学习地图.md",
+    "知识库/项目总结/文档代码一致性智能检测工具.md",
+    "知识库/项目总结/文档一致性调研文档/LSP与Serena.md",
+    "知识库/项目总结/文档一致性调研文档/智能文档校准工具方案调研.md",
+    "知识库/项目总结/文档一致性调研文档/智能文档校准工具方案.md",
+    "知识库/项目总结/文档一致性调研文档/【精】 业内外CodeBase原理分析.md",
+    "日常任务.md",
+    "知识库/知识沉淀/小技巧/Obsidian 插件清单与用法.md",
+    "知识库/知识沉淀/小技巧/Claude code使用技巧.md",
+    "知识库/知识沉淀/小技巧",
+    "知识库/知识沉淀/Function Call 笔记.md",
+    "知识库/知识沉淀/Computer Use 是什么.md",
+    "知识库/知识沉淀",
+    "知识库/收藏箱/用AI Agent做微服务系统设计.md",
+    "知识库/收藏箱/提示词工程.md",
+    "知识库/收藏箱/[精]Loop Engineering又是啥？一文讲清企业Agent落地的四层工程进化论.md",
     "知识库/待调研/调研oh-my-pi.md",
     "知识库/待调研/花叔的skill（女娲、橙皮书）.md",
     "知识库/待调研/如何写好Prompt & 好的Prompt是什么样的.md",
-    "知识库/待调研/gnhf 夜间自主编程编排器.md",
-    "知识库/待调研/IDE中使用Claude code，能复用IDE的LSP吗.md",
-    "知识库/待调研/Memory Bank调研.md",
-    "知识库/小林大模型视频学习总结/03-第三周 openclaw.md",
+    "知识库/小林大模型视频学习总结",
+    "知识库/公众号文章",
+    "知识库/优秀的github",
+    "知识库/skills/github-weekly-top10/scripts/fetch_github_weekly_top10.py",
+    "知识库/skills/github-weekly-top10/scripts",
+    "知识库/skills/github-weekly-top10",
     "图片/Pasted image 20260707193715.png",
     "图片/Pasted image 20260707193609.png",
     "图片/Pasted image 20260707193240.png",
     "图片/Pasted image 20260707192829.png",
     "图片/Pasted image 20260707192734.png",
     "图片/Pasted image 20260707191929.png",
-    "图片/Pasted image 20260707190506.png",
-    "图片/Pasted image 20260707151327.png",
-    "图片/Pasted image 20260707145105.png",
-    "知识库/小林大模型视频学习总结/02-第二周 Claude Code核心架构与实现原理.md",
-    "知识库/小林大模型视频学习总结/北美找AI工作.md",
-    "知识库/小林大模型视频学习总结/岗位介绍  &  简历.md",
-    "知识库/小林大模型视频学习总结/02-Claude code提示词.md",
-    "知识库/公众号文章/Claude Code工具.md",
-    "知识库/公众号文章/🧠 Claude Code 记忆机制（微信公众号版）.md",
-    "知识库/公众号文章/你不知道的 skill 规则，对比 Claude code 和 Codex 中 skill 的差异.md",
-    "知识库/优秀的github/优秀的github仓.md",
-    "知识库/公众号文章/循环（Loops）什么时候该用.md",
-    "知识库/公众号文章/Claude Code工具（微信公众号版）.md",
-    "知识库/公众号文章/Loop 机制详解：什么时候该让 AI 自己循环干活.md",
-    "知识库/知识沉淀/Function Call 笔记.md",
-    "知识库/公众号文章/🧠 Claude Code 记忆机制.md",
-    "知识库/公众号文章/Skill 不是提示词：Claude Code 和 Codex 里的 Skill 到底怎么加载？.md",
-    "知识库/小林大模型视频学习总结/02 之Claude code工具系统.md",
-    "知识库/优秀的github",
-    "知识库/知识沉淀",
-    "未命名.base",
-    "知识库/炼丹炉/文章",
-    "知识库/炼丹炉",
-    "知识库/公众号文章"
+    "未命名.canvas"
   ]
 }
