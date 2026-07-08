@@ -34,7 +34,7 @@ CLAUDE_SESSION_ID
 2. 动态加载新发现的 skill 目录
 3. 如果某个 conditional skill 的 paths 匹配当前文件，就激活它
 
-举例：react-review skill 必须在 tsx 文件加载时才被激活，仅此最开始这个 skill 不会放到可用列表中，需要在后续分析 tsx 文件时才动态激活
+举例：react-review skill 必须在 tsx 文件加载时才被激活，因此最开始这个 skill 不会放到可用列表中，需要在后续分析 tsx 文件时才动态激活
 
 ```yaml
 ---
@@ -100,24 +100,24 @@ description: Helps with releases.
 
 Claude Code 的 `SKILL.md` frontmatter 支持以下字段：
 
-| 字段 | 作用 |
-| --- | --- |
-| `name` | 展示名；多数布局下不决定 `/skill-name` 的命令名 |
-| `description` | 描述 skill 做什么、什么时候用；用于自动触发判断 |
-| `when_to_use` | 额外触发说明；会追加到 description 后 |
-| `argument-hint` | 自动补全时显示参数提示 |
-| `arguments` | 声明命名位置参数，用于 `$name` 替换 |
-| `disable-model-invocation` | 禁止模型自动调用，只允许用户手动调用 |
-| `user-invocable` | 是否在 `/` 菜单展示 |
-| `allowed-tools` | skill 激活时免确认使用的工具 |
-| `disallowed-tools` | skill 激活时移除的工具 |
-| `model` | skill 激活时临时覆盖模型 |
-| `effort` | skill 激活时临时覆盖 reasoning effort |
-| `context` | `fork` 表示在隔离 subagent 上下文运行 |
-| `agent` | `context: fork` 时指定 subagent 类型 |
-| `hooks` | 绑定到 skill 生命周期的 hooks |
-| `paths` | 限制哪些文件路径场景下可自动激活 |
-| `shell` | skill 中动态命令使用的 shell |
+| 字段                         | 作用                              |
+| -------------------------- | ------------------------------- |
+| `name`                     | 展示名；多数布局下不决定 `/skill-name` 的命令名 |
+| `description`              | 描述 skill 做什么、什么时候用；用于自动触发判断     |
+| `when_to_use`              | 额外触发说明；会追加到 description 后       |
+| `argument-hint`            | 自动补全时显示参数提示                     |
+| `arguments`                | 声明命名位置参数，用于 `$name` 替换          |
+| `disable-model-invocation` | 禁止模型自动调用，只允许用户手动调用              |
+| `user-invocable`           | 是否在 `/` 菜单展示                    |
+| `allowed-tools`            | skill 激活时免确认使用的工具               |
+| `disallowed-tools`         | skill 激活时移除的工具                  |
+| `model`                    | skill 激活时临时覆盖模型                 |
+| `effort`                   | skill 激活时临时覆盖 reasoning effort  |
+| `context`                  | `fork` 表示在隔离 subagent 上下文运行     |
+| `agent`                    | `context: fork` 时指定 subagent 类型 |
+| `hooks`                    | 绑定到 skill 生命周期的 hooks           |
+| `paths`                    | 限制哪些文件路径场景下可自动激活                |
+| `shell`                    | skill 中动态命令使用的 shell            |
 
 ### Claude Code 最佳示例
 
@@ -151,9 +151,9 @@ Review $target.
 
 Codex 官方文档中，`SKILL.md` 必须包含：
 
-| 字段 | 作用 |
-| ------------- | ----------------------------------------------- |
-| `name` | skill 名称 |
+| 字段            | 作用                          |
+| ------------- | --------------------------- |
+| `name`        | skill 名称                    |
 | `description` | 描述 skill 做什么、什么时候用；用于隐式调用判断 |
 
 示例：

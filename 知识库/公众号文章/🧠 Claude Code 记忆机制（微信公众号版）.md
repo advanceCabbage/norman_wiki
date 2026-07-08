@@ -411,7 +411,7 @@ Recalled memory
 - **reference**：外部系统入口，比如 Linear、Slack、Grafana dashboard 等。
 ##### 3.2 隐式记忆文件内容格式
 - MEMORY.md 文件中会存储所有记忆文件的索引信息
-- XXX.md 文件会记录具体内容以及name、description、type 等
+- XXX.md （具体记忆文件）会记录具体内容以及name、description、type 等
 ```
 MEMORY.md
 

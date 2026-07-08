@@ -1,0 +1,25 @@
+{
+  "schema_version": 1,
+  "session_id": "gajae_code_main_mr9bihj8_w69622xl",
+  "state": "completed",
+  "ready_for_input": true,
+  "updated_at": "2026-07-06T14:33:32.604Z",
+  "current_turn_id": null,
+  "last_turn_id": null,
+  "live": false,
+  "reason": null,
+  "source": "agent_session_event",
+  "event": "agent_end",
+  "cwd": "/Users/haoyang/Documents/项目/norman_wiki",
+  "workdir": "/Users/haoyang/Documents/项目/norman_wiki",
+  "branch": null,
+  "session_file": "/Users/haoyang/.gjc/agent/sessions/-Documents-项目-norman_wiki/2026-07-06T14-31-07-676Z_019f37d7-0a9c-7000-9760-e0d8bd3fc778.jsonl",
+  "ended_at": "2026-07-06T14:33:32.604Z",
+  "final_response": {
+    "text": "我已查阅 gjc 的官方源码仓库（`github.com/Yeachan-Heo/gajae-code`），下面是基于源码的介绍。\n\n## gjc 的全称\n\n**gjc = Gajae-Code**（CLI 命令名 `gjc`，npm 包名 `gajae-code` / `@gajae-code/coding-agent`）。\n\n- \"Gajae\"（가재）是韩语\"甲壳类/蟹\"的意思，所以官方吉祥物和主题都是甲壳类（暗色 `red-claw` 红螯、亮色 `blue-crab` 蓝蟹）。\n- 缩写 GJC 取自 **G**a**j**ae **C**ode 三个字母。（来源：`README.md`、`packages/coding-agent/package.json` 的 `bin: { \"gjc\": ... }`）\n\n## gjc 是什么\n\n它是一个**外挂式编码智能体运行器（coding-agent harness）**，而不是 Codex CLI / Claude Code / OpenCode 的插件。你在自己的仓库或 worktree 里启动它，它给 agent 提供一套小而明确的工作流：\n\n```text\ndeep-interview -> ralplan -> ultragoal\n                         └─ 需要时用 team 并行执行\n```\n\n核心理念（`README.md` \"Core capabilities\"）：\n- **先访谈再猜**：`deep-interview` 把模糊需求转成具体规格\n- **先规划再改码**：`ralplan` 在动代码前评审方案\n- **带证据执行**：`ultragoal` 跟踪目标、修订、校验、完成证据\n- **需要时并行**：`team` 用 tmux worker 协调大任务\n- **外部可审查**：从指定 repo/worktree 运行，不打补丁进别的 agent\n\n## 主要功能\n\n**1. 四个默认工作流 Skill**（`/skill:<name>` 或原生 CLI）\n\n| Skill | 作用 |\n|---|---|\n| `deep-interview` | 澄清模糊需求，产出 `.gjc/specs/` 规格 |\n| `ralplan` | 规划+架构师/批评者共识，产出 `.gjc/plans/`（待批准后才执行） |\n| `ultragoal` | 持久化目标账本 `.gjc/ultragoal/`，跨长任务追踪 checkpoint/证据 |\n| `team` | tmux 后端多 worker 协调执行 + 验证通道 |\n\n**2. 四个内置角色 Agent**（task 子代理调用）\n- `executor` 有界实现/重构/修复\n- `architect` 只读架构与代码评审\n- `planner` 只读排序与验收标准\n- `critic` 只读计划批判\n\n**3. 研究与桌面控制**\n- `gjc rlm` — 研究/REPL 模式，Jupyter 风格会话，持久 Python 内核，产出 `.gjc/rlm/<session>/notebook.ipynb` + `report.md`\n- `computer-use` — 实验性桌面控制（截图+鼠标键盘），通过设置/工具注册开关\n\n**4. 执行环境**\n- `gjc` 直接在当前 checkout 跑\n- `gjc --tmux` tmux 后端 leader 会话\n- `gjc --tmux --worktree <name>` 隔离 worktree 做可审查/风险性工作\n- 可与 Codex/Claude Code/OpenCode/Claw Code **并存**，不做替换\n\n**5. 移动通知**\n- 配置一次的通知 SDK + 托管版 Telegram 守护进程（`gjc daemon`）\n- 通用 `action_needed`/`reply` 协议，可接 Telegram/Discord/Slack/本地工具，不用抓终端输出\n\n**6. 多模型供应商**\n- 支持 Anthropic / OpenAI(Codex) / Google(Gemini) / xAI(Grok) 等\n- `--mpreset <name>` 模型 profile，`~/.gjc/config.yml` 配重试预算\n\n**7. 外部控制**\n- `gjc --mode rpc` 作为子进程 worker\n- Bridge/HTTPS 面，外部 bot 通过 RPC/Bridge 驱动而非滚动屏抓取\n\n**8. 其他实用面**\n- `gjc skills list / read`、`gjc setup defaults` 管理内置 skill\n- 会话管理、`gjc stats` 统计\n- 5 套 TUI 主题（red-claw / blue-crab / claude-code / codex / opencode）\n- `gjc completion inshellisense --install` shell 补全\n- 图片输入：`gjc @screenshot.png \"...\"` 或剪贴板粘贴\n\n## 安装与快速开始\n\n```sh\nbun install -g gajae-code        # 安装\ngjc                              # 当前目录直接跑\ngjc --tmux                       # tmux 后端\ngjc --tmux --worktree my-task    # 隔离 worktree\n```\n\n支持平台：Linux x64/arm64、Windows x64、macOS arm64/x64。\n\n---\n\n需要注意：项目自己标注是 **experimental / beta**（`README.md` 第 27 行），建议重要产出前校验结果。如果你想从某个具体功能（比如 ralplan 怎么用、或怎么配多模型）深入，我可以继续展开。",
+    "format": "markdown",
+    "source": "agent_end",
+    "artifact_path": null,
+    "truncated": false
+  }
+}
