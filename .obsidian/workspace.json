@@ -55,12 +55,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "知识库/项目总结/基于简历的问题猜想/基于团队智能客服助手项目可能的提问.md",
+                "file": "知识库/项目总结/面试笔记/Agent相关面试题.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "基于团队智能客服助手项目可能的提问"
+              "title": "Agent相关面试题"
             }
           }
         ],
@@ -121,7 +121,7 @@
       }
     ],
     "direction": "horizontal",
-    "width": 382.5
+    "width": 274.5
   },
   "right": {
     "id": "44586ca62a0726bd",
@@ -239,11 +239,16 @@
       "claude-sidebar:New Claude Tab": false
     }
   },
-  "active": "1cdfdb71f116154d",
+  "active": "bdcd6e5480e8e69f",
   "lastOpenFiles": [
+    "知识库/项目总结/面试笔记/RAG相关面试题.md",
+    "知识库/项目总结/面试笔记/Agent相关面试题.md",
+    "知识库/项目总结/面试笔记/面试公众号.md",
+    "知识库/项目总结/面试笔记",
+    "知识库/复习日记/0710.md",
+    "知识库/项目总结/基于简历的问题猜想/基于团队智能客服助手项目可能的提问.md",
     "知识库/项目总结/基于简历的问题猜想",
     "知识库/项目总结/智能客服/RAG在终端前端的应用实践.md",
-    "知识库/项目总结/基于简历的问题猜想/基于团队智能客服助手项目可能的提问.md",
     "知识库/待调研/实现github每周前10hub分享.md",
     "知识库/收藏箱/RepoPrompt CE.md",
     "知识库/收藏箱/用AI Agent做微服务系统设计.md",
@@ -258,7 +263,6 @@
     "知识库/待调研/superpower和Grill with doc的区别.md",
     "知识库/收藏箱/【精】Loop Engineering又是啥？一文讲清企业Agent落地的四层工程进化论.md",
     "知识库/收藏箱/【精】一文读懂Harness Engineering.md",
-    "知识库/复习日记/0710.md",
     "知识库/复习日记",
     "知识库/知识沉淀/Function Call 笔记.md",
     "知识库/小林大模型视频学习总结/03-第三周 openclaw.md",
@@ -270,8 +274,6 @@
     "知识库/项目总结/自动化测试工作流/MSI端到端智能测试应用实践.md",
     "知识库/项目总结/自动化测试工作流",
     "知识库/项目总结/智能客服",
-    "知识库/项目总结/文档一致性调研文档/Serena 原理揭秘.md",
-    "知识库/项目总结/文档一致性调研文档/Continue原理揭秘.md",
     "图片/f86096cf-e9aa-4f41-8768-9b8711ce4033.png",
     "图片/c671a21d-fd96-415a-a83d-4356ed0f17d9.png",
     "图片/a19bd6de-b6ba-41d8-b09d-59a47b02ff48.png",
@@ -284,8 +286,6 @@
     "知识库/skills/github-weekly-top10/scripts",
     "知识库/skills/github-weekly-top10",
     "知识库/skills",
-    "知识库/优秀的github",
-    "知识库/知识沉淀",
-    "未命名.base"
+    "知识库/优秀的github"
   ]
 }
