@@ -4,21 +4,63 @@
     "type": "split",
     "children": [
       {
-        "id": "aedfe5a7102f29f8",
+        "id": "832596f6fe9aba97",
         "type": "tabs",
         "children": [
           {
-            "id": "29d7a70c046e7a6f",
+            "id": "bdcd6e5480e8e69f",
             "type": "leaf",
             "state": {
               "type": "markdown",
               "state": {
-                "file": "知识库/项目总结/自动化测试工作流/Untitled.md",
+                "file": "知识库/项目总结/基于简历的问题猜想/基于openClaw的MSI端到端智能测试工作流.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "Untitled"
+              "title": "基于openClaw的MSI端到端智能测试工作流"
+            }
+          },
+          {
+            "id": "d18141591e3da6e6",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "知识库/项目总结/自动化测试工作流/MSI端到端智能测试应用实践.md",
+                "mode": "source",
+                "source": false
+              },
+              "icon": "lucide-file",
+              "title": "MSI端到端智能测试应用实践"
+            }
+          },
+          {
+            "id": "72b09acb9f9a58dd",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "知识库/项目总结/智能客服/RAG在终端前端的应用实践.md",
+                "mode": "source",
+                "source": false
+              },
+              "icon": "lucide-file",
+              "title": "RAG在终端前端的应用实践"
+            }
+          },
+          {
+            "id": "422c07e1957fe186",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "知识库/项目总结/文档代码一致性智能检测工具.md",
+                "mode": "source",
+                "source": false
+              },
+              "icon": "lucide-file",
+              "title": "文档代码一致性智能检测工具"
             }
           }
         ]
@@ -44,7 +86,7 @@
                 "autoReveal": false
               },
               "icon": "lucide-folder-closed",
-              "title": "Files"
+              "title": "文件列表"
             }
           },
           {
@@ -78,7 +120,7 @@
       }
     ],
     "direction": "horizontal",
-    "width": 300
+    "width": 274.5
   },
   "right": {
     "id": "44586ca62a0726bd",
@@ -156,23 +198,23 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "知识库/项目总结/自动化AI研发工作流.md",
+                "file": "知识库/待学习/学习计划.md",
                 "followCursor": false,
                 "showSearch": false,
                 "searchQuery": ""
               },
               "icon": "lucide-list",
-              "title": "自动化AI研发工作流 的大纲"
+              "title": "学习计划 的大纲"
             }
           },
           {
-            "id": "396ecf12660b65e5",
+            "id": "dd96e453563905bd",
             "type": "leaf",
             "state": {
-              "type": "advanced-tables-toolbar",
+              "type": "vault-terminal",
               "state": {},
-              "icon": "spreadsheet",
-              "title": "Advanced Tables"
+              "icon": "bot",
+              "title": "Claude"
             }
           }
         ],
@@ -185,64 +227,64 @@
   },
   "left-ribbon": {
     "hiddenItems": {
-      "switcher:Open quick switcher": false,
-      "graph:Open graph view": false,
-      "canvas:Create new canvas": false,
-      "daily-notes:Open today's daily note": false,
-      "templates:Insert template": false,
-      "command-palette:Open command palette": false,
-      "bases:Create new base": false,
-      "table-editor-obsidian:Advanced Tables Toolbar": false
+      "table-editor-obsidian:Advanced Tables Toolbar": false,
+      "switcher:打开快速切换": false,
+      "graph:查看关系图谱": false,
+      "canvas:新建白板": false,
+      "daily-notes:打开/创建今天的日记": false,
+      "templates:插入模板": false,
+      "command-palette:打开命令面板": false,
+      "bases:新建数据库": false,
+      "claude-sidebar:New Claude Tab": false
     }
   },
-  "active": "29d7a70c046e7a6f",
+  "active": "bdcd6e5480e8e69f",
   "lastOpenFiles": [
-    "知识库/项目总结/基于简历的问题猜想/基于openClaw的MSI端到端智能测试工作流.md",
-    "知识库/项目总结/自动化测试工作流/Untitled.md",
-    "知识库/项目总结/基于简历的问题猜想/基于团队智能客服助手项目可能的提问.md",
-    "知识库/项目总结/自动化测试工作流/EC 用例评审 — 设计规则速查表.md",
-    "知识库/项目总结/自动化测试工作流/评审EC用例SKill.md",
-    "知识库/项目总结/自动化测试工作流/评审可执行测试用例SKill.md",
-    "知识库/项目总结/面试笔记/面试公众号.md",
-    "知识库/项目总结/面试笔记/RAG相关面试题.md",
-    "知识库/项目总结/面试笔记/Agent相关面试题.md",
-    "知识库/项目总结/面试笔记",
     "知识库/项目总结/自动化测试工作流/MSI端到端智能测试应用实践.md",
-    "知识库/项目总结/基于简历的问题猜想",
-    "知识库/收藏箱/【精】一文读懂Harness Engineering.md",
-    "知识库/收藏箱/【精】Loop Engineering又是啥？一文讲清企业Agent落地的四层工程进化论.md",
-    "知识库/待调研/实现github每周前10hub分享.md",
-    "知识库/复习日记/0710.md",
-    "知识库/复习日记",
-    "Pasted image 20260709161302.png",
-    "知识库/项目总结/自动化测试工作流/生成测试用例SKill.md",
-    "知识库/项目总结/自动化AI研发工作流.md",
-    "知识库/项目总结/KNB桥转MSI桥转码工具.md",
-    "知识库/项目总结/Untitled.md",
+    "知识库/项目总结/基于简历的问题猜想/基于openClaw的MSI端到端智能测试工作流.md",
+    "知识库/项目总结/基于简历的问题猜想/基于团队智能客服助手项目可能的提问.md",
+    "知识库/项目总结/智能客服/RAG在终端前端的应用实践.md",
+    "知识库/项目总结/基于简历的问题猜想/基于API文档与代码一致性智能检测工具.md",
+    "知识库/项目总结/基于简历的问题猜想/基于容器桥转MSI桥转码工具.md",
     "知识库/项目总结/文档代码一致性智能检测工具.md",
+    "知识库/项目总结/文档一致性调研文档/Serena 原理揭秘.md",
+    "知识库/项目总结/文档一致性调研文档/Continue原理揭秘.md",
+    "知识库/项目总结/文档一致性调研文档/LSP与Serena.md",
     "知识库/项目总结/文档一致性调研文档/智能文档校准工具方案调研.md",
     "知识库/项目总结/文档一致性调研文档/智能文档校准工具方案.md",
-    "知识库/待调研/腾讯有一篇关于loop engineer的文章.md",
-    "知识库/项目总结/文档一致性调研文档/LSP与Serena.md",
     "知识库/项目总结/文档一致性调研文档/【精】 业内外CodeBase原理分析.md",
-    "知识库/项目总结/文档一致性调研文档/Continue原理揭秘.md",
-    "图片/c671a21d-fd96-415a-a83d-4356ed0f17d9.png",
-    "图片/0c3346c1-cb62-43f3-bafc-cb0b9e8c74b8.png",
-    "图片/80ccf428-4f8c-49ff-ab76-7f8c97eb4448.png",
-    "图片/a19bd6de-b6ba-41d8-b09d-59a47b02ff48.png",
-    "图片/6507d842-f929-4992-9a76-6a729d2ceafa.png",
-    "图片/1628ccde-4489-4129-ba92-5dd6becf6112.png",
-    "图片/5e570feb-485c-463a-8b44-91df744ea1d3.png",
-    "图片/1b7145b4-2c5a-4cfc-af17-82c8bc0fd09b.png",
-    "图片/74a32fab-d5fc-46ef-9590-66a404d1a95d.png",
-    "知识库/项目总结/文档一致性调研文档/Serena 原理揭秘.md",
-    "知识库/项目总结/智能客服",
+    "知识库/项目总结/自动化测试工作流/Untitled.md",
+    "知识库/项目总结/自动化测试工作流/评审可执行测试用例SKill.md",
+    "知识库/项目总结/自动化测试工作流/评审EC用例SKill.md",
+    "知识库/项目总结/自动化测试工作流/EC 用例评审 — 设计规则速查表.md",
+    "知识库/项目总结/自动化测试工作流/评审测试用例SKill.md",
+    "知识库/小林大模型视频学习总结/02-第二周 Claude Code核心架构与实现原理.md",
+    "知识库/项目总结/面试笔记/Agent相关面试题.md",
+    "知识库/项目总结/面试笔记/RAG相关面试题.md",
+    "知识库/项目总结/面试笔记/面试公众号.md",
+    "知识库/项目总结/面试笔记",
+    "知识库/复习日记/0710.md",
+    "知识库/项目总结/基于简历的问题猜想",
+    "知识库/待调研/实现github每周前10hub分享.md",
+    "知识库/收藏箱/RepoPrompt CE.md",
+    "知识库/收藏箱/用AI Agent做微服务系统设计.md",
+    "知识库/复习日记",
+    "Pasted image 20260709161302.png",
+    "图片/Pasted image 20260707145102.png",
     "知识库/项目总结/自动化测试工作流",
-    "知识库/知识沉淀/小技巧",
-    "知识库/知识沉淀",
-    "知识库/小林大模型视频学习总结",
-    "知识库/公众号文章",
-    "知识库/优秀的github",
-    "未命名.canvas"
+    "知识库/项目总结/智能客服",
+    "图片/f86096cf-e9aa-4f41-8768-9b8711ce4033.png",
+    "图片/c671a21d-fd96-415a-a83d-4356ed0f17d9.png",
+    "图片/a19bd6de-b6ba-41d8-b09d-59a47b02ff48.png",
+    "图片/8e98eaa8-416b-4388-9558-27079b918997.png",
+    "图片/80ccf428-4f8c-49ff-ab76-7f8c97eb4448.png",
+    "图片/74a32fab-d5fc-46ef-9590-66a404d1a95d.png",
+    "图片/6856f498-a217-4281-9d57-e42950dcf52f.png",
+    "图片/6507d842-f929-4992-9a76-6a729d2ceafa.png",
+    "知识库/skills/github-weekly-top10/scripts/fetch_github_weekly_top10.py",
+    "知识库/skills/github-weekly-top10/scripts",
+    "知识库/skills/github-weekly-top10",
+    "知识库/skills",
+    "知识库/优秀的github"
   ]
 }
