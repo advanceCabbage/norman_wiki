@@ -13,10 +13,10 @@
 	- 在**文件检**索阶段，采用多层提示工程架构指导 LLM 分析项目（指导 LLM 先获取概览，再深入细节，强调使用符号工具而非文本搜索）。Serena 的核心在于通过 LSP（语言服务协议）将 IDE 级别的符号分析能力赋予 LLM，进而实现高效符号索引。
 	- 智能的提示工程系统 <font color="#c0504d">TODO 查看源码</font>
 	- 完整的工具生态，50+专业工具覆盖代码分析、编辑、执行全流程
-		- 符合检索工具<font color="#c0504d">TODO 查看源码</font>
-		- 代码编辑工具
-		- 项目管理工具
-		- 执行命令工具
+		- 符号检索工具：find_implementations（查找符号的实现）、find_declaration（查看符号声明）、查找引用某符号的其他符号
+		- 代码编辑工具：read_file（阅读文件）、find_file（查找文件）、delete_lines（删除行）、replace_lines（替换行）
+		- 项目管理工具：activate_project（激活项目）、remove_project（移除项目）
+		- 执行命令工具：execute_shell_command（执行 shell 脚本）
 	- 缓存机制，缓存第一次调用初始化的项目结构信息
 - Cline 无任何前置操作<font color="#c0504d">TODO 查看源码</font>
 	- **文件检索**：
@@ -31,7 +31,87 @@
 
 **问题二**：实测效果上 Serena 相比其他两个体现出什么优势？
 - 接入成本低：无需部署向量数据库
-- 社区生态完整：Serena + Agno 框架，天然支持客户端和服务端通信界面场景 <font color="#c0504d">TODO 继续看 Agno</font>
+- 社区生态完整：Serena + Agno 框架，天然支持客户端和服务端通信界面场景
+
+**问题二细分问题一**：Serena 和 Agno 的关系与作用
+一句话定位：**Agno 是一个通用的、跟代码毫无关系的第三方 Agent 运行时框架；Serena 是一个专精代码语义检索/编辑的领域工具集。二者不是同一层面的竞争或包含关系，而是"Serena 单方面把自己接进 Agno 这个壳里"——依赖方向只有一个，Agno 完全不知道 Serena 的存在**
+
+**Agno 是什么？**
+跟 LangChain/AutoGPT 这类框架同类型的开源 Python 库，提供的是**跟具体业务领域无关的 Agent 基础设施**：
+- `Agent` 类：LLM 调用循环（组装 system message + 历史 + 工具 schema → 调模型 API → 解析 tool_use → 执行 → 循环）
+- `agno.models.*`：对 Claude/Gemini 等不同模型 provider API 的统一封装
+- `Toolkit` / `Function`：工具的抽象接口，跟 Serena 的 `Tool` 毫无关系，任何 Python 函数都能包成 `Function`
+- `AgentOS`：把一个 `Agent` 包装成 HTTP/聊天服务（带 Web UI）
+- `MemoryManager` / `SqliteDb`：对话历史持久化
+**它压根不是为代码场景设计的**——理论上你可以拿同一个 Agno `Agent` 去接一个天气查询工具、一个订票工具，跟接 Serena 的符号检索工具没有本质区别，Agno 不关心工具内部做什么。
+
+**Serena 是什么？**
+一套围绕 LSP（+可选 JetBrains 后端）构建的、**领域专精**的代码语义检索与编辑工具集，外加项目配置管理、记忆持久化、多种协议接入层（MCP/CLI/Dashboard）。它自己不具备"调用 LLM、跑对话循环"的能力——这恰恰是 Serena 一直缺的那一块
+
+|                     | Agno                           | Serena                               |
+| ------------------- | ------------------------------ | ------------------------------------ |
+| 谁调 LLM API          | ✅ 负责                           | ❌ 不涉及（除非走 Agno 这条路）                  |
+| 对话循环/多轮上下文管理        | ✅ 负责（历史存 SqliteDb）             | ❌ 不涉及                                |
+| 把工具暴露成模型能理解的 schema | ✅ 负责（`Function.from_callable`） | 提供原始 Python 函数签名+docstring 供其消费      |
+| 对外 HTTP/Web UI      | ✅ 负责（`AgentOS`）                | ❌ 不涉及（这条路径下）                         |
+| 代码语义检索（符号、引用、诊断）    | ❌ 完全不懂代码                       | ✅ 核心职责（`solidlsp`+`symbol.py`）       |
+| 代码结构感知编辑            | ❌                              | ✅ 核心职责（`code_editor.py`）             |
+| 项目配置/多语言语言服务器管理     | ❌                              | ✅ 核心职责（`ls_manager.py`/`project.py`） |
+| 跨会话知识持久化（memories）  | ❌（它有自己的对话历史，跟 memory 不是一回事）    | ✅ 核心职责                               |
+
+
+**问题三**：语言服务器、LSP、Serena 三者是什么关系
+**LSP 是协议规范（合同），语言服务器是遵守这份合同的服务端程序（每种语言一个），Serena 是这份合同的一个客户端实现（消费方）**。三者不是同一层面的东西，不能并列比较，是"规范 → 服务端 → 客户端"的三层关系
+
+**问题三细分问题一**：LSP 定义是什么？
+LSP 是微软 2016 年为 VSCode 定义的一套基于 JSON-RPC 的**标准消息格式**，规定了编辑器和"代码智能提供者"之间应该怎么对话，比如：
+- `textDocument/documentSymbol`：要符号树
+- `textDocument/definition`：要跳转定义
+- `textDocument/references`：要查引用
+LSP 本身**不含任何代码解析逻辑**，它只是规定了消息长什么样、怎么编号、怎么应答。这解决的是经典的 **M×N 问题**：在 LSP 之前，每个编辑器（VSCode/Vim/Emacs…）要支持每种语言（Python/Java/C++…）都得单独写一个插件，M 个编辑器 × N 种语言 = M×N 份集成代码；有了 LSP 之后，每个编辑器只需实现一次 LSP 客户端，每种语言只需实现一次 LSP 服务端，变成 M+N
+
+**问题三细分问题二**：语言服务器（Language Server）—— 协议的服务端实现，一种语言一个
+真正"懂"某种语言语法、类型系统、编译规则的是这些独立进程：Python 的 `pyright`、C/C++ 的 `clangd`、Java 的 `jdtls`（如上一轮讨论的）。它们各自内嵌了该语言的解析器/类型检查器，把分析结果按 LSP 规定的消息格式吐出来。**它们互相之间毫无关联**，pyright 不知道 clangd 的存在，也不知道自己被谁调用（VSCode？Neovim？还是 Serena）——只要调用方按 LSP 规范发消息，它就能响应
+
+**问题三细分问题三**：Serena —— LSP 的一个客户端实现
+这正是你问过的 `src/solidlsp` 目录的角色：它是 Serena 自己实现的一套 **LSP 客户端框架**（`ls.py` 里的 `SolidLanguageServer` 类），职责和 VSCode 内置的 LSP 客户端是**同一层面的东西**——负责启动语言服务器子进程、维护 JSON-RPC 通道、发请求收响应、管理文档同步状态。区别只是 VSCode 把结果渲染成 UI（跳转、悬浮提示），Serena 把结果转成给 LLM 用的工具返回值（JSON 字符串）
+这也是为什么 `find_symbol` / `get_symbols_overview` 这些 Serena 工具背后调的是 `SolidLanguageServer.request_document_symbols()`（`ls.py:2076`），本质是发了一次 `textDocument/documentSymbol` 请求；
+
+|            | LSP                 | 语言服务器（pyright/clangd/jdtls…）                        | Serena（solidlsp）                  |
+| ---------- | ------------------- | --------------------------------------------------- | --------------------------------- |
+| 本质         | 协议规范（JSON-RPC 消息格式） | 遵守协议的服务端程序，一种语言一个                                   | 遵守协议的客户端实现，一份实现服务 71 种语言          |
+| 类比         | HTTP 协议             | 某个网站的后端服务器                                          | 浏览器/curl（协议的消费方）                  |
+| 谁写的        | 微软牵头的开放标准           | 各语言社区各自维护（pyright=微软，clangd=LLVM，jdtls=Eclipse 基金会） | Serena/oraios 团队自己实现              |
+| Serena 的角色 | 遵守者                 | 被调用的外部进程                                            | LSP 客户端 + 上层语义封装（symbol.py/tools） |
+
+Serena 功能汇总：
+- **支持多种方式提供**：MCP、Agno Agent 等
+- **Agent 核心调度能力**：
+	- 工具注册、项目生命周期（激活/切换/关闭）
+	- 给 Claude Code 这类支持 hook 的宿主提供 `PreToolUse` / `SessionStart` 处理器——比如强制拦截模型对代码文件调用内置 `Read` / `Grep`，光靠 prompt 文字劝说不够时靠 hook 硬拦
+- **系统提示词拼接**：
+- **语义代码检索与编辑（核心卖点）**
+	- Serena 把 LLM 对代码的操作从'文本层面的 grep/sed'升级成'符号层面的语义检索与编辑'，核心是自己实现了一层 LSP 客户端框架，在这之上包了一套面向 Agent 的符号抽象
+	- **核心数据模型**：`Symbol` 抽象 + `name_path` 寻址；模型不需要知道符号在文件里的精确坐标，只要给一个"大概的名字层级"，剩下交给匹配器
+	- **检索链路：分层递进，尽量少读全文件**：`get_symbols_overview`（只看文件顶层符号骨架）→ 只精确读要用的那一个符号 → `find_referencing_symbols`（查引用关系）；**关键效率设计——两层磁盘缓存**：一层缓存 LSP 原始响应，一层缓存转换后的结构化符号树，都按**文件内容哈希**做失效判断，并且是持久化到磁盘的。这意味着同一份代码只要没改过，哪怕进程重启、语言服务器重启，也不需要重新问一次 LSP。这是"token 效率"和"响应速度"两个维度的双重优化，模型不用读整份源码，Serena 也不用每次都重新解析
+	-  LSP 不给源码文本，Serena 自己切片、 编辑链路：只用 LSP 定位，编辑动作 Serena自己做
+
+整理为一张表格记忆：
+
+|       | 传统 grep/sed    | Serena 的语义方式                       |     |
+| ----- | -------------- | ---------------------------------- | --- |
+| 定位    | 字符串/正则匹配，容易误伤  | LSP 语义索引，精确到符号级别                   |     |
+| 读取成本  | 经常要整文件读入上下文    | 先概览骨架，再按需精确读取单个符号                  |     |
+| 重复检索  | 每次都要重新扫描       | 内容哈希 + 磁盘持久化缓存，命中率高                |     |
+| 编辑安全性 | 手工处理格式/空行，容易出错 | 结构感知的插入逻辑自动处理                      |     |
+| 重命名   | 全局替换不安全        | 走真正的 LSP 重构协议，跨文件正确                |     |
+| 多后端适配 | 无              | `Symbol` 抽象统一 LSP / JetBrains 两套实现 |     |
+-  **LSP 客户端框架（多语言后端）**：自研 LSP 客户端（`SolidLanguageServer`），管理 71 种语言各自的 language server 子进程生命周期、JSON-RPC 通信、依赖自动下载（如 clangd 的二进制、jdtls 的 JVM+Lombok+launcher）
+- **支持 传统文件/系统工具**：read_file、replace_content、execute_shell_command 等
+- **项目状态与知识持久化**：对应.serena/project.yml 和 .serena/memories
+- **工具执行**
+	- 非符号类工具：Serena 执行并将工具结果返回给 LLM，例如：read_file、execute_shell_command、write_memory
+	- 符号类工具：Serena 调用对应的语言服务器接口，语言服务器实际执行并返回结果，Serena 将结果整理为大模型期望的格式，再将结果返回给 LLM
 
 **问题四**：LSP 的原理是什么？为什么可以精确找到对应的代码文件
 - **语义级别的代码理解**：传统文本搜索只能匹配字符串，LSP 可实现符号级别查找。```symbol_manager.find_by_name("ClassName.method_name")  # 精确定位到类的方法```
@@ -51,7 +131,9 @@
 
 **问题八**：有创建日志机制吗？用于跟踪用户的输入，观测效果是否符合预期
 
-**问题九**：Cline 消耗大量 Token 的原因是什么？和检索策略有关系吗？
+<font color="#c0504d">**问题九**：Cline 消耗大量 Token 的原因是什么？和检索策略有关系吗？</font>
+
+<font color="#c0504d">**问题十**：Claude code 的 codeBase 是如何实现的？</font>
 
 ## 二、AI 梳理的问题
 
@@ -107,11 +189,12 @@
 
 1. "预初始化记忆文件"具体是什么内容？这个缓存要花多久建好，代码仓更新之后缓存是不是就过期了，过期了怎么处理？
 	A：「预初始化的记忆文件」包含的内容为：
-	- project.yml 文件：包括：projectName：msi-android、 language：java、read_only:true、ignored_paths:[]、excluded_tools:[]、initial_prompt
-	- memories 文件夹：
+	- project.yml 文件（纯配置序列化与 LSP 无关）：包括：projectName：msi-android、 language：java、read_only:true、ignored_paths:[]、excluded_tools:[]、initial_prompt
+	- memories 文件夹（模型写入的，是否用到 LSP 取决于模型怎么探索项目）：
 		- code_style_and_conventions.md:代码风格约定、注解使用（@msiApiMethod）
 		- project_overview.md : 项目描述、项目文件结构、技术栈
 		- suggested_commands.md: 项目涉及的命令，构建命令、测试用例、Git 相关命令
+	- cache 文件夹：用于存储与 LSP 交互的缓存信息
 - 从以上文件来看，记忆文件中主要是包含这个项目的通用型描述，它不太会随着开发增加一些 API 或者实际功能的开发而变更。因此，它的变更频率是极低的。
 
 **问题五**： 技术方案第 4 条：质量优化
