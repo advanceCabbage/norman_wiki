@@ -237,17 +237,17 @@ def _wechat_code_block(lines, lang="text"):
     if not lang:
         lang = "text"
     code_lines = lines or [""]
-    line_numbers = "".join(
-        f'<span style="display:block;">{idx}</span>'
-        for idx in range(1, len(code_lines) + 1)
-    )
     code = "".join(
-        '<code style="display:block;white-space:pre-wrap;'
-        'font-family:Consolas,Monaco,monospace;font-size:14px;'
-        'line-height:1.75;color:#333;background:transparent;'
-        'padding:0;margin:0;border:none;">'
-        f'{_esc_code_line(line)}</code>'
-        for line in code_lines
+        '<span style="display:block;clear:both;padding:0;margin:0;">'
+        '<span style="display:block;float:left;width:28px;padding-right:10px;'
+        'color:#c8c8c8;text-align:right;font-size:14px;line-height:1.75;">'
+        f'{idx}</span>'
+        '<code style="display:block;white-space:pre-wrap;overflow-wrap:anywhere;'
+        'word-break:break-word;font-family:Consolas,Monaco,monospace;font-size:14px;'
+        'line-height:1.75;color:#333;background:transparent;padding:0;margin:0 0 0 38px;'
+        'border:none;">'
+        f'{_esc_code_line(line)}</code></span>'
+        for idx, line in enumerate(code_lines, 1)
     )
     return (
         '<pre class="code-snippet_nowrap" '
@@ -256,9 +256,6 @@ def _wechat_code_block(lines, lang="text"):
         'border-radius:4px;padding:14px 12px;margin:18px 0;'
         'white-space:normal;overflow-x:auto;font-size:14px;'
         'line-height:1.75;font-family:Consolas,Monaco,monospace;">'
-        '<span class="line-number" style="display:block;float:left;'
-        'color:#c8c8c8;text-align:right;padding-right:12px;'
-        f'font-size:14px;line-height:1.75;">{line_numbers}</span>'
         f'{code}</pre>'
     )
 
