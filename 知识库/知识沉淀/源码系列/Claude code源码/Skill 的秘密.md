@@ -57,7 +57,7 @@ Skill 工具调用结果:
 这是实现渐进式加载的关键。
 ## 2. 同名 Skill 的加载逻辑、以及匹配逻辑
 
-Claude Code 的 skill 来源不只有用户级和项目级。它还有内置 bundled skill、内置插件 skill、管理员托管 skill、额外目录 skill、插件 skill、旧版 commands 兼容项等。加载时按“真实文件路径”去从重，路径不相同的同名 skill 都会被加载。加载后它们都会被统一转换成 prompt command。真正调用时，不是根据“用户级/项目级”这个概念临时查找，而是在统一 command 列表里按顺序匹配第一个 name / alias 命中的 command。按照 command 中的顺序，同名 skill 加载的优先级为 `bundled > builtin plugin > managed > user > project`，因此需要特别注意用户级和项目级同名时会取用户级 skill
+Claude Code 的 skill 来源不只有用户级和项目级。它还有内置 bundled skill、内置插件 skill、管理员托管 skill、额外目录 skill、插件 skill、旧版 commands 兼容项等。加载时按“真实文件路径”去从重，路径不相同的同名 skill 都会被加载。加载后它们都会被统一转换成 prompt command。真正调用时，不是根据“用户级/项目级”这个概念临时查找，而是在统一 command 列表里按顺序匹配第一个 name / alias 命中的 command。按照 command 中的顺序，同名 skill 加载的优先级为 `bundled > builtin plugin > managed > user > project`，**因此需要特别注意用户级和项目级同名时会取用户级 skill**
 
 ## 3. Skill 的数据模型
 
@@ -144,7 +144,7 @@ repo/
     src/user.ts
 ```
 
-启动时可能只加载项目根部 Skill。当模型读取：
+**启动时可能只加载项目根部 Skill**。当模型读取：
 
 ```text
 packages/api/src/user.ts

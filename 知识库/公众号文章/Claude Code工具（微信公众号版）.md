@@ -204,10 +204,7 @@ Anthropic API
 然后 Claude Code 会调用：
 
 ```ts
-mapToolResultToToolResultBlockParam(
-  result,
-  toolUseID
-);
+mapToolResultToToolResultBlockParam(result, toolUseID);
 ```
 
 把结果转换成 Anthropic 消息协议里的 `tool_result` block。
