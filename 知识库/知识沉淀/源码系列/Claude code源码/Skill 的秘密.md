@@ -229,7 +229,7 @@ ${CLAUDE_SKILL_DIR}
 
 #### allowed-tools
 
-`allowed-tools` 表示这个 Skill 运行时需要哪些工具权限。
+`allowed-tools` 表示这个 Skill 运行时需要哪些工具权限，**仅仅是 skill 运用过程中自动批准工具执行，无需人工审核**。
 
 Skill 被调用后，系统会把这些工具加入当前上下文的允许规则中，使后续执行可以使用这些工具。
 

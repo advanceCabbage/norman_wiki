@@ -17,7 +17,7 @@ Claude Code 源码里，**常规 Subagent** 对应父子型，**Coordinator 模�
 - 防止子 agent 调用不该调用的工具。例如：子 agent 调用创建 子agent 的工具，导致 agent 嵌套
 #### 3.2 两个隔离的维度
 ##### 3.2.1  **上下文隔离**（重点）
-Claude code 主 agent 与子 agent 的上下文即不是完全共享也不是完全隔离，原因在于两个极端都存在问题，举例：
+Claude code 主 agent 与子 agent 的上下文**即不是完全共享也不是完全隔离**，原因在于两个极端都存在问题，举例：
 - **完全共享的劣势**：子 agent 的操作污染父 agent 的视图。父 agent 已经读过 file.ts 的前 100 行，子 agent 拿过去接着读到 200 行。这下父 agent 那边「文件读到哪了」的缓存被刷成 200 了，下次它要读这文件就以为自己已经读过 200 行了，直接跳过
 - **完全新建的劣势**：子 agent 跟主 agent 完全脱节。用户按 Ctrl+C 想中止整个任务，主线程把中止信号广播出去，结果子 agent 因为是全新上下文收不到这个信号，对外面发生啥一无所知，自顾自继续跑
 Claude Code 采取了四个决策来折中处理：
@@ -72,17 +72,18 @@ export type LocalAgentTaskState = TaskStateBase & {
 ```
 - agentId：是子 agent 的唯一标识
 - pendingMessages：父 agent 给子 agent 派发的任务数组
+- isBackgrounded：是否已经转后台
 
 **然后确定父->子通信逻辑**
 - **第一步：父 agent 往子 agent 信箱扔字条**：父 agent 调用 sendMessage 工具，往子 agent 的pendingMessages 末尾追加一条消息
-- **第二步：子在循环边界自己捡字条**：子 agent 在每轮**工具调用结束**后，去的pendingMessages 中获取新消息，把新消息作为「用户消息」注入自己的对话历史中，然后开始下一轮 LLM 调用
+- **第二步：子在循环边界自己捡字条**：子 agent 在每轮**工具调用结束**后，去pendingMessages 中获取新消息，把新消息作为「用户消息」注入自己的对话历史中，然后开始下一轮 LLM 调用
 - **特殊场景子 agent 停止运行时**：从磁盘上那份已经保存的对话 transcript 里，把子 agent 的完整对话历史恢复出来，拼上新消息，让子 agent重新跑起来
 
 **最后确定子->父通信逻辑**
 **核心思路**：子 agent 将完成的内容，拼成一段 XML，伪装成一条用户消息，塞给父 agent 的对话历史。它伪装成用户消息，**天然地复用了 agentic loop 的处理逻辑**。父 agent 不需要额外的状态机去「等通知」，它就像收到一条新的用户输入一样处理。（**非常好的设计点**）
 
 **总结**
-- 实际子 agent 运行时，默认是**前台模式**，当处于前台模式时，主 agent 会阻塞等待子 agent 返回结果。通过配置环境变量CLAUDE_AUTO_BACKGROUND_TASKS 可设置自动**前台转后台模式**，当处于自动转后台模式时，主 agent 最多阻塞等待 2 分钟，2 分钟子 agent 仍为返回内容，将其切换为后台模式，此时子 agent 完成任务后会采用子->父通信逻辑。**后台模式**：主agent不等待，发完消息直接走。关于如何触发后台模式：1.模型调用时显示指定后台运行子agent；2.自定义agent中定义固定后台运行；3.满足前台转后台条件
+- 实际子 agent 运行时，默认是**前台模式**，当处于前台模式时，主 agent 会阻塞等待子 agent 返回结果。通过配置环境变量CLAUDE_AUTO_BACKGROUND_TASKS 可设置自动**前台转后台模式**，当处于自动转后台模式时，主 agent 最多阻塞等待 2 分钟，2 分钟子 agent 仍未返回内容，将其切换为后台模式，此时子 agent 完成任务后会采用子->父通信逻辑。**后台模式**：主agent不等待，发完消息直接走。关于如何触发后台模式：1.模型调用时显示指定后台运行子agent；2.自定义agent中定义固定后台运行；3.满足前台转后台条件
 ## 五、Fork Subagent 省钱又省延迟的隐藏大招
 #### 5.1 背景介绍
 Claude code 的 system prompt 长度是**上万 Token**，里面塞了大量的工具说明、规范约定、用户上下文。
@@ -164,15 +165,6 @@ Parallelism is your superpower. Workers are async. Launch independent workers co
 | Fork Subagent | 多个任务依赖当前完整对话、已读文件和已有推理，需要从同一上下文点并行分叉 | 已完成架构阅读后，同时分叉：一个查 bug 根因、一个评估改法、一个找测试缺口         |
 | Coordinator   | 大型、多阶段、可并行的工程任务，需要持续拆解、追踪、汇总和调整分工    | “重构支付模块：先调研，再设计，再分模块实现，再跑测试和审查”；“并行排查多个服务的线上问题” |
 ## 九、CC 定义的六类子 agent 类型
-| 类型名 `subagent_type` | 作用                                         | 工具差异 |
-| ------------------- | ------------------------------------------ | ---- |
-| `general-purpose`   |                                            |      |
-| `statusline-setup`  | 专门配置 Claude Code 状态栏                       |      |
-| ``                  | 只读代码探索、定位文件和调用链、收集事实                       |      |
-| ``                  | 架构设计和实施计划，输出步骤、关键文件、权衡                     |      |
-| `claude-code-guide` | 回答 Claude Code、Agent SDK、Claude API 相关使用问题 |      |
-| `verification`      | 对已完成改动做验证、测试和对抗性检查                         |      |
-| `worker`            | Coordinator 模式下的实际执行 worker，可调研、实现、验证      |      |
 - **general-purpose** 
 	- 角色：通用调研、搜索、执行多步骤任务；要求完成任务后简洁汇报
 	- 工具差异：排除子 agent 不能使用的工具，其余都能使用

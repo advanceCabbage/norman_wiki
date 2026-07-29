@@ -2,7 +2,7 @@
 本篇文档依据 grill 的作者另外一篇 writing-great-skills 文档翻译并自我吸收总结得来，原文链接：https://github.com/mattpocock/skills/blob/main/skills/productivity/writing-great-skills/SKILL.md
 ## 二、写好 skill 的要点
 #### 2.1 调用方式
-- **模型调用**：保留 description，模型可以自主发现并触发它。代价是 descripdescription 会在每轮对话都占据上下文，此时 description 是面向模型的触发词清单
+- **模型调用**：保留 description，模型可以自主发现并触发它。代价是 description 会在每轮对话都占据上下文，此时 description 是面向模型的触发词清单
 - **用户调用**：设置 disable-model-invocation：true，模型看不到 description。仅用户输入 skill 名称才能调用。代价是增加用户认知负担，人必须记住它的存在和用途，此时 descriptiodescription 是面向人的一行摘要
 #### 2.2 编写 description
 - 精简：description 内容会增加上下文负担，因此需要精简

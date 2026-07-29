@@ -4,9 +4,9 @@ Claude code在代码检索方面并没有使用RAG，而是使用Grep、Glob加R
 - 第二，Claude Code 用 Grep 加 Glob 加 Read 三件套加上派子 agent 探索的设计，本质上是把检索决策权还给 LLM 自己，配合多轮迭代循环实现精准定位
 - 第三，更深层是 Anthropic 信任 LLM 的能力，押注模型会越来越强，所以选择「不替模型做决定」的设计哲学
 
-RAG 派的潜台词是：**LLM 不够强，所以我们要用工程手段帮它把材料准备好**。chunking、embedding、向量召回，本质都是「替模型做决定」。
+RAG 派的潜台词是：**LLM 不够强，所以我们要用工程手段帮它把材料准备好**。chunking、embedding、向量召回，本质都是「替模型做决定」
 
-Claude Code 派的潜台词是：**LLM 已经足够强，工程的角色是给它准备好工具，把决策权还给它**。grep 不替模型做任何决定，它只是个工具。用还是不用、什么时候用、怎么用，全是模型说了算。
+Claude Code 派的潜台词是：**LLM 已经足够强，工程的角色是给它准备好工具，把决策权还给它**。grep 不替模型做任何决定，它只是个工具。用还是不用、什么时候用、怎么用，全是模型说了算
 ## 二、使用RAG检索代码的痛点
 - 第一，**冷启动**。grep 是毫秒级响应，开箱即用；RAG 要先建索引，分钟级冷启动，劝退一半用户。
 
@@ -97,7 +97,7 @@ Claude code默认没有安装LSP插件，需要手动安装LSP插件。以TS举�
 - 第二步：全局安装 Typescript 语言服务器，npm install -g typescript-language-server typescript
 - 第三步：Claude code会在本机启动语言服务器的进程
 
-在以下场景会Claude code会默认调用LSP的相关工具。
+在以下场景Claude code会默认调用LSP的相关工具。
 LSP 用于"已知符号、要精确定位"的场景（仅对配置了语言服务器的文件类型有效，这里是 TypeScript/JS）：
 - 已经知道某个函数/类型/变量名，想找它的定义、所有引用、调用者/被调用者
 - 想要类型信息、hover 文档

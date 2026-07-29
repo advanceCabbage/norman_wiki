@@ -32,7 +32,7 @@ Claude code 的工具系统，本质上是一套 Agent Runtime。理解 Claude c
 - isConcurrencySafe ：判断工具能不能并发执行
 - isReadOnly
 ###### 2.4 结果转换与界面展示
-- mapToolResultToToolResultBlockParam：把工具结果转成模型能接收的 tool_result
+- mapToolResultBlockParam：把工具结果转成模型能接收的 tool_result
 - renderToolUseMessage：在界面上显示“模型准备做什么”
 - renderToolResultMessage：在界面上显示“工具执行出了什么结果”
 ## 三、模型接收到的工具结构
@@ -169,6 +169,7 @@ Claude code 的 hook 包含**四大类型：command、prompt、http、agent**
 **适合场景**：在停止前检查用户要求的测试是否真的运行并通过
 
 ###### 7.5 总结
+- command：可以用于执行 shell、脚本、函数等
 - prompt：让 LLM 快速判断一个条件，轻量
 - http：交给外部服务判断或审计，适合企业策略
 - agent：让能用工具的子 agent 做复杂验证，最重但能力最强
@@ -180,6 +181,21 @@ Hooks 和 Permission 很容易混在一起，但它们不是一回事，可以�
 一个关键点是：Hook 的 allow，不等于彻底绕过 Permission。
 比如 `PreToolUse` hook 返回 allow 后，仍然不能绕过 settings 里的 deny / ask rules，也不能绕过安全检查。Permission 才是最终安全决策系统。
 
+#### 8.1 Permissions 的自定义配置示例
+
+```json
+{
+  "permissions": {
+    "allow": ["Read", "Glob", "Grep", "Bash(npm install)"],
+    "ask": ["Bash(npm publish:*)"],
+    "deny": ["Bash(rm -rf *)"],
+    "defaultMode": "default"
+  }
+}
+```
+规则格式是 `ToolName` 或 `ToolName(ruleContent)`；例如 `Bash(npm install)` 会解析为工具名 `Bash` 与规则内容 `npm install`
+可配置来源包括：用户级：`~/.claude/settings.json` 等等
+
 ## 九、一次工具执行全流程
 - 找到工具
 - 解析 inputSchema 并校验validateInput（入参）
@@ -190,3 +206,46 @@ Hooks 和 Permission 很容易混在一起，但它们不是一回事，可以�
 	- 如果允许，执行 tool.call，映射 tool_result
 - 执行 PostToolUse hooks
 - 如果工具执行异常，执行 PostToolUseFailure hooks
+
+## 十、Claude code 工具注入机制（不是全量注入）
+
+Claude Code **不会**按用户本轮自然语言意图，发送和本轮问题相关的工具。Tool Search 功能是默认打开的。但当 Tool Search 功能关闭时，Claude code 会向大模型发送全量工具的 schema。当 Tool Search 功能开启时，Claude code 会采用固定发送核心工具 + 其余工具延迟加载的策略，目的是减少工具上下文、同时保持 tools 数组稳定并提高 Prompt Cache 命中率。
+固定核心工具包括：
+- 文件与 Shell：Bash、Grep、Glob、Read 等
+- Agent 与用户交互：Agent、AskUserQuestion
+- 任务管理：`TaskCreate` 等
+- 规划:`EnterPlanMode`等
+- 网络：`WebFetch` 等
+- 代码智能：LSP
+- SKill：Skill 工具
+- **工具发现：`SearchExtraTools`（搜索延迟工具并获取其定义）、`ExecuteExtraTool`（按名称和参数执行延迟工具）**
+其余工具属于非核心工具，需要延迟加载，例如：MCP 工具（读取和列举 MCP 来源）、`TeamCreate` 等
+
+#### 10.1 模型如何发现和加载非核心工具、以及如何利用 Prompt Cache 命中率
+- 首先：固定核心工具是通过结构化方式每轮请求都发送给大模型，大模型知道固定核心工具如何使用
+- 其次：非核心工具，仅发送了工具的名称列表，未发送工具的定义、参数等信息给大模型。告知大模型延迟工具和 MCP 工具不在当前 tool list，必须先调用 SearchExtraTools，再调用 ExecuteExtraTool 执行工具
+- 然后：首次请求时，所有名称都是“新名称”，因此会注入完整延迟工具名称列表。后续请求中，如果工具池没变，不会重复注入。如果一个 MCP Server 在会话途中连接成功，新增了工具，则下一次模型请求会重新注入当前完整清单
+- 最后：非核心工具列表变化后，依旧能复用大模型服务端的 Prompt Cache，原因是：Prompt Cache 的关键是请求前缀稳定，包括：System Prompt、工具 Schema 数组、早期稳定消息前缀。因为工具 Scheme 数组依旧是固定工具因此可以利用 Prompt Cache
+
+#### 10.2 示例
+
+```javascript
+<system-reminder>
+<available-deferred-tools>
+CronCreate
+TeamCreate
+mcp__slack__send_message
+...
+</available-deferred-tools>
+IMPORTANT: The tools listed above are deferred-loading — they are NOT in your tool list. To use them, you MUST first discover a tool via SearchExtraTools, then invoke it with ExecuteExtraTool.
+
+SearchExtraTools and ExecuteExtraTool are core tools already in your tool list right now — call them directly, do NOT use Bash/Glob to find them.
+
+Steps:
+1. SearchExtraTools({"query": "select:<tool_name>"}) — discover the tool and its schema
+2. ExecuteExtraTool({"tool_name": "<name>", "params": {...}}) — invoke it with correct parameters
+</system-reminder>
+
+```
+其中 `<available-deferred-tools>` 内每行只有 非核心工具的**工具名称**，不包含完整 description、参数 schema 或 `searchHint`。因此它是轻量的，告诉模型“有 CronCreate”
+不把 CronCreate 的完整 schema 塞入 API tools 数组

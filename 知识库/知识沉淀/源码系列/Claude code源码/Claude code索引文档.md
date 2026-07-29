@@ -1,3 +1,4 @@
+> 先读 [[Claude Code 源码学习大纲]]，再按下列专题深入；跨框架比较见 [[三大 Agent 框架横向对比与面试框架]]。
 
 #### 一、Skill 加载 [[Skill 的秘密]]
 
@@ -15,4 +16,3 @@
 #### 十一、Boris 自己平时怎么用 Claude Code？ [[Boris 自己平时怎么用 Claude Code？]]
 #### 十二、Claude code架构文章
 #### 最后、CC面试题 [[CC面试题]]
-

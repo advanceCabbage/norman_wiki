@@ -299,20 +299,46 @@ def _builtin_md(md):
             lv = len(m.group(1))
             out.append(f"<h{lv}>{_inline(m.group(2))}</h{lv}>")
             i += 1; continue
-        if re.match(r"^\s*[-*+]\s+", line):
-            items = []
-            while i < n and re.match(r"^\s*[-*+]\s+", lines[i]):
-                content = _inline(re.sub(r"^\s*[-*+]\s+", "", lines[i]))
-                items.append(f"<li>{content}</li>")
-                i += 1
-            out.append("<ul>" + "".join(items) + "</ul>"); continue
-        if re.match(r"^\s*\d+\.\s+", line):
-            items = []
-            while i < n and re.match(r"^\s*\d+\.\s+", lines[i]):
-                content = _inline(re.sub(r"^\s*\d+\.\s+", "", lines[i]))
-                items.append(f"<li>{content}</li>")
-                i += 1
-            out.append("<ol>" + "".join(items) + "</ol>"); continue
+        list_match = re.match(r"^(\s*)([-*+]|\d+\.)\s+(.*)$", line)
+        if list_match:
+            def _list_indent(prefix):
+                return len(prefix.expandtabs(4))
+
+            def _is_ordered(marker):
+                return marker.endswith(".") and marker[:-1].isdigit()
+
+            def _parse_list(idx, indent, ordered):
+                items = []
+                tag = "ol" if ordered else "ul"
+                while idx < n:
+                    item_match = re.match(r"^(\s*)([-*+]|\d+\.)\s+(.*)$", lines[idx])
+                    if not item_match:
+                        break
+                    item_indent = _list_indent(item_match.group(1))
+                    item_ordered = _is_ordered(item_match.group(2))
+                    if item_indent != indent or item_ordered != ordered:
+                        break
+
+                    content = _inline(item_match.group(3))
+                    idx += 1
+                    child_match = (re.match(r"^(\s*)([-*+]|\d+\.)\s+(.*)$", lines[idx])
+                                   if idx < n else None)
+                    if child_match and _list_indent(child_match.group(1)) > indent:
+                        child_html, idx = _parse_list(
+                            idx,
+                            _list_indent(child_match.group(1)),
+                            _is_ordered(child_match.group(2)),
+                        )
+                        content += child_html
+                    items.append(f"<li>{content}</li>")
+                return f"<{tag}>{''.join(items)}</{tag}>", idx
+
+            html, i = _parse_list(
+                i,
+                _list_indent(list_match.group(1)),
+                _is_ordered(list_match.group(2)),
+            )
+            out.append(html); continue
         if line.startswith(">"):
             text = line.lstrip("> ").rstrip()
             text = re.sub(r"^\[!\w+\]\s*", "", text)  # 去掉 GitHub 提示块标记 [!NOTE] 等
@@ -366,7 +392,9 @@ TAG_STYLES = {
     "ol": "padding-left:1.4em;margin:16px 0;",
     "li": "margin:8px 0;line-height:1.75;",
     "hr": "border:none;border-top:1px solid #e6e6e6;margin:26px 0;",
-    "strong": f"color:{ACCENT};font-weight:bold;",
+    # 微信编辑器偶尔会把未显式设定 display 的 <strong> 当作块级节点，
+    # 从而将紧随其后的同一列表文本拆到下一行。
+    "strong": f"display:inline;color:{ACCENT};font-weight:bold;",
     "em": "font-style:italic;color:#555;",
     "a": f"color:{ACCENT};text-decoration:none;border-bottom:1px solid {ACCENT};",
     "img": "max-width:100%;display:block;margin:18px auto;border-radius:6px;",
