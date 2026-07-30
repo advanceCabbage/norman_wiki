@@ -34,65 +34,9 @@
               "icon": "lucide-file",
               "title": "A2A 协议开发者入门"
             }
-          },
-          {
-            "id": "58563d136803e006",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "知识库/复习日记/整体计划.md",
-                "mode": "source",
-                "source": false
-              },
-              "icon": "lucide-file",
-              "title": "整体计划"
-            }
-          },
-          {
-            "id": "1751c935a4eed14c",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "未命名 13.md",
-                "mode": "source",
-                "source": false
-              },
-              "icon": "lucide-file",
-              "title": "未命名 13"
-            }
-          },
-          {
-            "id": "4407f90db4ccedc5",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "知识库/知识沉淀/多向量数据库对比.md",
-                "mode": "source",
-                "source": false
-              },
-              "icon": "lucide-file",
-              "title": "多向量数据库对比"
-            }
-          },
-          {
-            "id": "dd28e8ac66622f74",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "知识库/项目总结/Continue 全文检索：trigram、FTS5 与 BM25.md",
-                "mode": "source",
-                "source": false
-              },
-              "icon": "lucide-file",
-              "title": "Continue 全文检索：trigram、FTS5 与 BM25"
-            }
           }
         ],
-        "currentTab": 4
+        "currentTab": 1
       }
     ],
     "direction": "vertical"
@@ -267,15 +211,28 @@
       "claude-sidebar:New Claude Tab": false
     }
   },
-  "active": "4407f90db4ccedc5",
+  "active": "1cdfdb71f116154d",
   "lastOpenFiles": [
-    "知识库/知识沉淀/源码系列/RAG系列/RAG在langchain中的使用记录.md",
-    "知识库/知识沉淀/多向量数据库对比.md",
-    "知识库/知识沉淀/多向量数据库对比",
-    "知识库/复习日记/整体计划.md",
-    "知识库/项目总结/基于简历的问题猜想/基于API文档与代码一致性智能检测工具.md",
     "未命名 13.md",
+    "知识库/复习日记/整体计划.md",
+    "未命名 10.md",
+    "未命名 11.md",
+    "未命名 9.md",
+    "未命名 8.md",
+    "未命名 7.md",
     "知识库/项目总结/Continue 全文检索：trigram、FTS5 与 BM25.md",
+    "未命名 5.md",
+    "未命名 6.md",
+    "未命名 4.md",
+    "未命名 3.md",
+    "未命名 2.md",
+    "未命名.base",
+    "未命名 1.md",
+    "未命名.md",
+    "知识库/知识沉淀/多向量数据库对比.md",
+    "知识库/知识沉淀/源码系列/RAG系列/RAG在langchain中的使用记录.md",
+    "知识库/知识沉淀/多向量数据库对比",
+    "知识库/项目总结/基于简历的问题猜想/基于API文档与代码一致性智能检测工具.md",
     "知识库/项目总结/混合检索结果融合与排序方法.md",
     "知识库/项目总结/基于简历的问题猜想/基于团队智能客服助手项目可能的提问.md",
     "知识库/知识沉淀/A2A 协议开发者入门.md",
@@ -285,29 +242,16 @@
     "知识库/知识沉淀/源码系列/Claude code源码/CC 多Agent机制.md",
     "未命名 12.md",
     "知识库/知识沉淀/源码系列/RAG系列/向量检索优化手段之-创建向量索引.md",
-    "未命名 11.md",
     "知识库/项目总结/基于简历的问题猜想/基于容器桥转MSI桥转码工具.md",
-    "知识库/项目总结/智能客服/RAG在终端前端的应用实践.md",
-    "知识库/知识沉淀/源码系列/RAG系列/向量数据库对比.md",
-    "知识库/知识沉淀/源码系列/RAG系列/RAG常见问题.md",
-    "知识库/知识沉淀/源码系列/Pi Agent源码/Pi-agent-core详解.md",
-    "未命名 10.md",
-    "知识库/知识沉淀/源码系列/Claude code源码/CC 上下文压缩机制.md",
     "知识库/知识沉淀/源码系列/RAG系列",
-    "知识库/知识沉淀/提示词工程.md",
-    "知识库/知识沉淀/如何写好skill.md",
     "tmp/wechat/提示词工程-手绘封面.png",
     "tmp/wechat/提示词工程-封面.png",
-    "tmp/wechat/提示词工程-公众号工作副本.md",
-    "知识库/知识沉淀/Computer Use 是什么.md",
-    "知识库/知识沉淀/Fable 5发布后Claude code删减提示词的规则.md",
     "tmp/wechat/什么是RPC-封面.png",
     "tmp/wechat/claude-code-tool-injection-cover-v2.png",
     "tmp/wechat/claude-code-tool-injection-cover-handdrawn.png",
     "tmp/wechat/claude-code-tool-injection-cover.png",
     "图片/Pasted image 20260721142341.png",
     "知识库/公众号文章/Claude Code 不用 RAG，如何完成代码检索？（微信公众号版）-手绘封面.png",
-    "未命名.base",
     "知识库/知识沉淀/源码系列/Pi Agent源码",
     "知识库/知识沉淀/源码系列/OpenClaw源码",
     "知识库/知识沉淀/源码系列/Claude code源码",
