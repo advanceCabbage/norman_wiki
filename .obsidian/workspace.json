@@ -22,31 +22,59 @@
             }
           },
           {
-            "id": "f9023a3488a84227",
+            "id": "ca4bf0eb5d0873d3",
             "type": "leaf",
             "state": {
               "type": "markdown",
               "state": {
-                "file": "知识库/项目总结/基于简历的问题猜想/基于API文档与代码一致性智能检测工具.md",
+                "file": "知识库/知识沉淀/A2A 协议开发者入门.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "基于API文档与代码一致性智能检测工具"
+              "title": "A2A 协议开发者入门"
             }
           },
           {
-            "id": "c594067ed98752f9",
+            "id": "58563d136803e006",
             "type": "leaf",
             "state": {
               "type": "markdown",
               "state": {
-                "file": "知识库/知识沉淀/源码系列/RAG系列/RAG在langchain中的使用记录.md",
+                "file": "知识库/复习日记/整体计划.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "RAG在langchain中的使用记录"
+              "title": "整体计划"
+            }
+          },
+          {
+            "id": "1751c935a4eed14c",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "未命名 13.md",
+                "mode": "source",
+                "source": false
+              },
+              "icon": "lucide-file",
+              "title": "未命名 13"
+            }
+          },
+          {
+            "id": "4407f90db4ccedc5",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "知识库/知识沉淀/多向量数据库对比.md",
+                "mode": "source",
+                "source": false
+              },
+              "icon": "lucide-file",
+              "title": "多向量数据库对比"
             }
           },
           {
@@ -64,7 +92,7 @@
             }
           }
         ],
-        "currentTab": 2
+        "currentTab": 4
       }
     ],
     "direction": "vertical"
@@ -239,17 +267,27 @@
       "claude-sidebar:New Claude Tab": false
     }
   },
-  "active": "c594067ed98752f9",
+  "active": "4407f90db4ccedc5",
   "lastOpenFiles": [
-    "知识库/项目总结/混合检索结果融合与排序方法.md",
     "知识库/知识沉淀/源码系列/RAG系列/RAG在langchain中的使用记录.md",
+    "知识库/知识沉淀/多向量数据库对比.md",
+    "知识库/知识沉淀/多向量数据库对比",
+    "知识库/复习日记/整体计划.md",
     "知识库/项目总结/基于简历的问题猜想/基于API文档与代码一致性智能检测工具.md",
+    "未命名 13.md",
     "知识库/项目总结/Continue 全文检索：trigram、FTS5 与 BM25.md",
+    "知识库/项目总结/混合检索结果融合与排序方法.md",
+    "知识库/项目总结/基于简历的问题猜想/基于团队智能客服助手项目可能的提问.md",
+    "知识库/知识沉淀/A2A 协议开发者入门.md",
+    "tmp/wechat/A2A-协议开发者入门-公众号封面-手绘版.png",
+    "tmp/wechat/A2A-协议开发者入门-公众号封面.png",
+    "tmp/wechat/A2A 协议开发者入门-公众号工作副本.md",
+    "知识库/知识沉淀/源码系列/Claude code源码/CC 多Agent机制.md",
+    "未命名 12.md",
+    "知识库/知识沉淀/源码系列/RAG系列/向量检索优化手段之-创建向量索引.md",
     "未命名 11.md",
     "知识库/项目总结/基于简历的问题猜想/基于容器桥转MSI桥转码工具.md",
-    "知识库/项目总结/基于简历的问题猜想/基于团队智能客服助手项目可能的提问.md",
     "知识库/项目总结/智能客服/RAG在终端前端的应用实践.md",
-    "知识库/知识沉淀/源码系列/RAG系列/向量检索优化手段之-创建向量索引.md",
     "知识库/知识沉淀/源码系列/RAG系列/向量数据库对比.md",
     "知识库/知识沉淀/源码系列/RAG系列/RAG常见问题.md",
     "知识库/知识沉淀/源码系列/Pi Agent源码/Pi-agent-core详解.md",
@@ -257,19 +295,12 @@
     "知识库/知识沉淀/源码系列/Claude code源码/CC 上下文压缩机制.md",
     "知识库/知识沉淀/源码系列/RAG系列",
     "知识库/知识沉淀/提示词工程.md",
-    "知识库/复习日记/整体计划.md",
     "知识库/知识沉淀/如何写好skill.md",
     "tmp/wechat/提示词工程-手绘封面.png",
     "tmp/wechat/提示词工程-封面.png",
     "tmp/wechat/提示词工程-公众号工作副本.md",
     "知识库/知识沉淀/Computer Use 是什么.md",
     "知识库/知识沉淀/Fable 5发布后Claude code删减提示词的规则.md",
-    "知识库/项目总结/智能客服机器人.md",
-    "知识库/项目总结/自动化测试工作流/Untitled.md",
-    "知识库/待调研/ai-agent-book.md",
-    "知识库/待调研/Memory Bank调研.md",
-    "知识库/待调研/workBuddy.md",
-    "知识库/待调研/IDE中使用Claude code，能复用IDE的LSP吗.md",
     "tmp/wechat/什么是RPC-封面.png",
     "tmp/wechat/claude-code-tool-injection-cover-v2.png",
     "tmp/wechat/claude-code-tool-injection-cover-handdrawn.png",
@@ -277,15 +308,12 @@
     "图片/Pasted image 20260721142341.png",
     "知识库/公众号文章/Claude Code 不用 RAG，如何完成代码检索？（微信公众号版）-手绘封面.png",
     "未命名.base",
-    "Pasted image 20260721124117.png",
-    "Pasted image 20260721124034.png",
     "知识库/知识沉淀/源码系列/Pi Agent源码",
     "知识库/知识沉淀/源码系列/OpenClaw源码",
     "知识库/知识沉淀/源码系列/Claude code源码",
     "知识库/知识沉淀/源码系列",
     "公众号文章",
     "tmp/wechat",
-    "tmp",
-    "知识库/项目总结/面试笔记"
+    "tmp"
   ]
 }

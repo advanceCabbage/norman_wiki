@@ -140,3 +140,155 @@ db.execute({
 - **最后** 按照融合分降序，取 ToP K
 
 更多混合检索排序算法见[[混合检索结果融合与排序方法]]。**另外工程级别的设计还应该包含：调用重排模型，传入用户的问题和 RRF 得到的 TopK，让大模型进行最后的排序**。例如：Voyage `rerank-2.5`  或 Qwen 3-Reranker
+
+#### 3.3 实现 MMR
+
+**MMR （Maximal Marginal Relevance）最大边际相关：去冗余、要多样** [[混合检索结果融合与排序方法]]
+
+- **首先**前序步骤和「实现混合检索」一致，分别从向量检索和关键字检索返回 20 条数据，然后进行去重和排序
+- **然后**对去重和排序后的结果，裁剪 20 条数据。将这 20 条数据进行向量化，同时将用户的问题也进行向量化
+- **最后**调用 langchain 的maximalMarginalRelevance 方法进行 MMR 排序。设置相关性和多样性分别占比 50%，最后返回 5 条排名在前面的数据
+```ts
+import { maximalMarginalRelevance } from "@langchain/core/utils/math";
+
+// MMR 在池内挑 topK；返回候选下标，按 MMR 挑选顺序排列。
+const selected = maximalMarginalRelevance(
+	queryVector, // 用户输入，算“相关性”用:cos(query, 候选片段内容)
+	poolVectors, // 候选们的向量:既算相关性,也算“候选之间”的相似度(惩罚项)
+	config.search.mmr.lambda, // 上面那个 λ:相关 vs 多样 的权重
+	topK, // 选几条 = 循环几轮
+);
+```
+
+## 四、扩展文档类型
+#### 4.1 支持 PDF 切分
+- **首先**引入unpdf 库，
+- **然后**使用 unpdf 库提取 PDF 文本，并将各页文本用换行拼成一篇文档
+- **最后**用分块切割的思路对整篇 PDF 进行分块、向量化、入库
+- **注意**：1. 表格会被拍平为普通文本 2. 图片无法解读 3. 扫描件/图片型 PDF 无法抽取文字内容
+```ts
+import { extractText, getDocumentProxy } from "unpdf";
+/**
+* 用 unpdf(基于 pdfjs)抽取 PDF 的文本。mergePages=true 把各页文本用换行拼成一整篇，
+* 之后交给切分器处理(和 txt/md 走同一条流水线)。
+* 注意：只抽“文本层”。扫描件(图片型PDF)抽不出文字，需 OCR，属于 P3。
+*/
+
+async function extractPdf(path: string): Promise<string> {
+	const buffer = await readFile(path);
+	const pdf = await getDocumentProxy(new Uint8Array(buffer));
+	const { text } = await extractText(pdf, { mergePages: true });
+	return text;
+}
+```
+
+## 五、切换向量数据库 PostgreSQL
+#### 5.1 PostgreSQL 安装
+- 安装并打开 docker
+- 使用 docker 下载包含 pgvector 扩展的 PostgreSQL 镜像
+- 创建并启动 PostgreSQL 容器；启动时将容器的 `5432` 端口映射到本机端口，并挂载 Docker 数据卷保存数据库文件，确保容器重启或重新创建后数据仍可保留
+**小知识**：创建数据卷可以确保删除容器时，数据还在。通过 PostgreSQL 写入的数据会落盘到本机；使用命名数据卷，是为了让这些真实数据库文件不随容器删除而消失，并且便于复用、备份和管理。PostgreSQL 落盘到本机磁盘的数据和数据卷是同一份数据。假设我们不创建数据卷，实际 PostgreSQL 也会默认创建一份数据卷。
+
+#### 5.2 PostgreSQL 的可视化工具 DBeaver
+- **首先**下载并安装 DBeaver
+- **然后**通过新建连接与 docker 启动的 PostgreSQL 数据库建立连接，需要输入端口、数据库名称、数据库账号、数据库密码
+- **最后**可以看到 PostgreSQL 相关的数据，善用表刷新功能确保看到的数据是实时的，另外 DBeaver 还支持很多可视化数据库例如：SQLite、MongoDB、Oracle 等
+
+#### 5.3 代码层面录入文档到 PostgreSQL
+##### 5.3.1 向量型数据录入
+- **首先**对文档进行分块，可以是语义也是标题分块
+- **其次**使用 langchain 封装好的PGVectorStore 方法（可以省很多事）
+	- 1. 与数据库建立连接；传入数据库 host、port、database、user、password 等
+	- 2. 指定表名及表的字段名
+	- 3. 指定余弦相似度
+- **然后**也基于 langchain 提供的createHnswIndex 方法创建索引，目的是提升检索效率，效果于 SQLite 中的一样[[向量检索优化手段之-创建向量索引]]
+- **最后** 对向量化的文档入库
+```ts
+import { PGVectorStore } from "@langchain/community/vectorstores/pgvector";
+
+// PGVectorStore.initialize 会自动 `CREATE EXTENSION vector` 并建表(带向量列维度)，
+// 所以我们不用像 LibSQL 那样手写 DDL。返回的 similaritySearch 分数同样是余弦距离。
+const store = await PGVectorStore.initialize(embeddings, {
+	postgresConnectionOptions: {
+		host: pg.host,
+		port: pg.port,
+		database: pg.database,
+		user: pg.user,
+		password: pg.password,
+	},
+
+	tableName: pg.table,	
+	// 显式指定列名，和 LibSQL 表对齐（换库只换底层，字段名保持一致）。	
+	// LibSQLVectorStore 内部把 content/metadata 写死，embedding 由 config.db.column 指定；	
+	// 这里让 PG 用同样的列名。id 是 PG 的主键，相当于 LibSQL 的隐式 rowid。	
+	columns: {	
+		idColumnName: "id",
+		contentColumnName: "content", // PG 默认是 "text"，改成 "content" 对齐 LibSQL
+		metadataColumnName: "metadata",
+		vectorColumnName: config.db.column, // "embedding"
+	},
+	distanceStrategy: "cosine", // 与我们一贯的余弦保持一致
+	dimensions: config.zhipu.dimensions, // 1024，和 embedding 维度对齐
+});
+
+// 建 HNSW 近似最近邻索引(pgvector)。不建索引时 PG 是【暴力全表扫描】(数据量大就慢)；
+// HNSW 类比 LibSQL 的 libsql_vector_idx，让检索走近似图搜索、快很多。
+// 内部是 CREATE INDEX IF NOT EXISTS(幂等，可每次启动安全调用)；
+// m=16 / efConstruction=64 用 pgvector 默认；距离函数按 distanceStrategy(cosine) 自动选。
+
+await store.createHnswIndex({ dimensions: config.zhipu.dimensions });
+```
+##### 5.3.2 原文数据录入，支持关键字检索
+- **首先**单独开一个同 PostgreSQL 的连接池，创建表及表字段
+- **接着**为表创建 trigram 索引，关键字是 `gin_trgm_ops` ，以 content 字段建立索引，后续录入到表中的文章都会自动被 trigram 分词并建立索引
+- **最后** 将分块的内容录入到全文检索向量表中
+```ts
+// GIN + gin_trgm_ops：三元组倒排索引，加速 ILIKE 子串匹配（中文同样有效）。
+await pool.query(
+`CREATE INDEX IF NOT EXISTS idx_${KW_TABLE}_trgm ` +
+`ON ${KW_TABLE} USING gin (content gin_trgm_ops)`,
+);
+```
+
+#### 5.4 代码层面 PostgreSQL混合检索
+- **关键字检索**
+	- **首先**将用户输入按照空格分割
+	- **其次**使用%将分割的内容拼接
+	- **然后**将用户的输入连同查询语句一起发送给数据库，数据库自然会对 query 进行 trigram 分词并检索
+	- **最后**返回最相关的 topK 内容
+```ts
+// ILIKE ANY(patterns)：命中任一词即可（对应 FTS5 的 OR）；
+// word_similarity(query, content)：整条 query 与内容的相关度（0~1，越大越相关）。
+const res = await pool.query(
+	`SELECT content, metadata, word_similarity($1, content) AS sim	
+	FROM ${KW_TABLE}	
+	WHERE content ILIKE ANY($2)	
+	ORDER BY sim DESC	
+	LIMIT $3`,
+	[query, patterns, k],
+);
+```
+- **向量检索**
+	- 由于 langchian 封装了similaritySearchWithScore 方法，因此不同的向量数据库在向量检索时都调用相同的方法即可，不同之处在于 store.similaritySearchWithScore。这里的 stor 是 SQLiteStore 还是 PostgreSQLStore
+	- similaritySearchWithScore 实际是两个步骤
+		- **步骤一**调用对应 store 提供的embedQuery 方法对用户的问题进行向量化，这里都是基于ZhipuEmbeddings，因此SQLiteStore 或PostgreSQLStore 都是相同的
+		- **步骤二**假设是SQLiteStore 则 langchain 转化语句为，大致为帮助理解即可。不必纠结细节，langchain 会处理好
+`
+```sql
+// 属于SQLiteStore的
+FROM vector_top_k(
+  'idx_vectors_embedding',
+  vector(:queryVector),
+  :k
+)
+
+// 属于PostgreSQLStore的
+SELECT *,
+  "embedding" <=> $1 AS "_distance"
+FROM vectors
+ORDER BY "_distance" ASC
+LIMIT $2
+```
+
+
+## 六、切换向量数据库 Milvus
