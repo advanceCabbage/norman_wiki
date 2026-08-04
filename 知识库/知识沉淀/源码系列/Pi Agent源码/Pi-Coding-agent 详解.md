@@ -10,7 +10,7 @@
 - interactive (TUI 模式)
 - print（一次性输出）
 - json （结构化事件流，属于是一轮对话模式）
-- rpc(stdin-stdout JSONL 集成) [[什么是PRC]]
+- rpc(stdin-stdout JSONL 集成) [[什么是RPC]]
 ## 三、AgentSession 会话编排核心
 ###### 3.1 上下文压缩的七层防御
 读这段的收获：所谓"自动压缩"看着是一句 if (tokens > threshold) compact()，真实实现里有 7 层防御，全是"防止误触发"和"防止死循环"。这段代码本身就是很好的面试素材——说明生产级 agent 的难点不在主流程，在边界。
