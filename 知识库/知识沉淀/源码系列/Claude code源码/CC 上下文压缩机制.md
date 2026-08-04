@@ -43,18 +43,18 @@ tool result budget、snip、microcompact 的目标是：**在上下文真正超�
 ###### 3.3 压缩后会重新注入哪些信息
 以下内容会在压缩后重新注入上下文
 
-| 信息                  | 恢复策略                           |
-| ------------------- | ------------------------------ |
-| 最近读取文件              | 最多 5 个；每个最多 5 K token；总预算 50 K |
-| Plan 文件             | 重新作为 attachment 注入             |
-| Plan Mode           | 重新注入完整模式指令                     |
-| 已调用 Skill           | 按最近调用优先，每个最多 5 K，总预算 25 K      |
-| 异步 Agent            | 恢复未完成或未取回结果的任务状态               |
-| 延迟工具状态              | 恢复已发现的 deferred tools 信息       |
-| MCP / Agent listing | 重新发送当前 delta                   |
-| Hooks               | 再执行 SessionStart hooks，恢复其上下文  |
-| 压缩摘要                | 注入压缩摘要内容                       |
-| System prompt       |                                |
+| 信息                  | 恢复策略                          |
+| ------------------- | ----------------------------- |
+| 最近读取文件              | 最多 5 个；每个最多 5 K token         |
+| Plan 文件             | 重新作为 attachment 注入            |
+| Plan Mode           | 重新注入完整模式指令                    |
+| 已调用 Skill           | 按最近调用优先，每个最多 5 K，总预算 25 K     |
+| 异步 Agent            | 恢复未完成或未取回结果的任务状态              |
+| 延迟工具状态              | 恢复已发现的 deferred tools 信息      |
+| MCP / Agent listing | 重新发送当前 delta                  |
+| Hooks               | 再执行 SessionStart hooks，恢复其上下文 |
+| 压缩摘要                | 注入压缩摘要内容                      |
+| System prompt       |                               |
 
 ###### 3.4 摘要用什么模型？
 使用当前对话的同一个模型（也就是主 agent 模型）

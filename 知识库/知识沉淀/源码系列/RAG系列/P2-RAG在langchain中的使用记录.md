@@ -292,3 +292,98 @@ LIMIT $2
 
 
 ## 六、切换向量数据库 Milvus
+#### 6.1 Milvus 安装
+- 使用 Docker 下载 Milvus 镜像；
+- 准备 Milvus Standalone 的配置文件，并创建命名数据卷保存 Milvus 的表数据、向量数据和索引；
+- 创建并启动 Milvus 容器，将容器的 `19530` 端口映射到本机供应用连接，将 `9091` 端口映射到本机供 WebUI 与健康检查使用；
+- 通过 `http://localhost:9091/healthz` 确认服务启动成功。
+#### 6.2 Milvus 的两种可视化工具
+- **Milvus 自带的 WebUI(内置工具)**
+	- [http://127.0.0.1:9091/webui/](http://127.0.0.1:9091/webui/) 适合查看实例健康状态、数据库、Collection（表）及其表字段、索引、任务和资源信息。要看详细的数据库数据仍需要部署 Attu
+- **Attu(更适合管理和查看数据)**：Attu 是 Zilliz 提供的 Milvus 图形化管理工具，可浏览和编辑实体数据等
+#### 6.3 代码层面录入数据到 Milvus
+##### 6.3.1 向量数据库数据录入
+- **首先**还是进行传统的分块或语义分块
+- **然后** Milvus 采用的是 collection + schema 模式，首次入库字段时，自动按照传入的 metadametadata 推断字段、建表、定字段、建索引，无需我们指定 SQL，仅需指定表名即可
+- **其次** Milvus 默认的向量相似度量是 L2，因此我们显示指定需要使用COSINE
+- **最后**指定创建索引的类型选择 HNSW，并将数据入库
+```ts
+import { Milvus } from "@langchain/community/vectorstores/milvus";
+
+new Milvus(embeddings, {
+	collectionName: milvus.collection,
+	// token 形如 "root:Milvus"；地址 "localhost:19530"。
+	clientConfig: { address: milvus.address, token: milvus.token },
+	// 用 COSINE + HNSW（近似最近邻，类比 PG 的 HNSW / LibSQL 的向量索引）。
+	indexCreateOptions: {
+		index_type: "HNSW", // 指定创建索引的方式为“近似最近邻”
+		metric_type: "COSINE", // 指定向量相似度的计算方式为 余弦相似度
+		params: { M: 8, efConstruction: 64 },
+	},
+});
+```
+
+##### 6.3.2 原文数据录入，支持关键字检索
+- **首先**单独开一个同 Milvus 的连接池，创建表及表字段
+- **其次**重点讲讲表字段
+	- content 字段：存储原文、并设置 content 字段开启分词及使用中文分词器 jieba
+	- spare 字段：用于存储 BM25 函数的输出（稀疏向量）
+	- metadata 字段：保存了原始数据信息
+- **接着**定义 BM25 函数的输入和输出，即 输入content，输出 spare
+- **然后**基于 spare 创建稀疏倒排索引 + BM25 度量
+- **最后**录入数据入库
+```ts
+await client.createCollection({
+	collection_name: KW_COLLECTION,
+	fields: [
+		{
+			name: "content",
+			data_type: DataType.VarChar,
+			max_length: 65535,
+			enable_analyzer: true, // 开启分词
+			analyzer_params: { type: "chinese" }, // 中文分析器(jieba)
+		},
+		{ name: "sparse", data_type: DataType.SparseFloatVector },
+		{ name: "metadata", data_type: DataType.JSON },
+		],
+	// BM25 函数:输入 content(文本) → 输出 sparse(稀疏向量)，插入时自动计算。
+	functions: [
+		{
+		name: "content_bm25",
+		type: FunctionType.BM25,
+		input_field_names: ["content"],
+		output_field_names: ["sparse"],
+		params: {},
+		},
+	],
+});
+
+// 稀疏倒排索引 + BM25 度量。
+await client.createIndex({
+	collection_name: KW_COLLECTION,
+	field_name: "sparse",
+	index_type: "SPARSE_INVERTED_INDEX",
+	metric_type: "BM25",
+	params: {},
+});
+```
+
+#### 6.4 代码层面 Milvus 检索
+##### 6.4.1 向量检索
+和 PostgreSQL 一致
+##### 6.4.2 全文检索
+- **首先**将用户 query 使用 BM 25 转成稀疏查询向量再检索，返回的 score 是 BM 25(越大越相关)
+- **最后**返回指定的 topK 片段
+
+```ts
+// data 传【原始文本】，anns_field 指向 sparse；Milvus 经 analyzer + BM25 函数
+// 把文本转成稀疏查询向量再检索。返回的 score 是 BM25(越大越相关)。
+const res = await client.search({
+	collection_name: KW_COLLECTION,
+	data: [query],
+	anns_field: "sparse",
+	limit: k, // 返回指定的topK
+	output_fields: ["content", "metadata"],
+	consistency_level: ConsistencyLevelEnum.Strong, // 保证刚插入的数据也能被搜
+});
+```

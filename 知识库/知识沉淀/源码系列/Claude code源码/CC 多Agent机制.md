@@ -36,10 +36,10 @@ Claude Code 采取了四个决策来折中处理：
 
 ##### 3.2.2 工具隔离三道门禁
 **第一道所有 subAgent 的通用黑名单**：
-- 能派新 subagent 的工具：防止子再派孙递归嵌套，工具名：`Agent`
-- 能主动问用户问题的工具：子 agent 不该抢主 agent 的对话权，工具名：`AskUserQuestion
-- 能切换规划模式的工具：规划模式是主 agent 用于和用户对齐方案，工具名：`EnterPlanMode`
-- 能停止其他任务的工具：任务管理是主 agent 的专属能力名，工具名：`TaskStop`
+- 禁止派新 subagent 的工具：防止子再派孙递归嵌套，工具名：`Agent`
+- 禁止主动问用户问题的工具：子 agent 不该抢主 agent 的对话权，工具名：`AskUserQuestion
+- 禁止切换规划模式的工具：规划模式是主 agent 用于和用户对齐方案，工具名：`EnterPlanMode`
+- 禁止停止其他任务的工具：任务管理是主 agent 的专属能力名，工具名：`TaskStop`
 
 **第二道是「自定义 agent 多套一层黑名单」**：当前源码保留了“自定义 agent 可额外收紧工具权限”的扩展位，但当前版本没有配置额外黑名单；
 

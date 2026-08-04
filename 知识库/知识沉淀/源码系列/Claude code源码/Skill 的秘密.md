@@ -323,6 +323,9 @@ Path: xxx
 - 按最近调用时间排序
 - 预算不足时丢弃较旧 Skill
 **所以压缩后的策略不是“保留所有 Skill 声明”，而是“保留已经真正生效的 Skill 指令”。**
+- 已调用的 Skill 用 `invoked_skills` 保留内容和约束
+- 在 **compact 后的下一次用户输入，以及此后每一次非空用户输入**，都执行一次 `getTurnZeroSkillDiscovery` 本地 Skill 检索，再将匹配结果作为 `skill_discovery` 注入本轮主模型请求前的上下文，它**不是 embedding 向量检索**，而是基于 Skill 的 `name`、`whenToUse`、`description`、`allowedTools` 构建稀疏 TF-IDF 词项向量，并使用余弦相似度排序，默认返回 Top 5；对中文输入，可选先调用 Haiku 将意图提炼为英文关键词，再与原始中文一起进行 TF-IDF 匹配
+- 以及 `DiscoverSkills` 工具按任务语义召回
 
 ## 8. Resume 后如何处理 Skill 状态
 

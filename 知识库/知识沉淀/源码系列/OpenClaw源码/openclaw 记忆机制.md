@@ -27,7 +27,7 @@
 - **会话压缩**：compaction 由 Pi Agent SDK 执行：到阈值后总结较早历史，并保留最近的 `keepRecentTokens`（20000 tokens）
 - **长期记忆沉淀（memory flush）**：在压缩前让模型把重要事实写进 Markdown，避免仅存在于会话摘要中
 - **压缩阈值**：openclaw 默认是保留 200 K，即模型上下文窗口只剩下最后 200 K 时开启压缩
-- **轻量裁剪**：仅在发送给 LLM 前，裁剪旧工具结果以减少 token。启用 `cache-ttl` 模式后，默认在上下文达到 30% 时截短工具输出，达到 50% 时可清空旧工具输出；保留最近 3 个 assistant turn。但需要用户手动配置。**仅对支持prompt-cache TTL 的供应商提供，例如 Anthropic 的最大缓存时间是 1h，那么在 1 h 之前的工具调用结果，openclaw 就能去掉以此来节约上下文**
+- **轻量裁剪**：仅在发送给 LLM 前，裁剪旧工具结果以减少 token。启用 `cache-ttl` 模式后，默认在上下文达到 30% 时截短工具输出，达到 50% 时可清空旧工具输出；保留最近 3 个 assistant turn。但需要用户手动配置。**仅对支持prompt-cache TTL（Time To Live 存活时间） 的供应商提供，例如 Anthropic 的最大缓存时间是 1h，那么在 1 h 之前的工具调用结果，openclaw 就能去掉以此来节约上下文**
 ## 四、多人同时使用 openclaw 如何隔离
 
 - **方案一：相同Agent、按 session 隔离**

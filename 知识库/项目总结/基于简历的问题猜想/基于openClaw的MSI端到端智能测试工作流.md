@@ -1,17 +1,17 @@
 ## 一、我的问题猜想
 
 **问题一**：质量运营助手和审核者助手是如何实现多轮相互对话的？你做了哪些事情确保他们能够在最大三轮的时候进行终止？以及如何确保他们能够进行相互对话？
-草稿：两个机器人分别通过大象渠道与 openclaw 的 agent 建立了绑定关系。当你给任意一个机器人发送消息时此时就是在给 openclaw agent 发送消息。Openclaw 如何接收消息的呢？完整的消息链路是：用户（大象 App） ➔ 大象服务端 ➔ `meishi-dxopen` 服务（接收回调） ➔ OpenClaw Channel 插件（长轮询，主动向中间服务拉取消息并回复） ➔ Agent ➔ 原路返回。
+草稿：两个机器人分别通过大象渠道与 openclaw 的 agent 建立了绑定关系。当你给任意一个机器人发送消息时此时就是在给 openclaw agent 发送消息。Openclaw 如何接收消息的呢？完整的消息链路是：用户（大象 App） ➔ 大象服务端 ➔ `openclaw-dxopen` 服务（接收回调） ➔ OpenClaw Channel 插件（长轮询，主动向中间服务拉取消息并回复） ➔ Agent ➔ 原路返回。
 
 **问题一细分问题 一**两个 agent 是如何相互实现通信机制？
-核心结论：meishi-dxopen 是一个公网、状态话的“反向消息桥”。它解决的不是 Agent 推理，而是让大象服务端能把回调消息送到用户内网/本机的 openClaw，同时又让 OpenClaw 能把结果按原会话回复回大象
-核心原理：首先大象机器人配置回调地址为 meishi-dxopen 服务，用户给大象机器人发消息时，大象服务端主动回调公网的 meishi-dxopen；本地（安装 openclaw 机器）的 Channel 插件主动向 meishi-dxopen 发起长轮询；meishi-dxopen 维护两者的临时关联关系
+核心结论：openclaw-dxopen 是一个公网、状态话的“反向消息桥”。它解决的不是 Agent 推理，而是让大象服务端能把回调消息送到用户内网/本机的 openClaw，同时又让 OpenClaw 能把结果按原会话回复回大象
+核心原理：首先大象机器人配置回调地址为 openclaw-dxopen 服务，用户给大象机器人发消息时，大象服务端主动回调公网的 openclaw-dxopen；本地（安装 openclaw 机器）的 Channel 插件主动向 openclaw-dxopen 发起长轮询；openclaw-dxopen 维护两者的临时关联关系
 
-**问题一细分问题 二**：本地的 Channel 插件主动向 meishi-dxopen 发起长轮询，他们之间的唯一标识是什么？多个用户的机器人都配置了 meishi-dxopen，如何精确的将消息回调到正确的机器人上？**插件启动时：先注册、再轮询**
-Channel 插件启动时，先注册再轮询，根据 Bot 的 `clientId + clientSecret` 计算 bridge Token（SHA-256(clientId:clientSecret)）；用 Token 再计算稳定的 clientId (channel-<hash前12位>)；再向 meishi-dxopen 服务进行注册，此时注册数据不仅包含 Bot 身份，还包含消息处理策略，例如：是否接收所有群消息，还是只接收@bot 消息。**因此 meishi-dxopen 会知道：某个大象 Bot 当前由哪个 Openclaw Channel 实例消费，以及应该如何过滤和组装事件**
+**问题一细分问题 二**：本地的 Channel 插件主动向 openclaw-dxopen 发起长轮询，他们之间的唯一标识是什么？多个用户的机器人都配置了 openclaw-dxopen，如何精确的将消息回调到正确的机器人上？**插件启动时：先注册、再轮询**
+Channel 插件启动时，先注册再轮询，根据 Bot 的 `clientId + clientSecret` 计算 bridge Token（SHA-256(clientId:clientSecret)）；~~用 Token 再计算稳定的 clientId (channel-<hash前12位>)~~；再向 openclaw-dxopen 服务进行注册，此时注册数据不仅包含 Bot 身份，还包含消息处理策略，例如：是否接收所有群消息，还是只接收@bot 消息。**因此 openclaw-dxopen 会知道：某个大象 Bot 当前由哪个 Openclaw Channel 实例消费，以及应该如何过滤和组装事件**
 
 **问题一细分问题三**：长轮询机制是如何实现的**入站：大象回调如何“扭转”为 Agent 输入**
-大象回调到 meishi-dxopen Bridge，再由本地的 Channel 插件向 meishi-dxopen 服务发起的 HTTP 请求，每个请求最多等待 25 秒，超时后立即发起下一个请求。meishi-dxopen 服务有消息返回时立即通过 HTTP 将消息内容返回，Channel 同时也立即再次发起一个 HTTP 请求
+大象回调到 openclaw-dxopen Bridge，再由本地的 Channel 插件向 openclaw-dxopen 服务发起的 HTTP 请求，每个请求最多等待 25 秒，超时后立即发起下一个请求。openclaw-dxopen 服务有消息返回时立即通过 HTTP 将消息内容返回，Channel 同时也立即再次发起一个 HTTP 请求
 
 **问题一细分问题四**：**插件拿到事件后，如何发送给 Agent**
 插件收到 `events[]` 后，不是直接把文本丢给模型，而是做四层处理：
@@ -25,7 +25,7 @@ Channel 插件启动时，先注册再轮询，根据 Bot 的 `clientId + client
 因此，同一群里不同用户不会共用 Agent 上下文；同一个用户在群里隔天也会开启新会话
 
 **问题一细分问题五**：**出站：Agent 的回复为什么能回到“原路”**
-关键仍然是 `requestId`，requestId 是由 meishi-dxopen 产生并包含了大象机器人、群聊 ID 等信息，Agent 将消息内容处理完成后，插件会把回复内容发送给 Bridge。Bridge 根据 `requestId` 找回这条入站消息对应的 Bot、私聊/群聊、群 ID、发送者及消息上下文，再把结果以该 Bot 身份发回大象。所以，**Agent 不需要知道大象 API、群 ID 或回复地址**；它只产生 OpenClaw 标准回复。Channel 负责把“当前这次 Agent 执行”绑定到 `requestId`，Bridge 负责真正回大象。
+关键仍然是 `requestId`，requestId 是由 openclaw-dxopen 产生并包含了大象机器人、群聊 ID 等信息，Agent 将消息内容处理完成后，插件会把回复内容发送给 Bridge。Bridge 根据 `requestId` 找回这条入站消息对应的 Bot、私聊/群聊、群 ID、发送者及消息上下文，再把结果以该 Bot 身份发回大象。所以，**Agent 不需要知道大象 API、群 ID 或回复地址**；它只产生 OpenClaw 标准回复。Channel 负责把“当前这次 Agent 执行”绑定到 `requestId`，Bridge 负责真正回大象。
 回复链路：Agent → 插件 → requestId → Bridge → 原大象会话
 
 **问题一细分问题六：两个 Agent 互相通信时，链路会发生什么**
@@ -43,7 +43,7 @@ Channel 插件启动时，先注册再轮询，根据 Bot 的 `clientId + client
   → Bridge 发回同一大象群
 ```
 
-**核心通信流程扭转**：这个渠道的核心是一个反向消息桥。大象只能回调公网服务，而 OpenClaw 多数部署在本地或内网，因此 `meishi-dxopen` 接收大象回调并保存为带 `requestId` 的标准事件。插件启动后先注册 Bot 身份，再通过长轮询主动从 Bridge 拉取事件；收到后交给 OpenClaw 路由并派发 Agent。Agent 的结果由插件携带同一个 `requestId` 回推 Bridge，Bridge 再定位原始大象会话并发送回复。多 Agent 协作没有内部 RPC，本质是两个 Bot 在群里通过 Bridge 往返的事件驱动协作
+**核心通信流程扭转**：这个渠道的核心是一个反向消息桥。大象只能回调公网服务，而 OpenClaw 多数部署在本地或内网，因此 `openclaw-dxopen` 接收大象回调并保存为带 `requestId` 的标准事件。插件启动后先注册 Bot 身份，再通过长轮询主动从 Bridge 拉取事件；收到后交给 OpenClaw 路由并派发 Agent。Agent 的结果由插件携带同一个 `requestId` 回推 Bridge，Bridge 再定位原始大象会话并发送回复。多 Agent 协作没有内部 RPC，本质是两个 Bot 在群里通过 Bridge 往返的事件驱动协作
 
 **问题一细分问题七**：做了哪些约束使得最多可以进行三轮评审
 我们把评审流程设计成一个最大三次的有限状态机，而不是让两个 Agent 根据自然语言无限互相 @。
@@ -53,15 +53,16 @@ Channel 插件启动时，先注册再轮询，根据 Bot 的 `clientId + client
 
 **问题一细分问题八**：如何保证强制性的仅进行三轮评审
 - 不只靠消息记忆轮次，而是在系统里保存一条任务记录，用户发起用例评审时创建一个 taskId，taskId 贯穿整条链路。
-- **核心是将强制判断逻辑放在 meishi-dxopen 实现**，把“三轮评审”设计成由 `meishi-dxopen` 后端强制控制的工作流，而不是依赖 Agent 记住规则。每次首次派审都会生成唯一的 `taskId`，并在后端数据库保存当前轮次、最大轮次、任务状态、分支和 commit。`daxiang-openclaw-channel` 只负责消息收发和长轮询，不承载具体业务判断；质量运营助手每次准备修改并发起下一轮时，通过调用 `meishi-dxopen` 的评审工作流接口。后端根据 `taskId` 查询任务：只有当前轮次小于 3 且任务处于允许修改状态时，才授予下一轮派审许可并真正发送消息给审核者。审核者第 3 轮仍返回未通过时，后端会原子地把任务更新为“人工审核”终态，并直接发送固定通知，同时不再把后续修改事件投递给质量运营 Agent。即使出现消息重复、Agent 忘记上下文或误发第 4 轮请求，后端也会因任务已到终态而拒绝，所以最大三轮是系统保证的，而不是提示词约束
+- **核心是将强制判断逻辑放在 openclaw-dxopen 实现**，把“三轮评审”设计成由 `openclaw-dxopen` 后端强制控制的工作流，而不是依赖 Agent 记住规则。每次首次派审都会生成唯一的 `taskId`，并在后端数据库保存当前轮次、最大轮次、任务状态、分支和 commit。`daxiang-openclaw-channel` 只负责消息收发和长轮询，不承载具体业务判断；质量运营助手每次准备修改并发起下一轮时，通过调用 `openclaw-dxopen` 的评审工作流接口。后端根据 `taskId` 查询任务：只有当前轮次小于 3 且任务处于允许修改状态时，才授予下一轮派审许可并真正发送消息给审核者。审核者第 3 轮仍返回未通过时，后端会原子地把任务更新为“人工审核”终态，并直接发送固定通知，同时不再把后续修改事件投递给质量运营 Agent。即使出现消息重复、Agent 忘记上下文或误发第 4 轮请求，后端也会因任务已到终态而拒绝，所以最大三轮是系统保证的，而不是提示词约束
 
 
 **问题二**：OpenClaw 它可以使用 CodeX 作为底层引擎，那么它的原理是什么？OpenClaw 使用 CodeX 作为底层引擎的时候，那么他们的记忆系统是如何处理的？我们已知 CodeX 中其实也是有记忆系统的。他们是如何防止 CodeX 记忆系统和 OpenClaw 的记忆系统进行相互串联的？
-<font color="#c0504d">TODO：Openclaw 预留的引擎插件</font>
+<font color="#c0504d">TODO：Openclaw 预留的引擎插件</font>  [[openclaw可插拔机制]]
+
 
 **问题三**：OpenClaw 的记忆系统是如何设计的？Codex 的记忆系统又是如何设计的？
 
-<font color="#c0504d">TODO：学习 OpenClaw 以及 Codex 源码实现</font>
+<font color="#c0504d">TODO：学习 OpenClaw 以及 Codex 源码实现</font> [[openclaw 记忆机制]]
 
 **问题四**：使用两个 Agent 进行多轮对话的优势和劣势是什么？
 - 优势
@@ -77,7 +78,7 @@ Channel 插件启动时，先注册再轮询，根据 Bot 的 `clientId + client
 双 Agent 的核心价值是职责分离和交叉校验，用额外的时延与系统复杂度，换取更稳定、可审计的用例质量。它适合质量要求高、允许异步处理的场景；前提是用结构化协议和持久化状态机控制协作边界
 
 **问题五**：在实际场景中，用户能够接受使用和大象机器人的方式进行性能测试用例和评审吗？
-大象是我们公司内部的办公软件，所有的工作、聊天相关的内容都在那里。而且本身大象群里也有很多任务是通过机器人解决的，例如智能客服助手等，大家的接受程度较高
+大象是公司内部的办公软件，所有的工作、聊天相关的内容都在那里。而且本身大象群里也有很多任务是通过机器人解决的，例如智能客服助手等，大家的接受程度较高
 
 **问题六**：你认为当前的项目中还存在哪些问题可以值得优化的？以及该项目的亮点是什么？
 
@@ -145,7 +146,7 @@ Channel 插件启动时，先注册再轮询，根据 Bot 的 `clientId + client
 **问题五**：技术方案第 4 条：消息隔离
 
 1. 这套机制解决的是"内容不串"，但没提并发下的资源竞争——如果同时有 10 个用户发起用例生成请求，系统吞吐/排队怎么处理？压测过吗？
-	A：假设由10 个用户同时发起用例请求，<font color="#ff0000">在 openclaw 最多能允许有几个 PI Agent?</font> ，在生成测试用例阶段不会受到影响，用户消息是通过 session 隔离，生成的测试用例最终的代码分支是以 mis + 需求 + 时间 命名，在生成测试用例方面也不会冲突。在执行测试用例时会阻塞排队，测试手机在执行测试用例一次只能执行单个容器的测试用例，测试用例执行依托于美团 APP 中的容器
+	A：假设由10 个用户同时发起用例请求，主会话支持 4 个 agent 并行，子 agent 支持 8 个并行。在生成测试用例阶段不会受到影响，用户消息是通过 session 隔离，生成的测试用例最终的代码分支是以 mis + 需求 + 时间 命名，在生成测试用例方面也不会冲突。在执行测试用例时会阻塞排队，测试手机在执行测试用例一次只能执行单个容器的测试用例，测试用例执行依托于美团 APP 中的容器
 
 2. Session+uuid 隔离是很常见的多租户设计模式，这里有什么特别的技术难点值得写进简历？还是这条更多是"做了这件事"的陈述，而不是"解决了一个困难问题"的证明？
    A：这里仅仅是说明 session + UUID 隔离的方式实现 openclaw 的自定义渠道

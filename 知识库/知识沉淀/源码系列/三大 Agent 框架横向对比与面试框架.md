@@ -27,37 +27,37 @@ Prompt + Tool Runtime + Permission + Session + Context + Multi-Agent
 
 ## 二、一张总表：从 10 个维度对齐
 
-| 维度 | Claude Code | OpenClaw | Pi Agent |
-| --- | --- | --- | --- |
-| 核心定位 | 软件工程 Agent 产品与 Runtime | 多渠道、长期运行的 Agent Gateway | 可嵌入、可组合的 Agent 组件栈 |
-| 主要用户 | 在代码库中开发、修改、审查、验证的工程师 | 需要把 Agent 接到聊天渠道、设备、定时任务的产品/平台团队 | 想构建 CLI、IDE、SDK、定制 Agent 的开发者 |
-| Agent Loop | 纵向整合的 Query Loop，支持 Tool、权限、多 Agent | 默认委托 Pi；可经 Harness 换成 Codex | `pi-agent-core` 提供通用 Loop，coding-agent 提供产品层外循环 |
-| 模型接入 | 产品内的模型与认证能力，Prompt/工具组织高度工程化 | 由平台模型路由 + 选定 Runtime 共同承担 | `pi-ai` 将多 Provider/流式/Tool Call 统一化 |
-| 会话模型 | JSONL transcript + UUID 链 + 文件历史/模式等状态 | 渠道路由会话与 session 镜像；内层 Runtime 管理其会话 | JSONL 追加式会话树，`id + parentId + leaf` |
-| 长期记忆 | 核心记忆 + selector 按需注入，重视 compact 后恢复 | Markdown 长期记忆 + SQLite 向量/FTS；面向多会话/多用户 | 重点是 Session/资源/压缩，长期记忆由宿主产品定义 |
-| 工具治理 | Schema、Permission、Sandbox、Hook、并发安全和审批 UI | 候选工具经渠道/群聊/owner/沙箱/子 Agent 策略过滤 | 工具注册与 active 集分离、Hook 与执行环境可插拔 |
-| 扩展模型 | Skill、Hook、MCP、Subagent、动态工具发现 | Channel Plugin、Tool Plugin、Runtime Harness、持久化 Hook | ExtensionAPI、Hook、Skill、Provider、TUI 组件 |
-| 多 Agent | Subagent、Fork、Coordinator，强调上下文隔离与缓存 | 平台可限制子 Agent 系统能力；实际内层取决于 Runtime | 提供底层事件/队列/Harness 能力，产品层可自行编排 |
-| 长期运行能力 | 聚焦会话内的软件工程任务 | Channel、Cron、Heartbeat、重试、超时、隔离会话是核心能力 | 可嵌入 RPC/Server，但不主打渠道运营 |
+| 维度         | Claude Code                               | OpenClaw                                            | Pi Agent                                        |
+| ---------- | ----------------------------------------- | --------------------------------------------------- | ----------------------------------------------- |
+| 核心定位       | 软件工程 Agent 产品与 Runtime                    | 多渠道、长期运行的 Agent Gateway                             | 可嵌入、可组合的 Agent 组件栈                              |
+| 主要用户       | 在代码库中开发、修改、审查、验证的工程师                      | 需要把 Agent 接到聊天渠道、设备、定时任务的产品/平台团队                    | 想构建 CLI、IDE、SDK、定制 Agent 的开发者                   |
+| Agent Loop | 纵向整合的 Query Loop，支持 Tool、权限、多 Agent       | 默认委托 Pi；可经 Harness 换成 Codex                         | `pi-agent-core` 提供通用 Loop，coding-agent 提供产品层外循环 |
+| 模型接入       | 产品内的模型与认证能力，Prompt/工具组织高度工程化              | 由平台模型路由 + 选定 Runtime 共同承担                           | `pi-ai` 将多 Provider/流式/Tool Call 统一化            |
+| 会话模型       | JSONL transcript + UUID 链 + 文件历史/模式等状态    | 渠道路由会话与 session 镜像；内层 Runtime 管理其会话                 | JSONL 追加式会话树，`id + parentId + leaf`             |
+| 长期记忆       | 核心记忆 + selector 按需注入，重视 compact 后恢复       | Markdown 长期记忆 + SQLite 向量/FTS；面向多会话/多用户             | 重点是 Session/资源/压缩，长期记忆由宿主产品定义                   |
+| 工具治理       | Schema、Permission、Sandbox、Hook、并发安全和审批 UI | 候选工具经渠道/群聊/owner/沙箱/子 Agent 策略过滤                    | 工具注册与 active 集分离、Hook 与执行环境可插拔                  |
+| 扩展模型       | Skill、Hook、MCP、Subagent、动态工具发现            | Channel Plugin、Tool Plugin、Runtime Harness、持久化 Hook | ExtensionAPI、Hook、Skill、Provider、TUI 组件         |
+| 多 Agent    | Subagent、Fork、Coordinator，强调上下文隔离与缓存      | 平台可限制子 Agent 系统能力；实际内层取决于 Runtime                   | 提供底层事件/队列/Harness 能力，产品层可自行编排                   |
+| 长期运行能力     | 聚焦会话内的软件工程任务                              | Channel、Cron、Heartbeat、重试、超时、隔离会话是核心能力              | 可嵌入 RPC/Server，但不主打渠道运营                         |
 
 ## 三、核心维度的深入比较
 
 ### 3.1 架构取舍：垂直整合 vs 平台编排 vs 分层组件
 
-| 框架 | 优势 | 代价 / 风险 | 适合场景 |
-| --- | --- | --- | --- |
-| Claude Code | 工具、权限、上下文、会话、验证与协作形成一致体验；工程任务路径短 | Runtime 机制与产品约束较强，深度定制需遵循其生态 | 复杂代码库改造、调试、评审、日常研发 |
-| OpenClaw | 把渠道、身份、路由、记忆、Cron 和运行时解耦；可换内层 Runtime | 双层状态与跨 Runtime 语义更复杂；多租户隔离不能只靠 session | 多渠道 AI 助手、企业 Gateway、长期自动化、Agent 运营平台 |
-| Pi | 核心包边界清晰，Loop/模型/工具/存储/UI 可替换、可嵌入 | 产品级权限、渠道、多租户、运营能力需由宿主补齐 | 自研 Agent 产品、IDE/CLI 集成、需要控制 Runtime 的团队 |
+| 框架          | 优势                                    | 代价 / 风险                                | 适合场景                                    |
+| ----------- | ------------------------------------- | -------------------------------------- | --------------------------------------- |
+| Claude Code | 工具、权限、上下文、会话、验证与协作形成一致体验；工程任务路径短      | Runtime 机制与产品约束较强，深度定制需遵循其生态           | 复杂代码库改造、调试、评审、日常研发                      |
+| OpenClaw    | 把渠道、身份、路由、记忆、Cron 和运行时解耦；可换内层 Runtime | 双层状态与跨 Runtime 语义更复杂；多租户隔离不能只靠 session | 多渠道 AI 助手、企业 Gateway、长期自动化、Agent 运营平台   |
+| Pi          | 核心包边界清晰，Loop/模型/工具/存储/UI 可替换、可嵌入      | 产品级权限、渠道、多租户、运营能力需由宿主补齐                | 自研 Agent 产品、IDE/CLI 集成、需要控制 Runtime 的团队 |
 
 ### 3.2 Context 与 Memory：都在“长期”，但治理对象不同
 
-| 问题 | Claude Code | OpenClaw | Pi |
-| --- | --- | --- | --- |
-| 持久化原始历史 | 追加式 transcript；按 UUID/边界恢复有效链 | session JSONL，平台可在外层管理路由与镜像 | JSONL 会话树；当前上下文是 leaf 路径投影 |
-| 压缩目标 | 避免模型上下文爆炸，同时重建必要运行状态 | 默认委托 Pi 压缩；另有 memory flush 与工具输出治理 | 结构化摘要 + 最近约 20K token 尾部；防无限重试 |
-| 长期知识 | 独立 selector 选少量相关记忆再注入 | `MEMORY.md`/daily memory + 向量/FTS 混合检索 | 不把业务长期记忆作为核心职责，交由宿主 |
-| 最大风险 | 把不可丢失运行时约束交给摘要 | 同 Agent 多用户共享 workspace/记忆导致串人 | 将 session 历史误当成完整产品记忆系统 |
+| 问题      | Claude Code                   | OpenClaw                               | Pi                             |
+| ------- | ----------------------------- | -------------------------------------- | ------------------------------ |
+| 持久化原始历史 | 追加式 transcript；按 UUID/边界恢复有效链 | session JSONL，平台可在外层管理路由与镜像            | JSONL 会话树；当前上下文是 leaf 路径投影     |
+| 压缩目标    | 避免模型上下文爆炸，同时重建必要运行状态          | 默认委托 Pi 压缩；另有 memory flush 与工具输出治理     | 结构化摘要 + 最近约 20K token 尾部；防无限重试 |
+| 长期知识    | 独立 selector 选少量相关记忆再注入        | `MEMORY.md`/daily memory + 向量/FTS 混合检索 | 不把业务长期记忆作为核心职责，交由宿主            |
+| 最大风险    | 把不可丢失运行时约束交给摘要                | 同 Agent 多用户共享 workspace/记忆导致串人         | 将 session 历史误当成完整产品记忆系统        |
 
 **面试的高质量回答**：Claude Code 重点解决“一个复杂工程会话如何可恢复地继续”；OpenClaw 额外解决“多个渠道、用户和长期事实如何被治理”；Pi 提供会话与压缩积木，但是否建设长期记忆库是宿主决策。
 

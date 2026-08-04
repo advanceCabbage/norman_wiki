@@ -1,5 +1,5 @@
 ## 零、概览
-Claude Code 的主循环是一个状态机。用户输入先被标准化为消息和附件，再与系统提示词、工具 schema、环境上下文一起发给模型。模型流式返回文本和工具调用；若没有工具调用，经过 Stop Hook 和 token budget 判断后结束。若有工具调用，系统依据工具的并发安全性调度执行，并在每个工具内部依次经过 schema 校验、PreToolUse Hook、Permission、tool.call、PostToolUse Hook。工具结果以 user role 的 tool_result 回填模型，同时补充 Memory、Skill、文件变更等附件，然后进入下一轮模型调用。这个循环持续到模型完成任务或系统触发终止条件
+Claude Code 的主循环是一个状态机。用户输入先被标准化为消息和附件，再与系统提示词、工具 schema、环境上下文一起发给模型。模型流式返回文本和工具调用；若没有工具调用，经过 Stop Hook 和 token budget 判断后结束（**<font color="#c0504d">仅在 API 调用支持，CC 中不支持</font>**）。若有工具调用，系统依据工具的并发安全性调度执行，并在每个工具内部依次经过 schema 校验、PreToolUse Hook、Permission、tool.call、PostToolUse Hook。工具结果以 user role 的 tool_result 回填模型，同时补充 Memory、Skill、文件变更等附件，然后进入下一轮模型调用。这个循环持续到模型完成任务或系统触发终止条件
 ## 一、Loop 循环图谱
 ![[Pasted image 20260721142341.png]]
 
