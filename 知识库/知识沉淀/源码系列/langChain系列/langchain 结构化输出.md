@@ -3,7 +3,7 @@
 
 **对我的提示**：在此之前我不知道模型可以支持原生结构化的输出，我以为需要使用提示词要求模型输出结构化的内容
 
-#### langchain 结构化输出语法
+#### LangChain 结构化输出语法
 - 结构化对象写response_format 参数
 - 模型/供应商支持原生 structured output
 	- 自动使用 **ProviderStrategy**，把 schema 传给供应商原生 API

@@ -92,15 +92,15 @@ flowchart TB
 
 这一层定义“对象是什么意思”，与 HTTP、gRPC、JSON-RPC 无关。权威来源是 `a2a.proto`；SDK 或 JSON Schema 应由它生成，而不是手写一份相似但可能漂移的模型。[规范的权威定义说明](https://github.com/a2aproject/A2A/blob/main/docs/specification.md)
 
-| 对象 | 含义 | 你可以把它理解为 |
-|---|---|---|
-| `AgentCard` | Agent 的身份、能力、接口、认证、输入输出模式和技能 | 服务说明书 / Manifest |
-| `Message` | Client 与 Agent 的一轮交互 | 一封任务信件 |
-| `Part` | Message 或 Artifact 的内容块 | 文本、文件 URL/原始文件、结构化 JSON |
-| `Task` | 有唯一 ID、可持续更新的工作单元 | 可追踪工单 |
-| `Artifact` | Task 的交付物 | 报告、CSV、JSON、文件、图片 |
-| `Extension` | 核心规范之外的协商能力 | 版本化插件能力 |
-| `contextId` | 将相关 Task 和 Message 逻辑归组 | 会话 / 业务流程 ID |
+| 对象          | 含义                           | 你可以把它理解为                |
+| ----------- | ---------------------------- | ----------------------- |
+| `AgentCard` | Agent 的身份、能力、接口、认证、输入输出模式和技能 | 服务说明书 / Manifest        |
+| `Message`   | Client 与 Agent 的一轮交互         | 一封任务信件                  |
+| `Part`      | Message 或 Artifact 的内容块      | 文本、文件 URL/原始文件、结构化 JSON |
+| `Task`      | 有唯一 ID、可持续更新的工作单元            | 可追踪工单                   |
+| `Artifact`  | Task 的交付物                    | 报告、CSV、JSON、文件、图片       |
+| `Extension` | 核心规范之外的协商能力                  | 版本化插件能力                 |
+| `contextId` | 将相关 Task 和 Message 逻辑归组      | 会话 / 业务流程 ID            |
 
 `Task` 的典型状态为：
 

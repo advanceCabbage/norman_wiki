@@ -4,7 +4,7 @@
 - 再依次应用策略：工具 profile、全局配置、Provider 配置、Agent 配置、群聊限制、沙箱限制、子 Agent 限制、owner-only 限制等。
 - 剩余工具的 `name`、`description`、`parameters` 被转换为模型 SDK 的 `customTools`。
 
-OpenClaw 采用“**全量候选、按策略暴露**”模型。模型看到的是最终允许使用的完整工具集合，而不是机器上已安装的全部工具。工具 schema 走模型 API 的 tools/customTools 字段，不是简单拼到 system prompt 里的一大段文本。
+OpenClaw 采用“**全量候选、按策略暴露**”模式。模型看到的是最终允许使用的完整工具集合，而不是机器上已安装的全部工具。工具 schema 走模型 API 的 tools/customTools 字段，不是简单拼到 system prompt 里的一大段文本。
 
 #### 二、用户自定义机制
 

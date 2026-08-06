@@ -38,18 +38,18 @@ INSERT INTO fts (path, content) VALUES (?, ?);
 假设已有两个 chunk：
 
 ```text
-Chunk 101: function createUser(name) { ... }
+Chunk 101: function createUser(name) { ... } // createUser函数被trigram分词
 Chunk 102: function updateUser(id) { ... }
 ```
 
 其内部倒排索引可概念化为：
 
 | trigram | 命中的 chunk |
-| --- | --- |
-| `cre` | 101 |
-| `rea` | 101 |
-| `ate` | 101、102 |
-| `Use` | 101、102 |
+| ------- | --------- |
+| `cre`   | 101       |
+| `rea`   | 101       |
+| `ate`   | 101、102   |
+| `Use`   | 101、102   |
 
 上表是逻辑示意，不是 FTS5 对外暴露的普通数据表。
 

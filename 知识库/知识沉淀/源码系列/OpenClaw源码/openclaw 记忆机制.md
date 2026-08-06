@@ -9,6 +9,7 @@
 	- **如何进入模型上下文**：基于 SQlite 数据库，即对两类文件向量化也存储原文。通过向量化检索（约 400 token 切块，80 token overlap）和全文检索进行检索，默认返回最多 6 条，采用混合检索，向量权重 0.7、全文 FTS 权重 **0.3**。<font color="#c0504d">并且进行记忆检索时阻塞主 Loop 进程的，这与 Claude code 的异步检索记忆机制完全不同</font>
 	- **<font font-weight="blob" color="#c0504d">何时调用长期记忆</font>**：系统 prompt 提示模型在涉及旧决策、人物、偏好、待办、日期等问题时先搜索。因此是由模型自主决策是否调用记忆检索工具
 	- **检索细节**：在bootstrap 总字符不超过150,000 时（即 AGENT.md、SOUL.md 等文件字符合集），`MEMORY.md` 在不超过 20000 字符会全量注入bootstrap，假设超过则取其头和尾凑齐 20000 字符
+	- `MEMORY.md` 与 `memory/**/*.md` 是“长期精炼层 + 明细记录层”的约定，没有索引之间的关系
 - **第三层：会话历史**
 	- **存储的内容**：每轮原始消息、工具调用、压缩摘要
 	- **代表文件**：`~/.openclaw/agents/<agentId>/sessions/*.jsonl`
@@ -27,7 +28,7 @@
 - **会话压缩**：compaction 由 Pi Agent SDK 执行：到阈值后总结较早历史，并保留最近的 `keepRecentTokens`（20000 tokens）
 - **长期记忆沉淀（memory flush）**：在压缩前让模型把重要事实写进 Markdown，避免仅存在于会话摘要中
 - **压缩阈值**：openclaw 默认是保留 200 K，即模型上下文窗口只剩下最后 200 K 时开启压缩
-- **轻量裁剪**：仅在发送给 LLM 前，裁剪旧工具结果以减少 token。启用 `cache-ttl` 模式后，默认在上下文达到 30% 时截短工具输出，达到 50% 时可清空旧工具输出；保留最近 3 个 assistant turn。但需要用户手动配置。**仅对支持prompt-cache TTL（Time To Live 存活时间） 的供应商提供，例如 Anthropic 的最大缓存时间是 1h，那么在 1 h 之前的工具调用结果，openclaw 就能去掉以此来节约上下文**
+- **轻量裁剪**：仅在发送给 LLM 前，裁剪旧工具结果以减少 token。启用 `cache-ttl` 模式后，默认在上下文达到 30% 时截断工具输出，达到 50% 时可清空旧工具输出；保留最近 3 个 assistant turn。但需要用户手动配置。**仅对支持prompt-cache TTL（Time To Live 存活时间） 的供应商提供，例如 Anthropic 的最大缓存时间是 1h，那么在 1 h 之前的工具调用结果，openclaw 就能去掉以此来节约上下文**
 ## 四、多人同时使用 openclaw 如何隔离
 
 - **方案一：相同Agent、按 session 隔离**

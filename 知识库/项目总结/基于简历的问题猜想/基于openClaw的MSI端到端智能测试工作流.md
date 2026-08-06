@@ -4,11 +4,11 @@
 草稿：两个机器人分别通过大象渠道与 openclaw 的 agent 建立了绑定关系。当你给任意一个机器人发送消息时此时就是在给 openclaw agent 发送消息。Openclaw 如何接收消息的呢？完整的消息链路是：用户（大象 App） ➔ 大象服务端 ➔ `openclaw-dxopen` 服务（接收回调） ➔ OpenClaw Channel 插件（长轮询，主动向中间服务拉取消息并回复） ➔ Agent ➔ 原路返回。
 
 **问题一细分问题 一**两个 agent 是如何相互实现通信机制？
-核心结论：openclaw-dxopen 是一个公网、状态话的“反向消息桥”。它解决的不是 Agent 推理，而是让大象服务端能把回调消息送到用户内网/本机的 openClaw，同时又让 OpenClaw 能把结果按原会话回复回大象
+核心结论：openclaw-dxopen 是一个公网、状态化的“反向消息桥”。它解决的不是 Agent 推理，而是让大象服务端能把回调消息送到用户内网/本机的 openClaw，同时又让 OpenClaw 能把结果按原会话回复给大象
 核心原理：首先大象机器人配置回调地址为 openclaw-dxopen 服务，用户给大象机器人发消息时，大象服务端主动回调公网的 openclaw-dxopen；本地（安装 openclaw 机器）的 Channel 插件主动向 openclaw-dxopen 发起长轮询；openclaw-dxopen 维护两者的临时关联关系
 
 **问题一细分问题 二**：本地的 Channel 插件主动向 openclaw-dxopen 发起长轮询，他们之间的唯一标识是什么？多个用户的机器人都配置了 openclaw-dxopen，如何精确的将消息回调到正确的机器人上？**插件启动时：先注册、再轮询**
-Channel 插件启动时，先注册再轮询，根据 Bot 的 `clientId + clientSecret` 计算 bridge Token（SHA-256(clientId:clientSecret)）；~~用 Token 再计算稳定的 clientId (channel-<hash前12位>)~~；再向 openclaw-dxopen 服务进行注册，此时注册数据不仅包含 Bot 身份，还包含消息处理策略，例如：是否接收所有群消息，还是只接收@bot 消息。**因此 openclaw-dxopen 会知道：某个大象 Bot 当前由哪个 Openclaw Channel 实例消费，以及应该如何过滤和组装事件**
+Channel 插件启动时，先注册再轮询，根据 Bot 的 `clientId + clientSecret` 计算 bridge Token（SHA-256(clientId:clientSecret)）；用 Token 再计算稳定的 clientId (channel-<hash前12位>)；再向 openclaw-dxopen 服务进行注册，此时注册数据不仅包含 Bot 身份，还包含消息处理策略，例如：是否接收所有群消息，还是只接收@bot 消息。**因此 openclaw-dxopen 会知道：某个大象 Bot 当前由哪个 Openclaw Channel 实例消费，以及应该如何过滤和组装事件**
 
 **问题一细分问题三**：长轮询机制是如何实现的**入站：大象回调如何“扭转”为 Agent 输入**
 大象回调到 openclaw-dxopen Bridge，再由本地的 Channel 插件向 openclaw-dxopen 服务发起的 HTTP 请求，每个请求最多等待 25 秒，超时后立即发起下一个请求。openclaw-dxopen 服务有消息返回时立即通过 HTTP 将消息内容返回，Channel 同时也立即再次发起一个 HTTP 请求
@@ -46,14 +46,17 @@ Channel 插件启动时，先注册再轮询，根据 Bot 的 `clientId + client
 **核心通信流程扭转**：这个渠道的核心是一个反向消息桥。大象只能回调公网服务，而 OpenClaw 多数部署在本地或内网，因此 `openclaw-dxopen` 接收大象回调并保存为带 `requestId` 的标准事件。插件启动后先注册 Bot 身份，再通过长轮询主动从 Bridge 拉取事件；收到后交给 OpenClaw 路由并派发 Agent。Agent 的结果由插件携带同一个 `requestId` 回推 Bridge，Bridge 再定位原始大象会话并发送回复。多 Agent 协作没有内部 RPC，本质是两个 Bot 在群里通过 Bridge 往返的事件驱动协作
 
 **问题一细分问题七**：做了哪些约束使得最多可以进行三轮评审
-我们把评审流程设计成一个最大三次的有限状态机，而不是让两个 Agent 根据自然语言无限互相 @。
+我们把评审流程设计成一个最大三次的有限状态机，而不是让两个 Agent 根据自然语言无限互相 @
+
+**软控制**
 - 首次生成用例后，质量运营助手创建评审任务，写入 `taskId`、`reviewRound=1`、`maxRounds=3`、分支和 commit 信息，并向审核者派审。审核者只评当前轮次，返回结构化结论。
 - 如果通过，任务进入 `APPROVED` 终态；如果需要修改，质量运营助手只有在当前轮次小于 3 时才允许修改并派发下一轮。第 3 次仍未通过时，流程直接进入 `人工Review`，通知人工介入，系统禁止自动修改和第 4 次派审。
 - 审核者一侧也做相同的上限校验，所以即使上游误发第 4 轮，它也会拒绝执行。这形成了生成方和审核方的双重约束
 
-**问题一细分问题八**：如何保证强制性的仅进行三轮评审
+**硬约束如下**
+**问题一细分问题八**：如何保证**强制性的仅进行三轮评审**
 - 不只靠消息记忆轮次，而是在系统里保存一条任务记录，用户发起用例评审时创建一个 taskId，taskId 贯穿整条链路。
-- **核心是将强制判断逻辑放在 openclaw-dxopen 实现**，把“三轮评审”设计成由 `openclaw-dxopen` 后端强制控制的工作流，而不是依赖 Agent 记住规则。每次首次派审都会生成唯一的 `taskId`，并在后端数据库保存当前轮次、最大轮次、任务状态、分支和 commit。`daxiang-openclaw-channel` 只负责消息收发和长轮询，不承载具体业务判断；质量运营助手每次准备修改并发起下一轮时，通过调用 `openclaw-dxopen` 的评审工作流接口。后端根据 `taskId` 查询任务：只有当前轮次小于 3 且任务处于允许修改状态时，才授予下一轮派审许可并真正发送消息给审核者。审核者第 3 轮仍返回未通过时，后端会原子地把任务更新为“人工审核”终态，并直接发送固定通知，同时不再把后续修改事件投递给质量运营 Agent。即使出现消息重复、Agent 忘记上下文或误发第 4 轮请求，后端也会因任务已到终态而拒绝，所以最大三轮是系统保证的，而不是提示词约束
+- **核心是将强制判断逻辑放在 openclaw-dxopen 实现**，把“三轮评审”设计成由 `openclaw-dxopen` 后端强制控制的工作流，而不是依赖 Agent 记住规则。**首先**每次首次派审都会生成唯一的 `taskId`，并在后端数据库保存当前轮次、最大轮次、任务状态、分支和 commit。`daxiang-openclaw-channel` 只负责消息收发和长轮询，不承载具体业务判断；**然后**质量运营助手每次准备修改并发起下一轮时，通过调用 `openclaw-dxopen` 的评审工作流接口。后端根据 `taskId` 查询任务：只有当前轮次小于 3 且任务处于允许修改状态时，才授予下一轮派审许可并真正发送消息给审核者。审核者第 3 轮仍返回未通过时，后端会原子地把任务更新为“人工审核”终态，并直接发送固定通知，同时不再把后续修改事件投递给质量运营 Agent。即使出现消息重复、Agent 忘记上下文或误发第 4 轮请求，后端也会因任务已到终态而拒绝，所以最大三轮是系统保证的，而不是提示词约束
 
 
 **问题二**：OpenClaw 它可以使用 CodeX 作为底层引擎，那么它的原理是什么？OpenClaw 使用 CodeX 作为底层引擎的时候，那么他们的记忆系统是如何处理的？我们已知 CodeX 中其实也是有记忆系统的。他们是如何防止 CodeX 记忆系统和 OpenClaw 的记忆系统进行相互串联的？
