@@ -8,45 +8,45 @@
         "type": "tabs",
         "children": [
           {
-            "id": "997d1a1ac4bf5128",
+            "id": "c9c47302602bf7ef",
             "type": "leaf",
             "state": {
               "type": "markdown",
               "state": {
-                "file": "知识库/项目总结/基于简历的问题猜想/基于API文档与代码一致性智能检测工具.md",
+                "file": "知识库/知识沉淀/源码系列/LangChain系列/LangChain知识.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "基于API文档与代码一致性智能检测工具"
+              "title": "LangChain知识"
             }
           },
           {
-            "id": "654c0c15c43a116a",
+            "id": "107a49553295bdd9",
             "type": "leaf",
             "state": {
               "type": "markdown",
               "state": {
-                "file": "知识库/项目总结/面试笔记/Agent相关面试题.md",
+                "file": "知识库/知识沉淀/评估体系/Agent的评估配套实验.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "Agent相关面试题"
+              "title": "Agent的评估配套实验"
             }
           },
           {
-            "id": "94194161bd77f4ef",
+            "id": "714fc43a59eb13bb",
             "type": "leaf",
             "state": {
               "type": "markdown",
               "state": {
-                "file": "知识库/项目总结/基于简历的问题猜想/trigram、FTS5 与 BM25在Continue中的作用.md",
+                "file": "知识库/收藏箱/用AI Agent做微服务系统设计.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "trigram、FTS5 与 BM25在Continue中的作用"
+              "title": "用AI Agent做微服务系统设计"
             }
           }
         ],
@@ -84,7 +84,7 @@
             "state": {
               "type": "search",
               "state": {
-                "query": "RPC ",
+                "query": "",
                 "matchingCase": false,
                 "explainSearch": false,
                 "collapseAll": false,
@@ -227,34 +227,37 @@
       "claude-sidebar:New Claude Tab": false
     }
   },
-  "active": "654c0c15c43a116a",
+  "active": "1cdfdb71f116154d",
   "lastOpenFiles": [
-    "知识库/项目总结/面试笔记/面试记录.md",
-    "知识库/知识沉淀/源码系列/LangChain系列/LangSmith.md",
-    "知识库/知识沉淀/源码系列/LangChain系列/LangChain 结构化输出.md",
-    "知识库/知识沉淀/superpower和Grill with doc的区别.md",
-    "知识库/知识沉淀/如何写好skill.md",
-    "知识库/公众号文章/Loop 机制详解：什么时候该让 AI 自己循环干活.md",
-    "知识库/公众号文章/循环（Loops）什么时候该用.md",
-    "知识库/知识沉淀/A2A 协议开发者入门.md",
+    "知识库/知识沉淀/评估体系/langSmith评估体系介绍.md",
+    "知识库/知识沉淀/评估体系/Agent的评估配套实验.md",
+    "知识库/知识沉淀/7 个 AI 编程提示词.md",
     "知识库/知识沉淀/提示词工程.md",
-    "知识库/知识沉淀/源码系列/Pi Agent源码/什么是RPC.md",
-    "知识库/项目总结/基于简历的问题猜想/基于API文档与代码一致性智能检测工具.md",
-    "知识库/项目总结/基于简历的问题猜想/trigram、FTS5 与 BM25在Continue中的作用.md",
-    "知识库/项目总结/基于简历的问题猜想/LanceDB搭配SQLite.md",
-    "知识库/项目总结/基于简历的问题猜想/基于openClaw的MSI端到端智能测试工作流.md",
-    "知识库/知识沉淀/源码系列/OpenClaw源码/openclaw 记忆机制.md",
-    "知识库/知识沉淀/源码系列/OpenClaw源码/openclaw可插拔机制.md",
-    "知识库/项目总结/基于简历的问题猜想/基于团队智能客服助手项目可能的提问.md",
+    "知识库/知识沉淀/源码系列/LangChain系列/LangChain知识.md",
+    "知识库/知识沉淀/评估体系",
+    "知识库/收藏箱/用AI Agent做微服务系统设计.md",
+    "知识库/收藏箱/RepoPrompt CE.md",
+    "知识库/收藏箱/OpenAI Tokenizer.md",
+    "知识库/复习日记/整体计划.md",
+    "知识库/待学习/学习清单.md",
+    "知识库/知识沉淀/源码系列/LangChain系列/LangChain和LangGraph核心区别.md",
+    "知识库/知识沉淀/源码系列/LangChain系列/LangSmith.md",
+    "未命名 2.md",
+    "知识库/知识沉淀/源码系列/RAG系列/四种RAG适用的场景.md",
+    "未命名 1.md",
+    "知识库/知识沉淀/源码系列/RAG系列/P4-GraphRAG.md",
+    "知识库/知识沉淀/多向量数据库对比.md",
     "知识库/知识沉淀/源码系列/RAG系列/P2-RAG在langchain中的使用记录.md",
-    "知识库/项目总结/智能客服/RAG在终端前端的应用实践.md",
     "知识库/知识沉淀/源码系列/RAG系列/向量数据库对比.md",
-    "知识库/知识沉淀/源码系列/RAG系列/P3-RAG.md",
-    "知识库/知识沉淀/源码系列/RAG系列/向量检索优化手段之-创建向量索引.md",
-    "知识库/知识沉淀/源码系列/RAG系列/Agentic RAG.md",
-    "知识库/知识沉淀/源码系列/RAG系列/混合检索结果融合与排序方法.md",
-    "知识库/知识沉淀/源码系列/RAG系列/OCR.md",
-    "知识库/知识沉淀/源码系列/RAG系列/多模态同空间检索.md",
+    "知识库/知识沉淀/Computer Use 是什么.md",
+    "知识库/知识沉淀/源码系列/LangChain系列/LangChain 结构化输出.md",
+    "知识库/知识沉淀/Agent专家标准/Agent专家能力全景.md",
+    "知识库/知识沉淀/Agent专家标准/Agent能力自检与补齐路径.md",
+    "AGENTS.md",
+    "知识库/小林大模型视频学习总结/03-第三周 openclaw.md",
+    "知识库/Agent专家标准",
+    "知识库/知识沉淀/Agent专家标准",
+    "知识库/知识沉淀/工具技巧/CodeX官方最佳实践.md",
     "知识库/知识沉淀/源码系列/LangChain系列",
     "tmp/wechat-official-draft/ocr-handdrawn-cover-v2.png",
     "tmp/wechat-official-draft/ocr-wechat.rendered.html",
@@ -271,9 +274,6 @@
     "tmp/wechat/提示词工程-手绘封面.png",
     "tmp/wechat/提示词工程-封面.png",
     "tmp/wechat/什么是RPC-封面.png",
-    "tmp/wechat/claude-code-tool-injection-cover-v2.png",
-    "知识库/知识沉淀/源码系列/Pi Agent源码",
-    "知识库/知识沉淀/源码系列/OpenClaw源码",
-    "知识库/知识沉淀/源码系列/Claude code源码"
+    "tmp/wechat/claude-code-tool-injection-cover-v2.png"
   ]
 }
