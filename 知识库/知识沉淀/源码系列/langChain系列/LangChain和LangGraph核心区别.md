@@ -42,7 +42,7 @@ LangChain 的 create_agent 会构建一个基于 LangGraph 的图运行时，例
 LangChain 的 `create_agent` 产物本身运行在 LangGraph 图运行时之上，因此二者能力会有重叠；**真正的差异在于开发者是否需要直接掌控流程拓扑、状态与恢复边界**
 
 #### 3.1 LangChain 支撑标准 Agent 与轻量定制场景的技术要点
-- **预构建 Agent Loop**：`create_agent` 已封装“模型调用 → 模型选择工具 → 执行工具 → 将结果返回模型 → 输出最终答案”的标准循环
+- **预构建 Agent Loop**：`create_agent` 已封装“模型调用 → 模型选择工具 → 执行工具 → 将结果返回模型 → 输出最终答案”的标准循环 
 
 - **工具抽象与注册**：通过 `@tool` 或工具对象定义工具名称、描述和参数 Schema
 

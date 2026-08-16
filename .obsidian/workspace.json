@@ -8,45 +8,59 @@
         "type": "tabs",
         "children": [
           {
-            "id": "c9c47302602bf7ef",
+            "id": "583ae32e9615bf66",
             "type": "leaf",
             "state": {
               "type": "markdown",
               "state": {
-                "file": "知识库/知识沉淀/源码系列/LangChain系列/LangChain知识.md",
+                "file": "知识库/项目总结/基于简历的问题猜想/文档与代码一致性【新】.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "LangChain知识"
+              "title": "文档与代码一致性【新】"
             }
           },
           {
-            "id": "107a49553295bdd9",
+            "id": "75b20553486df82c",
             "type": "leaf",
             "state": {
               "type": "markdown",
               "state": {
-                "file": "知识库/知识沉淀/评估体系/Agent的评估配套实验.md",
+                "file": "知识库/知识沉淀/源码系列/RAG系列/RAG面试题.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "Agent的评估配套实验"
+              "title": "RAG面试题"
             }
           },
           {
-            "id": "714fc43a59eb13bb",
+            "id": "4da46822243a5162",
             "type": "leaf",
             "state": {
               "type": "markdown",
               "state": {
-                "file": "知识库/收藏箱/用AI Agent做微服务系统设计.md",
+                "file": "知识库/项目总结/基于简历的问题猜想/智能客服项目【新】.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "用AI Agent做微服务系统设计"
+              "title": "智能客服项目【新】"
+            }
+          },
+          {
+            "id": "501002003b40f047",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "知识库/项目总结/基于简历的问题猜想/基于API文档与代码一致性智能检测工具.md",
+                "mode": "source",
+                "source": false
+              },
+              "icon": "lucide-file",
+              "title": "基于API文档与代码一致性智能检测工具"
             }
           }
         ],
@@ -84,8 +98,8 @@
             "state": {
               "type": "search",
               "state": {
-                "query": "",
-                "matchingCase": false,
+                "query": "SSE",
+                "matchingCase": true,
                 "explainSearch": false,
                 "collapseAll": false,
                 "extraContext": false,
@@ -227,37 +241,39 @@
       "claude-sidebar:New Claude Tab": false
     }
   },
-  "active": "1cdfdb71f116154d",
+  "active": "75b20553486df82c",
   "lastOpenFiles": [
-    "知识库/知识沉淀/评估体系/langSmith评估体系介绍.md",
-    "知识库/知识沉淀/评估体系/Agent的评估配套实验.md",
-    "知识库/知识沉淀/7 个 AI 编程提示词.md",
-    "知识库/知识沉淀/提示词工程.md",
-    "知识库/知识沉淀/源码系列/LangChain系列/LangChain知识.md",
-    "知识库/知识沉淀/评估体系",
-    "知识库/收藏箱/用AI Agent做微服务系统设计.md",
-    "知识库/收藏箱/RepoPrompt CE.md",
-    "知识库/收藏箱/OpenAI Tokenizer.md",
-    "知识库/复习日记/整体计划.md",
-    "知识库/待学习/学习清单.md",
-    "知识库/知识沉淀/源码系列/LangChain系列/LangChain和LangGraph核心区别.md",
-    "知识库/知识沉淀/源码系列/LangChain系列/LangSmith.md",
-    "未命名 2.md",
-    "知识库/知识沉淀/源码系列/RAG系列/四种RAG适用的场景.md",
-    "未命名 1.md",
-    "知识库/知识沉淀/源码系列/RAG系列/P4-GraphRAG.md",
-    "知识库/知识沉淀/多向量数据库对比.md",
+    "知识库/项目总结/基于简历的问题猜想/智能客服项目【新】.md",
+    "知识库/知识沉淀/源码系列/RAG系列/RAG面试题.md",
     "知识库/知识沉淀/源码系列/RAG系列/P2-RAG在langchain中的使用记录.md",
-    "知识库/知识沉淀/源码系列/RAG系列/向量数据库对比.md",
-    "知识库/知识沉淀/Computer Use 是什么.md",
-    "知识库/知识沉淀/源码系列/LangChain系列/LangChain 结构化输出.md",
-    "知识库/知识沉淀/Agent专家标准/Agent专家能力全景.md",
-    "知识库/知识沉淀/Agent专家标准/Agent能力自检与补齐路径.md",
-    "AGENTS.md",
-    "知识库/小林大模型视频学习总结/03-第三周 openclaw.md",
+    "知识库/知识沉淀/源码系列/RAG系列/RAG常见问题.md",
+    "知识库/项目总结/面试笔记/面试记录.md",
+    "知识库/知识沉淀/源码系列/LangChain系列/评估体系/Agent的评估配套实验.md",
+    "知识库/知识沉淀/源码系列/LangChain系列/评估体系/langSmith评估体系介绍.md",
+    "知识库/知识沉淀/源码系列/RAG系列/P3-RAG.md",
+    "知识库/知识沉淀/源码系列/RAG系列/P4-GraphRAG.md",
+    "知识库/项目总结/基于简历的问题猜想/基于团队智能客服助手项目可能的提问.md",
+    "知识库/项目总结/基于简历的问题猜想/文档与代码一致性【新】.md",
+    "知识库/项目总结/基于简历的问题猜想/基于openClaw的MSI端到端智能测试工作流.md",
+    "知识库/项目总结/面试笔记/自我介绍.md",
+    "知识库/项目总结/基于简历的问题猜想/基于API文档与代码一致性智能检测工具.md",
+    "知识库/项目总结/基于简历的问题猜想/端到端测试【新】.md",
+    "知识库/知识沉淀/源码系列/OpenClaw源码/openclaw可插拔机制.md",
+    "未命名 3.md",
+    "知识库/知识沉淀/Function Calling、Skill、MCP 这三个有什么区别.md",
+    "知识库/待调研/VERTU手机与成都祥瑞福泽商业管理有限公司的关系调研.md",
+    "知识库/知识沉淀/源码系列/RAG系列/混合检索结果融合与排序方法.md",
+    "知识库/项目总结/智能客服机器人.md",
+    "知识库/项目总结/自动化AI研发工作流.md",
+    "知识库/项目总结/基于简历的问题猜想/基于容器桥转MSI桥转码工具.md",
+    "知识库/知识沉淀/大模型工程面试题/KV Cache是什么.md",
+    "知识库/知识沉淀/大模型工程面试题/大模型知识百宝箱.md",
+    "知识库/知识沉淀/源码系列/Claude code源码/CC 多Agent机制.md",
+    "知识库/知识沉淀/Agent面试题",
+    "知识库/知识沉淀/大模型工程面试题",
+    "知识库/知识沉淀/源码系列/LangChain系列/评估体系",
     "知识库/Agent专家标准",
     "知识库/知识沉淀/Agent专家标准",
-    "知识库/知识沉淀/工具技巧/CodeX官方最佳实践.md",
     "知识库/知识沉淀/源码系列/LangChain系列",
     "tmp/wechat-official-draft/ocr-handdrawn-cover-v2.png",
     "tmp/wechat-official-draft/ocr-wechat.rendered.html",
@@ -267,10 +283,8 @@
     "Pasted image 20260731152410.png",
     "Pasted image 20260731152055.png",
     "未命名.base",
-    "知识库/知识沉淀/多向量数据库对比",
     "tmp/wechat/A2A-协议开发者入门-公众号封面-手绘版.png",
     "tmp/wechat/A2A-协议开发者入门-公众号封面.png",
-    "知识库/知识沉淀/源码系列/RAG系列",
     "tmp/wechat/提示词工程-手绘封面.png",
     "tmp/wechat/提示词工程-封面.png",
     "tmp/wechat/什么是RPC-封面.png",
