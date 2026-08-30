@@ -11,7 +11,7 @@
 #### 七、CC 上下文压缩机制 [[CC 上下文压缩机制]]
 #### 八、主循环 Loop 机制[[CC主循环Loop机制]]
 
-#### 九、多 Agent 机制 [[CC 多Agent机制]]
+#### 九、多 Agent 机制 [[Claude的多Agent设计机制]]
 #### 十、CC 检索代码机制 [[CC代码检索机制]]
 #### 十一、Boris 自己平时怎么用 Claude Code？ [[Boris 自己平时怎么用 Claude Code？]]
 #### 十二、Claude code架构文章

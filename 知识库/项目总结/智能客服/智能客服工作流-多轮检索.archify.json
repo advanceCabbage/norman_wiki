@@ -1,0 +1,54 @@
+{
+  "schema_version": 1,
+  "diagram_type": "workflow",
+  "meta": {
+    "title": "MSI 智能客服：多轮检索与知识更新工作流",
+    "locale": "zh-CN",
+    "quality_profile": "showcase",
+    "viewBox": [1320, 820]
+  },
+  "lanes": [
+    { "id": "user", "label": "用户交互" },
+    { "id": "flow", "label": "工作流编排" },
+    { "id": "code", "label": "代码检索" },
+    { "id": "rag", "label": "知识库检索" },
+    { "id": "update", "label": "知识更新" }
+  ],
+  "phases": [
+    { "id": "intake", "label": "输入", "fromCol": 0, "toCol": 0 },
+    { "id": "route", "label": "分流与校验", "fromCol": 1, "toCol": 1, "variant": "emphasis" },
+    { "id": "search", "label": "检索与判断", "fromCol": 3, "toCol": 3, "variant": "dashed" },
+    { "id": "answer", "label": "汇总与答复", "fromCol": 5, "toCol": 5, "variant": "emphasis" }
+  ],
+  "groups": [
+    { "id": "code-path", "label": "deepSearch=是：校验后并行", "lane": "flow", "fromCol": 1, "toCol": 1, "variant": "dashed" },
+    { "id": "rag-path", "label": "常规与 deepSearch 均使用", "lane": "rag", "fromCol": 1, "toCol": 1, "variant": "emphasis" },
+    { "id": "update-path", "label": "文档、TT 与反馈持续沉淀", "lane": "update", "fromCol": 1, "toCol": 1, "variant": "dashed" }
+  ],
+  "mainPath": ["question", "intent", "knowledge", "quality", "reply"],
+  "nodes": [
+    { "id": "question", "lane": "user", "col": 0, "type": "external", "label": "用户问题" },
+    { "id": "followup", "lane": "user", "col": 3, "type": "frontend", "label": "智能客服追问" },
+    { "id": "reply", "lane": "user", "col": 5, "type": "frontend", "label": "最终答复" },
+    { "id": "intent", "lane": "flow", "col": 0, "type": "backend", "label": "意图识别" },
+    { "id": "params", "lane": "flow", "col": 1, "type": "security", "label": "代码参数校验" },
+    { "id": "quality", "lane": "flow", "col": 3, "type": "backend", "label": "知识满足判断" },
+    { "id": "code", "lane": "code", "col": 5, "type": "cloud", "label": "HTTP → Claude" },
+    { "id": "knowledge", "lane": "rag", "col": 1, "type": "database", "label": "知识库检索" },
+    { "id": "update", "lane": "update", "col": 1, "type": "database", "label": "知识更新" }
+  ],
+  "edges": [
+    { "id": "question-intent", "from": "question", "to": "intent", "role": "main" },
+    { "id": "intent-knowledge", "from": "intent", "to": "knowledge", "label": "deepSearch=否", "role": "branch", "variant": "dashed" },
+    { "id": "intent-params", "from": "intent", "to": "params", "label": "deepSearch=是", "role": "branch", "variant": "dashed", "labelDy": -26 },
+    { "id": "params-followup", "from": "params", "to": "followup", "label": "信息不足", "role": "error", "variant": "security" },
+    { "id": "followup-question", "from": "followup", "to": "question", "label": "用户补充", "role": "return", "variant": "dashed", "fromSide": "left", "toSide": "left", "route": "return-left" },
+    { "id": "params-code", "from": "params", "to": "code", "label": "信息完整", "role": "async", "variant": "dashed" },
+    { "id": "params-knowledge", "from": "params", "to": "knowledge", "role": "async", "variant": "dashed", "fromSide": "bottom", "toSide": "top", "route": "drop" },
+    { "id": "knowledge-quality", "from": "knowledge", "to": "quality", "label": "检索证据", "role": "main", "fromSide": "right", "toSide": "right", "via": [[800, 491], [800, 243]] },
+    { "id": "quality-followup", "from": "quality", "to": "followup", "label": "不满足", "role": "error", "variant": "security" },
+    { "id": "quality-reply", "from": "quality", "to": "reply", "label": "知识证据", "role": "main" },
+    { "id": "code-quality", "from": "code", "to": "quality", "label": "源码结论", "role": "async", "variant": "dashed", "fromSide": "bottom", "toSide": "bottom", "via": [[625, 410], [430, 410], [430, 310]], "labelAt": [530, 410] },
+    { "id": "update-knowledge", "from": "update", "to": "knowledge", "label": "增量更新", "role": "return", "variant": "dashed" }
+  ]
+}

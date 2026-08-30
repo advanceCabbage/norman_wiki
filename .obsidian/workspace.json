@@ -4,44 +4,16 @@
     "type": "split",
     "children": [
       {
-        "id": "832596f6fe9aba97",
+        "id": "307ff78564fa5cb3",
         "type": "tabs",
         "children": [
           {
-            "id": "583ae32e9615bf66",
+            "id": "eabe684a91fcd06d",
             "type": "leaf",
             "state": {
               "type": "markdown",
               "state": {
-                "file": "知识库/项目总结/基于简历的问题猜想/文档与代码一致性【新】.md",
-                "mode": "source",
-                "source": false
-              },
-              "icon": "lucide-file",
-              "title": "文档与代码一致性【新】"
-            }
-          },
-          {
-            "id": "75b20553486df82c",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "知识库/知识沉淀/源码系列/RAG系列/RAG面试题.md",
-                "mode": "source",
-                "source": false
-              },
-              "icon": "lucide-file",
-              "title": "RAG面试题"
-            }
-          },
-          {
-            "id": "4da46822243a5162",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "知识库/项目总结/基于简历的问题猜想/智能客服项目【新】.md",
+                "file": "知识库/知识沉淀/面试参考题目/智能客服项目【新】.md",
                 "mode": "source",
                 "source": false
               },
@@ -50,17 +22,59 @@
             }
           },
           {
-            "id": "501002003b40f047",
+            "id": "f57a1a40ab34e66d",
             "type": "leaf",
             "state": {
               "type": "markdown",
               "state": {
-                "file": "知识库/项目总结/基于简历的问题猜想/基于API文档与代码一致性智能检测工具.md",
+                "file": "知识库/知识沉淀/面试参考题目/智能客服项目【新】.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "基于API文档与代码一致性智能检测工具"
+              "title": "智能客服项目【新】"
+            }
+          },
+          {
+            "id": "fabdde098c16a676",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "知识库/知识沉淀/面试参考题目/文档与代码一致性【新】.md",
+                "mode": "source",
+                "source": false
+              },
+              "icon": "lucide-file",
+              "title": "文档与代码一致性【新】"
+            }
+          },
+          {
+            "id": "8c751e2812ef52d4",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "知识库/知识沉淀/面试参考题目/Agent面试题/长流程Agent框架机制.md",
+                "mode": "source",
+                "source": false
+              },
+              "icon": "lucide-file",
+              "title": "长流程Agent框架机制"
+            }
+          },
+          {
+            "id": "74cb3c346ac97149",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "知识库/知识沉淀/Ai Coding全流程能力.md",
+                "mode": "source",
+                "source": false
+              },
+              "icon": "lucide-file",
+              "title": "Ai Coding全流程能力"
             }
           }
         ],
@@ -241,53 +255,52 @@
       "claude-sidebar:New Claude Tab": false
     }
   },
-  "active": "75b20553486df82c",
+  "active": "f57a1a40ab34e66d",
   "lastOpenFiles": [
-    "知识库/项目总结/基于简历的问题猜想/智能客服项目【新】.md",
-    "知识库/知识沉淀/源码系列/RAG系列/RAG面试题.md",
-    "知识库/知识沉淀/源码系列/RAG系列/P2-RAG在langchain中的使用记录.md",
-    "知识库/知识沉淀/源码系列/RAG系列/RAG常见问题.md",
+    "知识库/知识沉淀/面试参考题目/二面思路.md",
+    "知识库/项目总结/智能客服/智能客服工作流-解耦分支-v2.visual-check.json",
+    "知识库/项目总结/智能客服/智能客服工作流-解耦分支-v2.visual-check.html",
+    "知识库/项目总结/智能客服/智能客服工作流-解耦分支-v2.visual-check.2048x1320.dark.png",
+    "知识库/项目总结/智能客服/智能客服工作流-解耦分支-v2.visual-check.1440x900.dark.png",
+    "知识库/项目总结/智能客服/智能客服工作流-解耦分支-v2.visual-check.2048x1320.light.png",
+    "知识库/项目总结/智能客服/智能客服工作流-解耦分支-v2.visual-check.1440x900.light.png",
+    "知识库/项目总结/智能客服/智能客服工作流-解耦分支-v2.html",
+    "知识库/项目总结/智能客服/智能客服工作流-解耦分支-v2.archify.json",
+    "图片/archify-封面-手绘.svg.html",
+    "图片/archify-封面-手绘.png",
+    "知识库/项目总结/智能客服/智能客服工作流-解耦分支.visual-check.json",
+    "知识库/项目总结/智能客服/智能客服工作流-解耦分支.visual-check.html",
+    "知识库/项目总结/智能客服/智能客服工作流-解耦分支.visual-check.2048x1320.dark.png",
+    "知识库/项目总结/智能客服/智能客服工作流-解耦分支.visual-check.1440x900.dark.png",
+    "知识库/项目总结/智能客服/智能客服工作流-解耦分支.visual-check.2048x1320.light.png",
+    "知识库/项目总结/智能客服/智能客服工作流-解耦分支.visual-check.1440x900.light.png",
+    "知识库/项目总结/智能客服/智能客服工作流-解耦分支.html",
+    "知识库/项目总结/智能客服/智能客服工作流-解耦分支.archify.json",
+    "图片/archify-workflow.png",
+    "知识库/公众号文章/31K Star 的 Archify：一句话生成可交互的架构图.md",
+    "知识库/项目总结/智能客服/智能客服工作流-多轮检索.visual-check.json",
+    "知识库/知识沉淀/面试参考题目/智能客服项目【新】.md",
+    "知识库/待调研/RAG 表格切分与完整检索.md",
     "知识库/项目总结/面试笔记/面试记录.md",
-    "知识库/知识沉淀/源码系列/LangChain系列/评估体系/Agent的评估配套实验.md",
-    "知识库/知识沉淀/源码系列/LangChain系列/评估体系/langSmith评估体系介绍.md",
-    "知识库/知识沉淀/源码系列/RAG系列/P3-RAG.md",
-    "知识库/知识沉淀/源码系列/RAG系列/P4-GraphRAG.md",
-    "知识库/项目总结/基于简历的问题猜想/基于团队智能客服助手项目可能的提问.md",
-    "知识库/项目总结/基于简历的问题猜想/文档与代码一致性【新】.md",
+    "知识库/知识沉淀/源码系列/Claude code源码/CC 上下文压缩机制.md",
+    "知识库/知识沉淀/面试参考题目/文档与代码一致性【新】.md",
+    "知识库/项目总结/文档一致性调研文档/Serena 原理揭秘.md",
+    "知识库/项目总结/文档一致性调研文档/LSP与Serena.md",
+    "知识库/项目总结/文档一致性调研文档/智能文档校准工具方案.md",
+    "知识库/项目总结/文档一致性调研文档/智能文档校准工具方案调研.md",
+    "知识库/项目总结/文档一致性调研文档/【精】 业内外CodeBase原理分析.md",
+    "知识库/项目总结/文档代码一致性智能检测工具.md",
+    "知识库/知识沉淀/面试参考题目/端到端测试【新】.md",
+    "知识库/项目总结/自动化测试工作流/MSI端到端智能测试应用实践.md",
+    "知识库/项目总结/自动化测试工作流/EC 用例评审 — 设计规则速查表.md",
+    "知识库/项目总结/自动化测试工作流/生成测试用例SKill.md",
+    "知识库/项目总结/自动化测试工作流/评审EC用例SKill — 规范符合性说明.md",
+    "知识库/项目总结/自动化测试工作流/评审EC用例SKill.md",
+    "知识库/项目总结/自动化测试工作流/评审EC用例 — 规则与报告模板.md",
+    "知识库/项目总结/自动化测试工作流/评审可执行测试用例SKill.md",
     "知识库/项目总结/基于简历的问题猜想/基于openClaw的MSI端到端智能测试工作流.md",
-    "知识库/项目总结/面试笔记/自我介绍.md",
-    "知识库/项目总结/基于简历的问题猜想/基于API文档与代码一致性智能检测工具.md",
-    "知识库/项目总结/基于简历的问题猜想/端到端测试【新】.md",
-    "知识库/知识沉淀/源码系列/OpenClaw源码/openclaw可插拔机制.md",
-    "未命名 3.md",
-    "知识库/知识沉淀/Function Calling、Skill、MCP 这三个有什么区别.md",
-    "知识库/待调研/VERTU手机与成都祥瑞福泽商业管理有限公司的关系调研.md",
-    "知识库/知识沉淀/源码系列/RAG系列/混合检索结果融合与排序方法.md",
     "知识库/项目总结/智能客服机器人.md",
-    "知识库/项目总结/自动化AI研发工作流.md",
-    "知识库/项目总结/基于简历的问题猜想/基于容器桥转MSI桥转码工具.md",
-    "知识库/知识沉淀/大模型工程面试题/KV Cache是什么.md",
-    "知识库/知识沉淀/大模型工程面试题/大模型知识百宝箱.md",
-    "知识库/知识沉淀/源码系列/Claude code源码/CC 多Agent机制.md",
-    "知识库/知识沉淀/Agent面试题",
-    "知识库/知识沉淀/大模型工程面试题",
-    "知识库/知识沉淀/源码系列/LangChain系列/评估体系",
-    "知识库/Agent专家标准",
-    "知识库/知识沉淀/Agent专家标准",
-    "知识库/知识沉淀/源码系列/LangChain系列",
-    "tmp/wechat-official-draft/ocr-handdrawn-cover-v2.png",
-    "tmp/wechat-official-draft/ocr-wechat.rendered.html",
-    "tmp/wechat-official-draft/ocr-handdrawn-cover.png",
-    "tmp/wechat-official-draft",
-    "知识库/知识沉淀/工具技巧",
-    "Pasted image 20260731152410.png",
-    "Pasted image 20260731152055.png",
-    "未命名.base",
-    "tmp/wechat/A2A-协议开发者入门-公众号封面-手绘版.png",
-    "tmp/wechat/A2A-协议开发者入门-公众号封面.png",
-    "tmp/wechat/提示词工程-手绘封面.png",
-    "tmp/wechat/提示词工程-封面.png",
-    "tmp/wechat/什么是RPC-封面.png",
-    "tmp/wechat/claude-code-tool-injection-cover-v2.png"
+    "知识库/项目总结/智能客服/RAG在终端前端的应用实践.md",
+    "知识库/项目总结/面试笔记/Agent相关面试题.md"
   ]
 }

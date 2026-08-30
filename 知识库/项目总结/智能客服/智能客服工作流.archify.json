@@ -1,0 +1,78 @@
+{
+  "schema_version": 1,
+  "diagram_type": "workflow",
+  "meta": {
+    "title": "MSI 智能客服工作流",
+    "locale": "zh-CN",
+    "quality_profile": "showcase",
+    "viewBox": [820, 900]
+  },
+  "lanes": [
+    { "id": "user", "label": "研发用户" },
+    { "id": "service", "label": "客服编排层" },
+    { "id": "sources", "label": "知识与源码能力" },
+    { "id": "outcome", "label": "答复与业务结果" },
+    { "id": "improve", "label": "持续优化" }
+  ],
+  "phases": [
+    { "id": "intake", "label": "问题接入", "fromCol": 0, "toCol": 1 },
+    { "id": "resolve", "label": "检索与分析", "fromCol": 2, "toCol": 4, "variant": "emphasis" },
+    { "id": "feedback", "label": "交付与回流", "fromCol": 5, "toCol": 5, "variant": "dashed" }
+  ],
+  "groups": [
+    { "id": "retrieval", "label": "依据优先", "lane": "sources", "fromCol": 2, "toCol": 3, "variant": "emphasis" },
+    { "id": "learning", "label": "失败样本闭环", "lane": "improve", "fromCol": 4, "toCol": 5, "variant": "dashed" }
+  ],
+  "mainPath": ["question", "route", "retrieve", "merge", "answer"],
+  "nodes": [
+    { "id": "question", "lane": "user", "col": 0, "type": "external", "label": "研发咨询", "sublabel": "API 与接入问题" },
+    { "id": "route", "lane": "service", "col": 1, "type": "backend", "label": "意图路由", "sublabel": "识别问题与上下文" },
+    { "id": "retrieve", "lane": "sources", "col": 2, "type": "database", "label": "混合检索", "sublabel": "向量 + 关键词" },
+    { "id": "code", "lane": "sources", "col": 3, "type": "cloud", "label": "源码分析", "sublabel": "Claude SDK 只读检索", "tag": "按需触发" },
+    { "id": "merge", "lane": "service", "col": 4, "type": "backend", "label": "证据汇总", "sublabel": "排序、过滤与归纳" },
+    { "id": "answer", "lane": "user", "col": 5, "type": "frontend", "label": "结构化答复", "sublabel": "答复、追问或转人工" },
+    { "id": "feedback", "lane": "outcome", "col": 5, "type": "messagebus", "label": "反馈信号", "sublabel": "点踩与再次提 TT" },
+    { "id": "classify", "lane": "improve", "col": 4, "type": "backend", "label": "失败归因", "sublabel": "文档、时效、路由或回答" },
+    { "id": "refresh", "lane": "improve", "col": 5, "type": "database", "label": "知识更新", "sublabel": "同步文档与评测集" }
+  ],
+  "edges": [
+    { "id": "question-route", "from": "question", "to": "route", "role": "main" },
+    { "id": "route-retrieve", "from": "route", "to": "retrieve", "role": "main" },
+    { "id": "route-code", "from": "route", "to": "code", "role": "branch", "variant": "dashed", "fromSide": "bottom", "toSide": "bottom", "route": "bottom-channel" },
+    { "id": "retrieve-merge", "from": "retrieve", "to": "merge", "role": "main" },
+    { "id": "code-merge", "from": "code", "to": "merge", "role": "async", "variant": "dashed" },
+    { "id": "merge-answer", "from": "merge", "to": "answer", "role": "main" },
+    { "id": "answer-feedback", "from": "answer", "to": "feedback", "role": "branch", "variant": "dashed" },
+    { "id": "feedback-classify", "from": "feedback", "to": "classify", "role": "return", "variant": "dashed" },
+    { "id": "classify-refresh", "from": "classify", "to": "refresh", "role": "main" }
+  ],
+  "cards": [
+    {
+      "dot": "cyan",
+      "title": "知识可信度",
+      "items": [
+        "API 文档：摘要召回 + 全文返回的双通道索引",
+        "历史 TT：模型总结、筛选与人工抽检后准入",
+        "文档更新自动触发索引覆盖更新"
+      ]
+    },
+    {
+      "dot": "amber",
+      "title": "风险分流",
+      "items": [
+        "信息不足时追问 API、端、环境与现象",
+        "实现细节问题才触发只读源码检索",
+        "无可靠依据时转人工，不强答"
+      ]
+    },
+    {
+      "dot": "emerald",
+      "title": "效果验证",
+      "items": [
+        "在线：点踩、会话复盘、再次提 TT",
+        "离线：检索、路由、追问与回答评测",
+        "失败样本进入下一轮知识与评测优化"
+      ]
+    }
+  ]
+}

@@ -1,0 +1,147 @@
+<!doctype html><meta charset="utf-8">
+<style>
+  html,body{margin:0;padding:0;background:#fff}
+  svg{display:block}
+</style>
+<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="720" viewBox="0 0 1280 720">
+  <defs>
+    <filter id="rough" x="-8%" y="-8%" width="116%" height="116%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.022" numOctaves="3" seed="7" result="n"/>
+      <feDisplacementMap in="SourceGraphic" in2="n" scale="3.4" xChannelSelector="R" yChannelSelector="G"/>
+    </filter>
+    <filter id="rough2" x="-8%" y="-8%" width="116%" height="116%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.03" numOctaves="3" seed="19" result="n"/>
+      <feDisplacementMap in="SourceGraphic" in2="n" scale="2.4" xChannelSelector="R" yChannelSelector="G"/>
+    </filter>
+    <filter id="paper">
+      <feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="4" result="t"/>
+      <feColorMatrix in="t" type="saturate" values="0"/>
+    </filter>
+    <pattern id="grid" width="34" height="34" patternUnits="userSpaceOnUse">
+      <path d="M34 0H0V34" fill="none" stroke="#2a2f36" stroke-width="1" opacity="0.055"/>
+    </pattern>
+  </defs>
+
+  <!-- paper -->
+  <rect width="1280" height="720" fill="#f6f3ea"/>
+  <rect width="1280" height="720" fill="url(#grid)"/>
+  <rect width="1280" height="720" filter="url(#paper)" opacity="0.05" style="mix-blend-mode:multiply"/>
+
+  <g stroke-linecap="round" stroke-linejoin="round">
+
+  <!-- ============ WHITEBOARD ============ -->
+  <g filter="url(#rough)">
+    <!-- easel legs -->
+    <path d="M470 606 L452 668" stroke="#2a2f36" stroke-width="5" fill="none"/>
+    <path d="M1128 606 L1148 668" stroke="#2a2f36" stroke-width="5" fill="none"/>
+    <!-- board -->
+    <rect x="432" y="96" width="734" height="512" rx="14" fill="#fffdf7" stroke="#2a2f36" stroke-width="6"/>
+    <!-- tray -->
+    <path d="M452 612 H1146" stroke="#2a2f36" stroke-width="7" fill="none"/>
+  </g>
+
+  <!-- diagram on the board -->
+  <g filter="url(#rough2)">
+    <!-- row 1 -->
+    <rect x="486" y="212" width="132" height="66" rx="12" fill="#e6f4ee" stroke="#2f9e6e" stroke-width="4"/>
+    <rect x="690" y="212" width="132" height="66" rx="12" fill="#e2f1f6" stroke="#1f8ba3" stroke-width="4"/>
+    <rect x="900" y="150" width="126" height="60" rx="12" fill="#f1ecfa" stroke="#7a5cc4" stroke-width="4"/>
+    <rect x="900" y="288" width="126" height="60" rx="12" fill="#fdeee2" stroke="#d1732c" stroke-width="4"/>
+    <!-- row 2 -->
+    <rect x="588" y="404" width="138" height="62" rx="12" fill="#fdeef1" stroke="#c8446a" stroke-width="4"/>
+    <rect x="806" y="404" width="138" height="62" rx="12" fill="#eef2e4" stroke="#6b8f3a" stroke-width="4"/>
+
+    <!-- arrows -->
+    <path d="M618 245 H676" stroke="#2a2f36" stroke-width="4" fill="none"/>
+    <path d="M676 245 l-13 -7 M676 245 l-13 7" stroke="#2a2f36" stroke-width="4" fill="none"/>
+
+    <path d="M822 238 C862 232 866 190 886 182" stroke="#2a2f36" stroke-width="4" fill="none"/>
+    <path d="M886 182 l-14 1 M886 182 l-9 11" stroke="#2a2f36" stroke-width="4" fill="none"/>
+
+    <path d="M822 256 C862 262 866 306 886 314" stroke="#2a2f36" stroke-width="4" fill="none"/>
+    <path d="M886 314 l-14 -2 M886 314 l-8 -11" stroke="#2a2f36" stroke-width="4" fill="none"/>
+
+    <path d="M756 278 C756 340 660 348 658 392" stroke="#2a2f36" stroke-width="4" stroke-dasharray="11 9" fill="none"/>
+    <path d="M658 392 l-8 -12 M658 392 l10 -10" stroke="#2a2f36" stroke-width="4" fill="none"/>
+
+    <path d="M726 435 H794" stroke="#2a2f36" stroke-width="4" fill="none"/>
+    <path d="M794 435 l-13 -7 M794 435 l-13 7" stroke="#2a2f36" stroke-width="4" fill="none"/>
+
+    <path d="M963 348 C963 392 950 400 944 420" stroke="#2a2f36" stroke-width="4" stroke-dasharray="11 9" fill="none"/>
+    <path d="M944 420 l11 -9 M944 420 l1 -14" stroke="#2a2f36" stroke-width="4" fill="none"/>
+  </g>
+
+  <!-- board text -->
+  <g font-family="'Bradley Hand','Chalkboard SE',cursive" font-weight="700" text-anchor="middle" fill="#22272e">
+    <text x="552" y="252" font-size="23">User</text>
+    <text x="756" y="252" font-size="23">API</text>
+    <text x="963" y="188" font-size="21">Cache</text>
+    <text x="963" y="326" font-size="21">DB</text>
+    <text x="657" y="443" font-size="21">Auth</text>
+    <text x="875" y="443" font-size="21">Queue</text>
+  </g>
+
+  <!-- board header -->
+  <text x="486" y="160" font-family="'Bradley Hand','Chalkboard SE',cursive" font-weight="700"
+        font-size="40" fill="#1f8ba3">Archify</text>
+  <g filter="url(#rough2)">
+    <path d="M488 172 H648" stroke="#e0902f" stroke-width="6" fill="none" opacity="0.85"/>
+  </g>
+
+  <!-- ============ ROBOT ============ -->
+  <g filter="url(#rough)">
+    <!-- antenna -->
+    <path d="M198 236 V196" stroke="#2a2f36" stroke-width="6" fill="none"/>
+    <circle cx="198" cy="186" r="13" fill="#e0902f" stroke="#2a2f36" stroke-width="5"/>
+    <!-- head -->
+    <rect x="118" y="238" width="164" height="128" rx="26" fill="#eef4f6" stroke="#2a2f36" stroke-width="6"/>
+    <!-- ears -->
+    <rect x="100" y="284" width="20" height="40" rx="8" fill="#dfe8ec" stroke="#2a2f36" stroke-width="5"/>
+    <rect x="280" y="284" width="20" height="40" rx="8" fill="#dfe8ec" stroke="#2a2f36" stroke-width="5"/>
+    <!-- eyes -->
+    <circle cx="166" cy="294" r="17" fill="#fff" stroke="#2a2f36" stroke-width="5"/>
+    <circle cx="234" cy="294" r="17" fill="#fff" stroke="#2a2f36" stroke-width="5"/>
+    <circle cx="170" cy="297" r="7" fill="#22272e"/>
+    <circle cx="238" cy="297" r="7" fill="#22272e"/>
+    <!-- smile -->
+    <path d="M168 330 Q200 352 232 330" stroke="#2a2f36" stroke-width="5" fill="none"/>
+    <!-- neck -->
+    <path d="M200 366 V386" stroke="#2a2f36" stroke-width="6" fill="none"/>
+    <!-- body -->
+    <rect x="128" y="386" width="146" height="150" rx="22" fill="#e6f4ee" stroke="#2a2f36" stroke-width="6"/>
+    <circle cx="178" cy="432" r="11" fill="#2f9e6e" stroke="#2a2f36" stroke-width="4"/>
+    <path d="M204 432 H244" stroke="#2a2f36" stroke-width="4" fill="none"/>
+    <path d="M158 470 H244" stroke="#2a2f36" stroke-width="4" fill="none"/>
+    <path d="M158 494 H216" stroke="#2a2f36" stroke-width="4" fill="none"/>
+    <!-- left arm -->
+    <path d="M130 428 C94 442 86 480 104 506" stroke="#2a2f36" stroke-width="6" fill="none"/>
+    <circle cx="106" cy="514" r="14" fill="#eef4f6" stroke="#2a2f36" stroke-width="5"/>
+    <!-- right arm reaching to board -->
+    <path d="M274 410 C330 380 368 336 402 300" stroke="#2a2f36" stroke-width="6" fill="none"/>
+    <!-- hand -->
+    <circle cx="408" cy="294" r="15" fill="#eef4f6" stroke="#2a2f36" stroke-width="5"/>
+    <!-- legs -->
+    <path d="M166 536 V584" stroke="#2a2f36" stroke-width="6" fill="none"/>
+    <path d="M236 536 V584" stroke="#2a2f36" stroke-width="6" fill="none"/>
+    <path d="M146 588 H188" stroke="#2a2f36" stroke-width="7" fill="none"/>
+    <path d="M216 588 H258" stroke="#2a2f36" stroke-width="7" fill="none"/>
+  </g>
+
+  <!-- marker in hand -->
+  <g filter="url(#rough2)" transform="rotate(-38 424 282)">
+    <rect x="404" y="268" width="72" height="26" rx="7" fill="#e0902f" stroke="#2a2f36" stroke-width="5"/>
+    <path d="M476 272 l20 9 -20 9 Z" fill="#22272e" stroke="#2a2f36" stroke-width="4"/>
+  </g>
+
+  <!-- sparkles -->
+  <g stroke="#e0902f" stroke-width="4" fill="none" filter="url(#rough2)">
+    <path d="M352 178 v22 M341 189 h22"/>
+    <path d="M328 236 v14 M321 243 h14"/>
+    <path d="M382 132 v16 M374 140 h16"/>
+  </g>
+
+  <!-- tagline -->
+  <text x="104" y="622" font-family="'HanziPen SC','Hannotate SC','PingFang SC',sans-serif"
+        font-weight="700" font-size="34" fill="#22272e">一句话，画出架构图</text>
+  </g>
+</svg>

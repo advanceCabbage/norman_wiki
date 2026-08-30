@@ -1,0 +1,49 @@
+{
+  "schema_version": 1,
+  "diagram_type": "workflow",
+  "meta": {
+    "title": "MSI 智能客服：deepSearch 编排工作流",
+    "locale": "zh-CN",
+    "quality_profile": "showcase",
+    "viewBox": [1180, 700]
+  },
+  "lanes": [
+    { "id": "user", "label": "用户交互" },
+    { "id": "agent", "label": "工作流编排" },
+    { "id": "knowledge", "label": "知识库检索" },
+    { "id": "maintenance", "label": "知识库更新" }
+  ],
+  "phases": [
+    { "id": "intake", "label": "输入与分流", "fromCol": 0, "toCol": 1 },
+    { "id": "analysis", "label": "检索与分析", "fromCol": 2, "toCol": 3, "variant": "emphasis" },
+    { "id": "reply-phase", "label": "汇总与答复", "fromCol": 4, "toCol": 5, "variant": "dashed" }
+  ],
+  "groups": [
+    { "id": "code-path", "label": "仅 deepSearch 触发", "lane": "agent", "fromCol": 3, "toCol": 5, "variant": "dashed" },
+    { "id": "rag-path", "label": "所有请求进入", "lane": "knowledge", "fromCol": 2, "toCol": 5, "variant": "emphasis" },
+    { "id": "sync-path", "label": "文档与历史 TT 持续更新", "lane": "maintenance", "fromCol": 1, "toCol": 2, "variant": "dashed" }
+  ],
+  "mainPath": ["query", "intent", "retrieve", "rrf", "reply"],
+  "nodes": [
+    { "id": "query", "lane": "user", "col": 0, "type": "external", "label": "用户问题", "sublabel": "API、端与问题现象" },
+    { "id": "clarify", "lane": "user", "col": 1, "type": "frontend", "label": "礼貌追问", "sublabel": "补充 API 名与端" },
+    { "id": "reply", "lane": "user", "col": 5, "type": "frontend", "label": "最终答复", "sublabel": "RAG 与源码结论汇总" },
+    { "id": "intent", "lane": "agent", "col": 1, "type": "backend", "label": "意图识别", "sublabel": "是否含 deepSearch" },
+    { "id": "validate", "lane": "agent", "col": 3, "type": "security", "label": "小模型校验", "sublabel": "检查 API 名与端" },
+    { "id": "code", "lane": "agent", "col": 5, "type": "cloud", "label": "HTTP → Claude", "sublabel": "SDK 源码任务分析" },
+    { "id": "retrieve", "lane": "knowledge", "col": 2, "type": "database", "label": "混合检索", "sublabel": "双路各召回 20 条" },
+    { "id": "rrf", "lane": "knowledge", "col": 4, "type": "backend", "label": "并集去重 + RRF", "sublabel": "保留 Top-20 片段" },
+    { "id": "update", "lane": "maintenance", "col": 1, "type": "database", "label": "知识更新", "sublabel": "文档变更、TT 准入" }
+  ],
+  "edges": [
+    { "id": "query-intent", "from": "query", "to": "intent", "role": "main" },
+    { "id": "intent-retrieve", "from": "intent", "to": "retrieve", "label": "知识库（始终）", "role": "main" },
+    { "id": "intent-validate", "from": "intent", "to": "validate", "label": "deepSearch=是", "role": "branch", "variant": "dashed" },
+    { "id": "validate-clarify", "from": "validate", "to": "clarify", "label": "信息不足", "role": "error", "variant": "security" },
+    { "id": "validate-code", "from": "validate", "to": "code", "label": "信息完整", "role": "main" },
+    { "id": "retrieve-rrf", "from": "retrieve", "to": "rrf", "label": "40 个候选", "role": "main" },
+    { "id": "rrf-reply", "from": "rrf", "to": "reply", "label": "Top-20 片段", "role": "main", "fromSide": "right", "toSide": "right", "route": "outside-right", "labelAt": [692, 405] },
+    { "id": "code-reply", "from": "code", "to": "reply", "label": "源码结论", "role": "async", "variant": "dashed", "fromSide": "right", "toSide": "right", "route": "outside-right", "channelX": 720, "labelAt": [750, 285] },
+    { "id": "update-retrieve", "from": "update", "to": "retrieve", "label": "更新索引", "role": "return", "variant": "dashed" }
+  ]
+}

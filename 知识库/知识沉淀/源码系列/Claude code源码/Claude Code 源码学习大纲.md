@@ -101,7 +101,7 @@ Prompt  Tool Runtime       Session          Context Governance
 
 ### 2.6 Multi-Agent：隔离、通信与并发，而不是“多开几个模型”
 
-对应笔记：[CC 多Agent机制](CC%20多Agent机制.md)。
+对应笔记：[Claude的多Agent设计机制](Claude的多Agent设计机制.md)。
 
 - **常规 Subagent**：父子型。子 Agent 的读文件状态复制，禁止任意写全局 UI 状态，仅保留后台任务登记通路；深度受限以避免递归失控。
 - **工具隔离**：子 Agent 不可再派 Agent、不可抢用户问答权、不可切换 Plan Mode、不可停止其他任务；后台 Agent 进一步采用白名单。

@@ -1,0 +1,55 @@
+{
+  "schema_version": 1,
+  "diagram_type": "workflow",
+  "meta": {
+    "title": "MSI 智能客服：deepSearch 分流工作流",
+    "locale": "zh-CN",
+    "quality_profile": "showcase",
+    "viewBox": [1320, 820]
+  },
+  "lanes": [
+    { "id": "user", "label": "用户交互" },
+    { "id": "flow", "label": "工作流编排" },
+    { "id": "code", "label": "代码检索" },
+    { "id": "rag", "label": "知识库检索" },
+    { "id": "update", "label": "知识库更新" }
+  ],
+  "phases": [
+    { "id": "intake", "label": "输入", "fromCol": 0, "toCol": 0 },
+    { "id": "route", "label": "意图分流", "fromCol": 1, "toCol": 1, "variant": "emphasis" },
+    { "id": "search", "label": "检索、分析与答复", "fromCol": 3, "toCol": 5, "variant": "dashed" }
+  ],
+  "groups": [
+    { "id": "deepsearch-path", "label": "deepSearch=是：并行代码 + 知识库", "lane": "flow", "fromCol": 1, "toCol": 1, "variant": "dashed" },
+    { "id": "rag-path", "label": "知识库检索：两条分支均汇入", "lane": "rag", "fromCol": 1, "toCol": 5, "variant": "emphasis" },
+    { "id": "update-path", "label": "文档与 TT 持续更新", "lane": "update", "fromCol": 1, "toCol": 1, "variant": "dashed" }
+  ],
+  "mainPath": ["query", "intent", "knowledge-base", "hybrid", "rrf", "reply"],
+  "nodes": [
+    { "id": "query", "lane": "user", "col": 0, "type": "external", "label": "用户问题" },
+    { "id": "clarify", "lane": "user", "col": 3, "type": "frontend", "label": "礼貌追问" },
+    { "id": "reply", "lane": "user", "col": 5, "type": "frontend", "label": "最终答复" },
+    { "id": "intent", "lane": "flow", "col": 0, "type": "backend", "label": "意图识别" },
+    { "id": "parallel", "lane": "flow", "col": 1, "type": "messagebus", "label": "并行分流" },
+    { "id": "validate", "lane": "code", "col": 3, "type": "security", "label": "小模型校验" },
+    { "id": "claude", "lane": "code", "col": 5, "type": "cloud", "label": "HTTP → Claude" },
+    { "id": "knowledge-base", "lane": "rag", "col": 1, "type": "database", "label": "知识库节点" },
+    { "id": "hybrid", "lane": "rag", "col": 3, "type": "database", "label": "混合检索" },
+    { "id": "rrf", "lane": "rag", "col": 5, "type": "backend", "label": "去重 + RRF" },
+    { "id": "sync", "lane": "update", "col": 1, "type": "database", "label": "知识更新" }
+  ],
+  "edges": [
+    { "id": "query-intent", "from": "query", "to": "intent", "role": "main" },
+    { "id": "intent-kb", "from": "intent", "to": "knowledge-base", "label": "deepSearch=否", "role": "branch", "variant": "dashed", "fromSide": "bottom", "toSide": "top", "via": [[88, 352], [120, 352], [120, 425], [220, 425]], "labelSegment": 1, "labelDy": 14 },
+    { "id": "intent-parallel", "from": "intent", "to": "parallel", "label": "deepSearch=是", "role": "branch", "variant": "dashed", "labelDy": -26 },
+    { "id": "parallel-validate", "from": "parallel", "to": "validate", "role": "async", "variant": "dashed" },
+    { "id": "parallel-kb", "from": "parallel", "to": "knowledge-base", "role": "async", "variant": "dashed", "fromSide": "bottom", "toSide": "top", "route": "drop" },
+    { "id": "validate-clarify", "from": "validate", "to": "clarify", "label": "信息不足", "role": "error", "variant": "security" },
+    { "id": "validate-claude", "from": "validate", "to": "claude", "label": "信息完整", "role": "async", "variant": "dashed" },
+    { "id": "kb-hybrid", "from": "knowledge-base", "to": "hybrid", "label": "检索请求", "role": "main" },
+    { "id": "hybrid-rrf", "from": "hybrid", "to": "rrf", "label": "40 个候选", "role": "main" },
+    { "id": "rrf-reply", "from": "rrf", "to": "reply", "label": "Top-20 片段", "role": "main", "fromSide": "right", "toSide": "right", "route": "outside-right", "channelX": 860 },
+    { "id": "claude-reply", "from": "claude", "to": "reply", "label": "源码结论", "role": "async", "variant": "dashed" },
+    { "id": "sync-kb", "from": "sync", "to": "knowledge-base", "label": "更新索引", "role": "return", "variant": "dashed" }
+  ]
+}
