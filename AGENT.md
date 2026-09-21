@@ -61,6 +61,7 @@ norman_wiki
     │   ├── 冴羽·工程师的硬核成长指南.md
     │   └── 转型Agent全栈工程师：企业级知识库项目（神光）.md
     ├── 待学习
+    │   ├── Coding Agent 上下文检索原理与资料.md
     │   └── 学习清单.md
     ├── 待调研
     │   ├── IDE中使用Claude code，能复用IDE的LSP吗.md

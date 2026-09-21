@@ -1,3 +1,6 @@
+
+## 一、封装为 Plugin的方式
+
 整个流程封装为 plugin
 
 **首先**确认现有项目中 CLAUDE.md、AGENT.md 是否存在，假设不存在先由 claude code 的/init 初始化一份 CLAUDE.md。高频动作做成 Skill，主要记录：项目目录、启动命令、测试命令以及人工添加的防踩坑指南
@@ -17,3 +20,23 @@
 **POC/迭代**，POC（Proof of Concept 概念验证）。先实现并验证核心原型框架，核心原型验证完成后，再反哺 Spec.md 文件
 
 **规模化与风险**，多任务用 worktree 并行，不给 agent 提交代码或合并代码的权限，由人工确认 diff
+
+
+## 二、使用grill-me整套skill的使用思路
+
+**首先**初始化项目中的CLAUDE.md、AGENT.md等文件。在第一次开始需求之前调用 /setup-matt-pocock-skills 初始化，目的是指明方案文档、Issues后续的文件位置，会记录到CLAUDE.md中
+
+**然后**需求分析阶段使用/grill-with-docs，这个skill会对当前的需求进行严格的拷问，直到需求的所有细节都明确下来；同时将项目的一些特定词汇、术语记录下来，少数难以撤销的决定也记录下来，作为后续执行任务的背景信息
+
+**另外**/grill-with-docs在聊的途中也具备几个分支，例如：支持/research skill查询外部资料（要求开子agent进行搜索）；支持/prototype去实现一个小的demo进行验证，再继续实现等（直接在主agent中执行）
+
+**接下来**使用/to-spec将确定好的需求，记录下来整理成一份文档；并且会确定测试点、测试功能，用于在实现代码时同时写入测试用例
+
+**然后**使用/to-tickets将需求拆分为每个能单独执行完成的小任务
+
+**其次**使用/implement 写代码，按照/to-tickets拆分的任务进行实现。每个任务执行一次/implement，任务多时建议任务之间使用clear（手动执行），边实现边跑单测，最后完整跑一遍测试套件。
+
+**最后**使用/code-review进行代码评审，两个子agent并行CR，互不干扰。
+
+**额外**当出现难于排查的BUG时，使用/diagnosing-bugs skill要求先完全复现BUG，再提假设、验证、先补回归测试再修复
+

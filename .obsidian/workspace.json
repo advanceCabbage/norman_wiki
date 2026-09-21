@@ -8,49 +8,21 @@
         "type": "tabs",
         "children": [
           {
-            "id": "eabe684a91fcd06d",
+            "id": "521470a1db0a9c32",
             "type": "leaf",
             "state": {
               "type": "markdown",
               "state": {
-                "file": "知识库/知识沉淀/面试参考题目/智能客服项目【新】.md",
+                "file": "知识库/知识沉淀/面试参考题目/Agent面试题/Agent记忆压缩四种机制.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "智能客服项目【新】"
+              "title": "Agent记忆压缩四种机制"
             }
           },
           {
-            "id": "f57a1a40ab34e66d",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "知识库/知识沉淀/面试参考题目/智能客服项目【新】.md",
-                "mode": "source",
-                "source": false
-              },
-              "icon": "lucide-file",
-              "title": "智能客服项目【新】"
-            }
-          },
-          {
-            "id": "fabdde098c16a676",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "知识库/知识沉淀/面试参考题目/文档与代码一致性【新】.md",
-                "mode": "source",
-                "source": false
-              },
-              "icon": "lucide-file",
-              "title": "文档与代码一致性【新】"
-            }
-          },
-          {
-            "id": "8c751e2812ef52d4",
+            "id": "532889960b3c9c73",
             "type": "leaf",
             "state": {
               "type": "markdown",
@@ -62,23 +34,8 @@
               "icon": "lucide-file",
               "title": "长流程Agent框架机制"
             }
-          },
-          {
-            "id": "74cb3c346ac97149",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "知识库/知识沉淀/Ai Coding全流程能力.md",
-                "mode": "source",
-                "source": false
-              },
-              "icon": "lucide-file",
-              "title": "Ai Coding全流程能力"
-            }
           }
-        ],
-        "currentTab": 1
+        ]
       }
     ],
     "direction": "vertical"
@@ -112,7 +69,7 @@
             "state": {
               "type": "search",
               "state": {
-                "query": "SSE",
+                "query": "RPC",
                 "matchingCase": true,
                 "explainSearch": false,
                 "collapseAll": false,
@@ -255,9 +212,44 @@
       "claude-sidebar:New Claude Tab": false
     }
   },
-  "active": "f57a1a40ab34e66d",
+  "active": "521470a1db0a9c32",
   "lastOpenFiles": [
+    "知识库/知识沉淀/面试参考题目/Agent面试题/Agent记忆机制.md",
+    "知识库/项目总结/面试笔记/Agent相关面试题.md",
+    "知识库/收藏箱/用AI Agent做微服务系统设计.md",
     "知识库/知识沉淀/面试参考题目/二面思路.md",
+    "知识库/知识沉淀/面试参考题目/Agent面试题/长流程Agent框架机制.md",
+    "知识库/知识沉淀/面试参考题目/RAG系列/RAG 小林笔记.md",
+    "知识库/知识沉淀/面试参考题目/RAG系列/RAG面试题.md",
+    "知识库/知识沉淀/面试参考题目/RAG系列/Agentic RAG.md",
+    "知识库/知识沉淀/面试参考题目/RAG系列/向量数据库对比.md",
+    "知识库/知识沉淀/面试参考题目/RAG系列/向量检索优化手段之-创建向量索引.md",
+    "知识库/知识沉淀/面试参考题目/RAG系列/四种RAG适用的场景.md",
+    "知识库/知识沉淀/面试参考题目/RAG系列/混合检索结果融合与排序方法.md",
+    "知识库/知识沉淀/面试参考题目/RAG系列/多模态同空间检索.md",
+    "知识库/知识沉淀/面试参考题目/大模型工程面试题/Transformer架构.md",
+    "知识库/知识沉淀/面试参考题目/大模型工程面试题/大模型工程-小林笔记.md",
+    "知识库/知识沉淀/面试参考题目/大模型工程面试题/KV Cache是什么.md",
+    "知识库/知识沉淀/面试参考题目/Agent面试题/ReAct、Plan-and-Execute、Reflection三种范式介绍.md",
+    "知识库/知识沉淀/面试参考题目/Agent面试题/LLM - CoT.md",
+    "知识库/知识沉淀/面试参考题目/Agent面试题/Claude的多Agent设计机制.md",
+    "知识库/知识沉淀/面试参考题目/Agent面试题/Agent记忆压缩四种机制.md",
+    "知识库/知识沉淀/面试参考题目/Agent面试题/Agent工具机制.md",
+    "知识库/知识沉淀/面试参考题目/Agent面试题/多Agent框架选型.md",
+    "知识库/知识沉淀/面试参考题目/工作流和智能体.md",
+    "知识库/知识沉淀/面试参考题目/【精】一文读懂Harness Engineering.md",
+    "知识库/知识沉淀/面试参考题目/【精】Loop Engineering又是啥？一文讲清企业Agent落地的四层工程进化论.md",
+    "知识库/知识沉淀/面试参考题目/提示词工程.md",
+    "tmp/wechat-official-draft/agent-memory-20260915/cover-handdrawn-title-prompt.txt",
+    "tmp/wechat-official-draft/agent-memory-20260915/cover-handdrawn-title.png",
+    "tmp/wechat-official-draft/agent-memory-20260915/cover-handdrawn-prompt.txt",
+    "tmp/wechat-official-draft/agent-memory-20260915/cover-handdrawn.png",
+    "tmp/wechat-official-draft/agent-memory-20260915/cover-prompt.txt",
+    "tmp/wechat-official-draft/agent-memory-20260915/preview.html",
+    "tmp/wechat-official-draft/agent-memory-20260915/content.html",
+    "tmp/wechat-official-draft/agent-memory-20260915/cover.png",
+    "tmp/wechat-official-draft/agent-memory-20260915",
+    "知识库/知识沉淀/Python学习",
     "知识库/项目总结/智能客服/智能客服工作流-解耦分支-v2.visual-check.json",
     "知识库/项目总结/智能客服/智能客服工作流-解耦分支-v2.visual-check.html",
     "知识库/项目总结/智能客服/智能客服工作流-解耦分支-v2.visual-check.2048x1320.dark.png",
@@ -265,42 +257,8 @@
     "知识库/项目总结/智能客服/智能客服工作流-解耦分支-v2.visual-check.2048x1320.light.png",
     "知识库/项目总结/智能客服/智能客服工作流-解耦分支-v2.visual-check.1440x900.light.png",
     "知识库/项目总结/智能客服/智能客服工作流-解耦分支-v2.html",
-    "知识库/项目总结/智能客服/智能客服工作流-解耦分支-v2.archify.json",
-    "图片/archify-封面-手绘.svg.html",
     "图片/archify-封面-手绘.png",
-    "知识库/项目总结/智能客服/智能客服工作流-解耦分支.visual-check.json",
-    "知识库/项目总结/智能客服/智能客服工作流-解耦分支.visual-check.html",
     "知识库/项目总结/智能客服/智能客服工作流-解耦分支.visual-check.2048x1320.dark.png",
-    "知识库/项目总结/智能客服/智能客服工作流-解耦分支.visual-check.1440x900.dark.png",
-    "知识库/项目总结/智能客服/智能客服工作流-解耦分支.visual-check.2048x1320.light.png",
-    "知识库/项目总结/智能客服/智能客服工作流-解耦分支.visual-check.1440x900.light.png",
-    "知识库/项目总结/智能客服/智能客服工作流-解耦分支.html",
-    "知识库/项目总结/智能客服/智能客服工作流-解耦分支.archify.json",
-    "图片/archify-workflow.png",
-    "知识库/公众号文章/31K Star 的 Archify：一句话生成可交互的架构图.md",
-    "知识库/项目总结/智能客服/智能客服工作流-多轮检索.visual-check.json",
-    "知识库/知识沉淀/面试参考题目/智能客服项目【新】.md",
-    "知识库/待调研/RAG 表格切分与完整检索.md",
-    "知识库/项目总结/面试笔记/面试记录.md",
-    "知识库/知识沉淀/源码系列/Claude code源码/CC 上下文压缩机制.md",
-    "知识库/知识沉淀/面试参考题目/文档与代码一致性【新】.md",
-    "知识库/项目总结/文档一致性调研文档/Serena 原理揭秘.md",
-    "知识库/项目总结/文档一致性调研文档/LSP与Serena.md",
-    "知识库/项目总结/文档一致性调研文档/智能文档校准工具方案.md",
-    "知识库/项目总结/文档一致性调研文档/智能文档校准工具方案调研.md",
-    "知识库/项目总结/文档一致性调研文档/【精】 业内外CodeBase原理分析.md",
-    "知识库/项目总结/文档代码一致性智能检测工具.md",
-    "知识库/知识沉淀/面试参考题目/端到端测试【新】.md",
-    "知识库/项目总结/自动化测试工作流/MSI端到端智能测试应用实践.md",
-    "知识库/项目总结/自动化测试工作流/EC 用例评审 — 设计规则速查表.md",
-    "知识库/项目总结/自动化测试工作流/生成测试用例SKill.md",
-    "知识库/项目总结/自动化测试工作流/评审EC用例SKill — 规范符合性说明.md",
-    "知识库/项目总结/自动化测试工作流/评审EC用例SKill.md",
-    "知识库/项目总结/自动化测试工作流/评审EC用例 — 规则与报告模板.md",
-    "知识库/项目总结/自动化测试工作流/评审可执行测试用例SKill.md",
-    "知识库/项目总结/基于简历的问题猜想/基于openClaw的MSI端到端智能测试工作流.md",
-    "知识库/项目总结/智能客服机器人.md",
-    "知识库/项目总结/智能客服/RAG在终端前端的应用实践.md",
-    "知识库/项目总结/面试笔记/Agent相关面试题.md"
+    "知识库/项目总结/智能客服/智能客服工作流-解耦分支.visual-check.1440x900.dark.png"
   ]
 }

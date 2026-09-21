@@ -1,0 +1,102 @@
+# Agent 记忆压缩四种机制
+
+## 一、总览
+
+- <span style="display:inline;color:#35b378;font-weight:bold;">摘要压缩</span><span style="display:inline;color:#3f3f3f;font-weight:normal;">是把长对话总结成简短摘要</span>
+- <span style="display:inline;color:#35b378;font-weight:bold;">滑动窗口</span><span style="display:inline;color:#3f3f3f;font-weight:normal;">是只保留最近 N 轮对话</span>
+- <span style="display:inline;color:#35b378;font-weight:bold;">重要性过滤</span><span style="display:inline;color:#3f3f3f;font-weight:normal;">是打分筛选，只留重要内容</span>
+- <span style="display:inline;color:#35b378;font-weight:bold;">结构化抽取</span><span style="display:inline;color:#3f3f3f;font-weight:normal;">是把关键信息抽成结构化数据存起来</span>
+
+## 二、方案一：滑动窗口
+**定义**：默认保留最新 N 条消息，超出就删除最老的消息
+
+**优势**：实现简单、无 LLM 调用
+
+**劣势**：历史信息中的关键决策也会被遗忘
+
+## 三、方案二：摘要压缩
+
+**定义**：调用 LLM 将历史对话总结成一段精华摘要，用摘要替换原始对话
+
+**优势**：能记录关键决策
+
+**劣势**：需调用 LLM、细节会丢失
+
+### 3.1 进阶版本：层级式摘要
+
+不是对所有历史做一次性摘要，而是分层处理。
+
+例如：保留最近 10 轮原文，10 到 50 轮压缩成一份「中期摘要」，50 轮之前的历史进一步压缩成更精炼的「长期摘要」。
+
+**优势在于 Agent 既能精确回忆近期细节，也能粗略回忆远期要点**
+
+## 四、方案三：重要性过滤
+
+**定义**：调用 LLM 对历史对话进行打分，LLM 逐条判断每条记录的重要程度。通常在批量清理历史时做，而不是实时处理每条消息
+
+**优势**：按照重要程度而非时间先后顺序评估价值，使得历史久远价值高的内容得以完整保留
+
+**劣势**：每条记录都要调用一次 LLM，开销大
+
+### 4.1 规则打分
+
+包含「决定」「确认」等关键词的记录加分，被后续对话引用次数多的加分
+
+### 4.2 LLM 打分
+
+逐条判断每条记录的重要程度
+
+## 五、方案四：结构化抽取
+
+**定义**：很多场景里，真正有价值的不是对话文字，而是对话中传递的事实和状态。
+
+比如「用户偏好用 Python」等。将这些信息主动提取出来，存成结构化字段，后续注入 prompt 时直接用提出的实体，信息密度也高很多。
+
+通常这类用户特征、实体使用关键字检索
+
+## 六、Claude Code 的压缩机制
+### 6.1 压缩触发时机
+- <span style="display:inline;color:#35b378;font-weight:bold;">自动压缩</span><span style="display:inline;color:#3f3f3f;font-weight:normal;">：主 Agent Loop 会在每次调用 API 前，预估本轮对话 tokens 长度是否达到阈值，达到阈值则在请求前先自动压缩。</span>
+    - 预估本轮对话 tokens 是基于上一轮 API 请求返回的信息 **+** 最新一轮输入消息 **+** 工具执行结果 （预算 token 都是预估，通过字符长度除以四得到最终的 token 预算）
+    - 以上轮 API 请求预估由几个部分相加获得，分别是：上一轮的输入（命中缓存 + 本次创建缓存 + 本次未创建缓存 三段组成） + 上一轮的输出 token
+    - 设置阈值大小和原始窗口有关系，通常在 93% 左右。例如窗口大小 1M 时有效窗口为 94%
+- <span style="display:inline;color:#35b378;font-weight:bold;">手动压缩</span><span style="display:inline;color:#3f3f3f;font-weight:normal;">：用户手动触发 /compact 进行压缩，并支持传入一段自定义压缩提示词</span>
+- <span style="display:inline;color:#35b378;font-weight:bold;">上下文超限报错时</span><span style="display:inline;color:#3f3f3f;font-weight:normal;">：主 Agent 会主动进行一轮压缩，再尝试调用 Agent</span>
+- <span style="display:inline;color:#35b378;font-weight:bold;">局部压缩</span><span style="display:inline;color:#3f3f3f;font-weight:normal;">：用户通过历史消息选择器，可以只压缩某个位置之前或之后的消息，这是用户控制上下文结构的高级入口，不等同于普通全量自动压缩</span>
+### 6.2 压缩策略及恢复机制
+
+**参与压缩的内容**：最近一次压缩总结内容、用户消息 + Agent 消息、工具调用 + 工具调用结果
+
+**压缩策略**：把所有的压缩内容都交给负责压缩的 Agent 进行压缩，压缩过程是阻塞型的，压缩过程中主 Agent 仅能阻塞等待
+
+**压缩后恢复机制**：并行的恢复历史文件，将其重新注入到对话上下文中，包括：
+- 最近读取的文件；最多五个，每个最大 5 K 字符
+- 最近已调用过 Skill；每个最大 5 K 字符，整体上限为 25 K 字符
+- Plan 文件、Plan Model；重新注入上下文
+- 异步 Agent；恢复未完成的任务、未获取的结果
+- 延迟工具状态；恢复已经发现的延迟工具列表
+### 6.3 压缩前的优化手段
+为了避免被迫使用昂贵的压缩机制，在 Agent 运行中还设计了一系列优化手段。
+- <span style="display:inline;color:#35b378;font-weight:bold;">工具调用结果超长单独存储</span><span style="display:inline;color:#3f3f3f;font-weight:normal;">：当单个工具结果超过 5 万字符 或一次调用中产生的工具结果超过 20 万字符时触发。将最大的工具结果写入到文件中，然后截取文件开头 2000 字符，将截断内容和文件地址发送给大模型，由大模型判断是否需要读取完整的工具执行结果</span>
+- <span style="display:inline;color:#35b378;font-weight:bold;">超过 30 轮对话时</span><span style="display:inline;color:#3f3f3f;font-weight:normal;">由大模型自主决定移除掉一些历史上下文过久的信息</span>
+- 当两轮对话间隔时间超过缓存时间阈值（默认为 60 分钟）时，由程序自动移除可重新获取工具结果。KV Cache 最大时间是 60 分钟，可移除 Read / Bash / Grep / Glob / WebSearch 等工具执行结果，单需要保留以上最近五个工具调用的结果
+## 七、OpenClaw 的压缩机制
+### 7.1 压缩触发时机
+ OpenClaw 的压缩机制复用的 Pi Runtime 逻辑，自动压缩有两种触发：
+- <span style="display:inline;color:#35b378;font-weight:bold;">自动压缩</span><span style="display:inline;color:#3f3f3f;font-weight:normal;">：本轮对话结束时，检测上下文阈值则触发压缩</span>
+- <span style="display:inline;color:#35b378;font-weight:bold;">上下文超限报错时</span><span style="display:inline;color:#3f3f3f;font-weight:normal;">：模型请求报上下文超出阈值时，自动压缩并重试</span>
+- <span style="display:inline;color:#35b378;font-weight:bold;">手动压缩</span><span style="display:inline;color:#3f3f3f;font-weight:normal;">：用户通过 /compact 手动触发压缩</span>
+不看模型上下文窗口的动态值，均预留为 2 万 tokens 为触发自动压缩的阈值。
+
+### 7.2 压缩策略及恢复机制
+
+**参与压缩的内容**：与 Claude 一致
+
+**压缩策略**：选择与主模型一致的模型，单独调用 API 进行压缩处理
+
+**压缩后恢复机制**：
+- 压缩摘要；注入上下文
+- 最近对话；保留最近约 2 万 token 的对话上下文
+- 最近读过的文件、最近修改过的文件；均只注入路径，不带完整文件内容
+- 重新获取 Skill 的列表清单
+- AGENT.md、USER.md 等文件全量注入

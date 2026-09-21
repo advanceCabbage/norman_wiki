@@ -86,7 +86,7 @@ Claude 会在工作过程中自行判断哪些内容值得记住，常见来源�
 ```
 ##### 3.3.2 加载记忆机制
 - **每轮对话固定加载索引文件**：加载 `MEMORY.md` 的前 200 行或 25 KB 数据，**模型每轮能看到 Memory 的索引文件**
-- **需要使用记忆时使用大模型找出最相关的五个记忆文件**：扫描 memory 目录下的 md 文件，排除 memory.md。读取每个文件的前三行 front matter，获取 file name、description、type，并组成 manifest。使用特定的提示词（You are selecting memories that will be useful to Claude Code as it processes a user's query）使用大模型判断与用户当前的 query 选择最多五个相关的记忆，返回这些文件的路径。
+- **需要使用记忆时使用大模型找出最相关的五个记忆文件**：扫描 memory 目录下的 md 文件，排除 memory.md。读取每个文件的前三行 front matter，获取 file name、description、type，并组成 manifest。**使用特定的提示词**（You are selecting memories that will be useful to Claude Code as it processes a user's query）使用大模型判断与用户当前的 query 选择最多五个相关的记忆，返回这些文件的路径。
 - **读取最相关的五个记忆文件全文**：读取相关的记忆文件，并将记忆文件的内容通过 `relevant_memories` 字段传给大模型
 - **记忆加载特点异步，不阻塞**：召回是异步预取，不阻塞主循环。每个用户 turn 开始时，会异步获取记忆，主循环会在后续 post-tools 阶段检查 prefetch 获取的记忆是否已经完成，
 	- 如果完成，就注入相关记忆 attachment

@@ -119,16 +119,16 @@ SUBMITTED → WORKING → COMPLETED
 
 这一层定义客户端可以做什么，无论下层选 JSON-RPC、gRPC 还是 REST，语义都应一致。
 
-| 操作 | 用途 |
-|---|---|
-| `SendMessage` | 新建任务或向已有 Task 补充信息；返回 Task 或直接 Message |
-| `SendStreamingMessage` | 发起任务并实时接收状态和产物片段 |
-| `GetTask` | 查询 Task 当前状态、产物和可选历史；也可用于轮询 |
-| `ListTasks` | 按上下文、状态等列出当前调用方有权限查看的 Task |
-| `CancelTask` | 请求取消一个仍在处理的 Task |
-| `SubscribeToTask` | 对进行中的已有 Task 重新建立实时订阅 |
-| Push notification 配置 | 为长任务登记一个 webhook，由服务端主动通知 |
-| `GetExtendedAgentCard` | 已认证调用方获取更详细或权限更高的能力说明 |
+| 操作                     | 用途                                     |
+| ---------------------- | -------------------------------------- |
+| `SendMessage`          | 新建任务或向已有 Task 补充信息；返回 Task 或直接 Message |
+| `SendStreamingMessage` | 发起任务并实时接收状态和产物片段                       |
+| `GetTask`              | 查询 Task 当前状态、产物和可选历史；也可用于轮询            |
+| `ListTasks`            | 按上下文、状态等列出当前调用方有权限查看的 Task             |
+| `CancelTask`           | 请求取消一个仍在处理的 Task                       |
+| `SubscribeToTask`      | 对进行中的已有 Task 重新建立实时订阅                  |
+| Push notification 配置   | 为长任务登记一个 webhook，由服务端主动通知              |
+| `GetExtendedAgentCard` | 已认证调用方获取更详细或权限更高的能力说明                  |
 
 `SendMessage` 对简单任务可以直接返回一条 `Message`；但复杂或长任务应该立即创建 `Task`，后续由查询、流式订阅或 webhook 获取结果。[
 核心操作定义](https://github.com/a2aproject/A2A/blob/main/docs/specification.md)
@@ -137,11 +137,11 @@ SUBMITTED → WORKING → COMPLETED
 
 这一层把同一抽象操作映射到具体网络协议。标准核心绑定为：
 
-| 绑定 | 适用情况 |
-|---|---|
-| `JSONRPC` | HTTP API 团队容易接入；调用为 JSON-RPC 2.0 over HTTPS，流式用 SSE |
-| `GRPC` | 内部服务网格、强类型、高吞吐和多语言 RPC 环境 |
-| `HTTP+JSON` | 希望采用资源风格 REST API 的团队 |
+| 绑定          | 适用情况                                                |
+| ----------- | --------------------------------------------------- |
+| `JSONRPC`   | HTTP API 团队容易接入；调用为 JSON-RPC 2.0 over HTTPS，流式用 SSE |
+| `GRPC`      | 内部服务网格、强类型、高吞吐和多语言 RPC 环境                           |
+| `HTTP+JSON` | 希望采用资源风格 REST API 的团队                               |
 
 一个 Agent 可以同时声明多种接口。调用方读取 Agent Card 的 `supportedInterfaces` 后，选择自己支持的接口；列表第一项是服务端首选项。
 

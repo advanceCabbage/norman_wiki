@@ -5,7 +5,7 @@ Continue 在向量检索和全文检索方面同时使用了 SQLite 和 LanceDB�
 ## 二、SQLite 和 LanceDB 同时使用的优势
 
 #### 1.**使用各自更成熟的专用能力**
-LanceDB 直接提供向量索引和近邻搜索，SQLite 直接提供事务、关系表和 FTS 5。组合方案减少自研和验证成本。
+LanceDB 直接提供向量索引和近邻搜索，SQLite 直接提供事务、关系表和 FTS5。组合方案减少自研和验证成本。
 ####  2.在保留现有 SQLite 索引系统的基础上增加向量能力
 Continue 的文件目录、Chunk、FTS、符号和增量状态已经建立在 SQLite 上。引入 LanceDB 只需增加向量搜索层，不必把整个索引系统迁移到新数据库。
 
