@@ -4,38 +4,95 @@
     "type": "split",
     "children": [
       {
-        "id": "307ff78564fa5cb3",
+        "id": "6e26c69e98d1629b",
         "type": "tabs",
         "children": [
           {
-            "id": "521470a1db0a9c32",
+            "id": "7d21faddd53aabc1",
             "type": "leaf",
             "state": {
               "type": "markdown",
               "state": {
-                "file": "知识库/知识沉淀/面试参考题目/Agent面试题/Agent记忆压缩四种机制.md",
+                "file": "知识库/知识沉淀/面试参考题目/端到端测试【新】.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "Agent记忆压缩四种机制"
+              "title": "端到端测试【新】"
             }
           },
           {
-            "id": "532889960b3c9c73",
+            "id": "6ff33228bcfe91a8",
             "type": "leaf",
             "state": {
               "type": "markdown",
               "state": {
-                "file": "知识库/知识沉淀/面试参考题目/Agent面试题/长流程Agent框架机制.md",
+                "file": "知识库/知识沉淀/面试参考题目/智能客服项目【新】.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "长流程Agent框架机制"
+              "title": "智能客服项目【新】"
+            }
+          },
+          {
+            "id": "1698be1273755eb3",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "知识库/知识沉淀/面试参考题目/后端技能/分布式/分布式与分布式锁.md",
+                "mode": "source",
+                "source": false
+              },
+              "icon": "lucide-file",
+              "title": "分布式与分布式锁"
+            }
+          },
+          {
+            "id": "426503b55d4ab919",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "知识库/知识沉淀/面试参考题目/A2A 协议开发者入门.md",
+                "mode": "source",
+                "source": false
+              },
+              "icon": "lucide-file",
+              "title": "A2A 协议开发者入门"
+            }
+          },
+          {
+            "id": "f79044354513535c",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "知识库/知识沉淀/面试参考题目/端到端测试【新】.md",
+                "mode": "source",
+                "source": false
+              },
+              "icon": "lucide-file",
+              "title": "端到端测试【新】"
+            }
+          },
+          {
+            "id": "06d256a7035f4fd4",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "知识库/知识沉淀/面试参考题目/Agent面试题/Agent记忆机制.md",
+                "mode": "source",
+                "source": false
+              },
+              "icon": "lucide-file",
+              "title": "Agent记忆机制"
             }
           }
-        ]
+        ],
+        "currentTab": 4
       }
     ],
     "direction": "vertical"
@@ -69,7 +126,7 @@
             "state": {
               "type": "search",
               "state": {
-                "query": "RPC",
+                "query": "面试记录",
                 "matchingCase": true,
                 "explainSearch": false,
                 "collapseAll": false,
@@ -190,9 +247,29 @@
               "icon": "bot",
               "title": "Claude"
             }
+          },
+          {
+            "id": "63a10be95d1d92a3",
+            "type": "leaf",
+            "state": {
+              "type": "advanced-tables-toolbar",
+              "state": {},
+              "icon": "spreadsheet",
+              "title": "Advanced Tables"
+            }
+          },
+          {
+            "id": "e483e7520d02d7d7",
+            "type": "leaf",
+            "state": {
+              "type": "vault-terminal",
+              "state": {},
+              "icon": "bot",
+              "title": "Claude"
+            }
           }
         ],
-        "currentTab": 5
+        "currentTab": 7
       }
     ],
     "direction": "horizontal",
@@ -212,34 +289,40 @@
       "claude-sidebar:New Claude Tab": false
     }
   },
-  "active": "521470a1db0a9c32",
+  "active": "f79044354513535c",
   "lastOpenFiles": [
+    "知识库/知识沉淀/面试参考题目/Agent面试题/Agent上下文工程设计.md",
     "知识库/知识沉淀/面试参考题目/Agent面试题/Agent记忆机制.md",
-    "知识库/项目总结/面试笔记/Agent相关面试题.md",
-    "知识库/收藏箱/用AI Agent做微服务系统设计.md",
-    "知识库/知识沉淀/面试参考题目/二面思路.md",
-    "知识库/知识沉淀/面试参考题目/Agent面试题/长流程Agent框架机制.md",
-    "知识库/知识沉淀/面试参考题目/RAG系列/RAG 小林笔记.md",
-    "知识库/知识沉淀/面试参考题目/RAG系列/RAG面试题.md",
-    "知识库/知识沉淀/面试参考题目/RAG系列/Agentic RAG.md",
-    "知识库/知识沉淀/面试参考题目/RAG系列/向量数据库对比.md",
-    "知识库/知识沉淀/面试参考题目/RAG系列/向量检索优化手段之-创建向量索引.md",
-    "知识库/知识沉淀/面试参考题目/RAG系列/四种RAG适用的场景.md",
-    "知识库/知识沉淀/面试参考题目/RAG系列/混合检索结果融合与排序方法.md",
-    "知识库/知识沉淀/面试参考题目/RAG系列/多模态同空间检索.md",
-    "知识库/知识沉淀/面试参考题目/大模型工程面试题/Transformer架构.md",
-    "知识库/知识沉淀/面试参考题目/大模型工程面试题/大模型工程-小林笔记.md",
-    "知识库/知识沉淀/面试参考题目/大模型工程面试题/KV Cache是什么.md",
-    "知识库/知识沉淀/面试参考题目/Agent面试题/ReAct、Plan-and-Execute、Reflection三种范式介绍.md",
-    "知识库/知识沉淀/面试参考题目/Agent面试题/LLM - CoT.md",
-    "知识库/知识沉淀/面试参考题目/Agent面试题/Claude的多Agent设计机制.md",
-    "知识库/知识沉淀/面试参考题目/Agent面试题/Agent记忆压缩四种机制.md",
-    "知识库/知识沉淀/面试参考题目/Agent面试题/Agent工具机制.md",
+    "未命名 2.md",
     "知识库/知识沉淀/面试参考题目/Agent面试题/多Agent框架选型.md",
+    "知识库/知识沉淀/面试参考题目/Agent面试题/Claude的多Agent设计机制.md",
+    "知识库/知识沉淀/面试参考题目/Agent面试题/ReAct、Plan-and-Execute、Reflection三种范式介绍.md",
+    "知识库/知识沉淀/面试参考题目/二面思路.md",
+    "知识库/知识沉淀/面试参考题目/Agent面试题/工程实践中选择手搓框架.md",
+    "知识库/知识沉淀/面试参考题目/Agent面试题/Agent记忆压缩四种机制.md",
+    "知识库/知识沉淀/面试参考题目/Agent面试题/长流程Agent框架机制.md",
     "知识库/知识沉淀/面试参考题目/工作流和智能体.md",
-    "知识库/知识沉淀/面试参考题目/【精】一文读懂Harness Engineering.md",
-    "知识库/知识沉淀/面试参考题目/【精】Loop Engineering又是啥？一文讲清企业Agent落地的四层工程进化论.md",
-    "知识库/知识沉淀/面试参考题目/提示词工程.md",
+    "知识库/知识沉淀/面试参考题目/Agent面试题/LLM - CoT.md",
+    "知识库/知识沉淀/面试参考题目/Tools、Agent、Workflow.md",
+    "知识库/知识沉淀/面试参考题目/Function Calling、Skill、MCP 这三个有什么区别.md",
+    "知识库/知识沉淀/面试参考题目/MCP与A2A协议.md",
+    "知识库/知识沉淀/面试参考题目/A2A 协议开发者入门.md",
+    "知识库/知识沉淀/面试参考题目/2026.10 面试准备.md",
+    "知识库/知识沉淀/面试参考题目/后端技能/系统设计题.md",
+    "知识库/知识沉淀/面试参考题目/后端技能/限流算法.md",
+    "知识库/知识沉淀/面试参考题目/后端技能/Redis相关.md",
+    "知识库/知识沉淀/面试参考题目/后端技能/Redis",
+    "知识库/知识沉淀/面试参考题目/后端技能/分布式/负载均衡策略.md",
+    "知识库/知识沉淀/面试参考题目/后端技能/分布式/分布式事务.md",
+    "知识库/知识沉淀/面试参考题目/后端技能/分布式/分布式ID.md",
+    "知识库/知识沉淀/面试参考题目/后端技能/分布式",
+    "知识库/知识沉淀/面试参考题目/后端技能/分布式/分布式与分布式锁.md",
+    "知识库/项目总结/面试笔记/面试记录.md",
+    "未命名 3.md",
+    "未命名.base",
+    "知识库/知识沉淀/面试参考题目/后端技能",
+    "图片/Pasted image 20260731152410.png",
+    "图片/Pasted image 20260731152055.png",
     "tmp/wechat-official-draft/agent-memory-20260915/cover-handdrawn-title-prompt.txt",
     "tmp/wechat-official-draft/agent-memory-20260915/cover-handdrawn-title.png",
     "tmp/wechat-official-draft/agent-memory-20260915/cover-handdrawn-prompt.txt",
@@ -249,16 +332,10 @@
     "tmp/wechat-official-draft/agent-memory-20260915/content.html",
     "tmp/wechat-official-draft/agent-memory-20260915/cover.png",
     "tmp/wechat-official-draft/agent-memory-20260915",
-    "知识库/知识沉淀/Python学习",
-    "知识库/项目总结/智能客服/智能客服工作流-解耦分支-v2.visual-check.json",
-    "知识库/项目总结/智能客服/智能客服工作流-解耦分支-v2.visual-check.html",
     "知识库/项目总结/智能客服/智能客服工作流-解耦分支-v2.visual-check.2048x1320.dark.png",
     "知识库/项目总结/智能客服/智能客服工作流-解耦分支-v2.visual-check.1440x900.dark.png",
     "知识库/项目总结/智能客服/智能客服工作流-解耦分支-v2.visual-check.2048x1320.light.png",
     "知识库/项目总结/智能客服/智能客服工作流-解耦分支-v2.visual-check.1440x900.light.png",
-    "知识库/项目总结/智能客服/智能客服工作流-解耦分支-v2.html",
-    "图片/archify-封面-手绘.png",
-    "知识库/项目总结/智能客服/智能客服工作流-解耦分支.visual-check.2048x1320.dark.png",
-    "知识库/项目总结/智能客服/智能客服工作流-解耦分支.visual-check.1440x900.dark.png"
+    "图片/archify-封面-手绘.png"
   ]
 }

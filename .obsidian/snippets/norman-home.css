@@ -1,0 +1,90 @@
+/* Norman 知识工作台：只影响带 norman-home 的三篇入口笔记。 */
+.norman-home {
+  --nh-bg: #fffefb;
+  --nh-panel: #f1faf5;
+  --nh-ink: #244538;
+  --nh-muted: #597567;
+  --nh-line: #dceee3;
+  --nh-accent: #237c59;
+  --background-primary: var(--nh-bg);
+  --background-secondary: var(--nh-panel);
+  --text-normal: var(--nh-ink);
+  --text-muted: var(--nh-muted);
+  --text-faint: var(--nh-muted);
+  --link-color: var(--nh-accent);
+  --link-color-hover: #135638;
+  --link-unresolved-color: #a04732;
+  --h1-color: var(--nh-ink);
+  --h2-color: var(--nh-ink);
+  --h3-color: var(--nh-ink);
+  --file-line-width: 1040px;
+  color-scheme: light;
+  color: var(--nh-ink);
+  background: var(--nh-bg);
+}
+.markdown-preview-view.norman-home { padding: 22px 30px 36px; }
+.norman-home .markdown-preview-sizer { max-width: 1040px; margin-inline: auto; }
+.markdown-preview-view.norman-home .metadata-container,
+.norman-home .inline-title { display: none; }
+.norman-home .callout[data-callout^="nh-"] {
+  padding: 0; margin: 0; border: 0; border-radius: 0;
+  background: transparent; box-shadow: none; color: var(--nh-ink);
+  mix-blend-mode: normal;
+}
+.norman-home .callout[data-callout^="nh-"] > .callout-title { display: none; }
+.norman-home .callout[data-callout^="nh-"] > .callout-content { overflow: visible; }
+.norman-home .callout[data-callout="nh-hero"] {
+  padding: 30px 32px; margin: 0 0 20px; border-radius: 14px;
+  background: radial-gradient(ellipse at 90% 12%, #fff2c9, transparent 53%),
+    radial-gradient(ellipse at 12% 95%, #c8f2df, transparent 65%),
+    linear-gradient(120deg, #e8fbef, #f7fff4);
+}
+.norman-home .callout[data-callout="nh-hero"] p { margin: 7px 0; color: var(--nh-muted); font-size: 14px; }
+.norman-home .callout[data-callout="nh-hero"] p:first-child { font-size: 11px; letter-spacing: 3px; }
+.norman-home .callout[data-callout="nh-hero"] h1 { margin: 12px 0 8px; font-size: 30px; font-weight: 650; letter-spacing: -.7px; }
+.norman-home .callout[data-callout="nh-nav"] { padding-bottom: 18px; margin-bottom: 24px; border-bottom: 1px solid var(--nh-line); }
+.norman-home .callout[data-callout="nh-nav"] p { display: flex; flex-wrap: wrap; gap: 9px; margin: 0; }
+.norman-home .callout[data-callout="nh-nav"] a {
+  padding: 8px 15px; border: 1px solid var(--nh-line); border-radius: 8px;
+  background: var(--nh-bg); color: var(--nh-ink); text-decoration: none; font-size: 14px;
+}
+.norman-home .callout[data-callout="nh-nav"] strong a { background: var(--nh-accent); border-color: var(--nh-accent); color: #fff; font-weight: 500; }
+.norman-home .callout[data-callout="nh-nav"] a:hover { border-color: var(--nh-accent); }
+.norman-home .callout[data-callout="nh-columns"] > .callout-content { display: grid; grid-template-columns: minmax(0, 1.45fr) minmax(0, 1fr); gap: 30px; }
+.norman-home .callout[data-callout="nh-columns"] > .callout-content > p:empty { display:none; }
+.norman-home .callout[data-callout="nh-main"],
+.norman-home .callout[data-callout="nh-side"] { min-width: 0; }
+.norman-home h2 { font-size: 19px; margin: 22px 0 12px; font-weight: 600; }
+.norman-home h3 { font-size: 15px; margin: 20px 0 7px; font-weight: 600; }
+.norman-home .callout[data-callout="nh-main"] > .callout-content > h2:first-child,
+.norman-home .callout[data-callout="nh-side"] > .callout-content > h2:first-child { margin-top:0; }
+.norman-home .callout[data-callout="nh-focus"] { background: var(--nh-panel); border: 1px solid var(--nh-line); border-radius: 10px; padding: 14px 18px; margin: 12px 0 22px; }
+.norman-home .callout[data-callout="nh-focus"] p { margin: 5px 0; }
+.norman-home .callout[data-callout="nh-focus"] em { font-style:normal; font-size:12px; color:var(--nh-muted); }
+.norman-home .callout[data-callout="nh-topics"] > .callout-content { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:16px; }
+.norman-home .callout[data-callout="nh-topics"] p { margin:0; border-top:2px solid #90ceb0; padding-top:10px; font-size:12px; color:var(--nh-muted); }
+.norman-home .callout[data-callout="nh-topics"] strong { display:block; margin-bottom:5px; font-size:14px; }
+.norman-home .callout[data-callout="nh-topics"] strong a { text-decoration:none; }
+.norman-home ul { padding-inline-start:18px; }
+.norman-home li { margin:8px 0; }
+.norman-home a { overflow-wrap:anywhere; }
+.norman-home a:focus-visible { outline:2px solid var(--nh-accent); outline-offset:3px; }
+.norman-home .callout[data-callout="nh-footer"] { margin-top:26px; padding-top:15px; border-top:1px solid var(--nh-line); }
+.norman-home .callout[data-callout="nh-footer"] p { display:flex; flex-wrap:wrap; gap:16px; font-size:12px; margin:0; }
+.norman-home .callout[data-callout="nh-side"] { font-size:14px; }
+@container (max-width: 650px) {
+  .norman-home .callout[data-callout="nh-columns"] > .callout-content { grid-template-columns:1fr; gap:18px; }
+  .norman-home .callout[data-callout="nh-topics"] > .callout-content { grid-template-columns:repeat(2,minmax(0,1fr)); }
+  .norman-home .callout[data-callout="nh-hero"] { padding:24px 20px; }
+  .norman-home .callout[data-callout="nh-hero"] h1 { font-size:26px; }
+}
+.workspace-leaf-content[data-type="markdown"]:has(.norman-home) { container-type:inline-size; }
+@media (max-width: 700px) {
+  .markdown-preview-view.norman-home { padding:18px; }
+  .norman-home .callout[data-callout="nh-columns"] > .callout-content { grid-template-columns:1fr; }
+  .norman-home .callout[data-callout="nh-topics"] > .callout-content { grid-template-columns:repeat(2,minmax(0,1fr)); }
+}
+@media (pointer:coarse) { .norman-home .callout[data-callout="nh-nav"] a { min-height:44px; } }
+/* Keep the active link the same height as the other navigation links. */
+.norman-home .callout[data-callout="nh-nav"] strong { display:contents; }
+.norman-home .callout[data-callout="nh-nav"] a { display:inline-flex; align-items:center; }

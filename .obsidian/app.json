@@ -1,4 +1,5 @@
 {
   "promptDelete": false,
-  "alwaysUpdateLinks": true
+  "alwaysUpdateLinks": true,
+  "openBehavior": "file:知识库/首页.md"
 }
